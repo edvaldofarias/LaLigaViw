@@ -1,6 +1,6 @@
 # La Liga Viw
 
-Central de acompanhamento em português, feita com HTML, CSS e JavaScript. O conteúdo publicável fica em `dist/`.
+Central de acompanhamento em português, feita com HTML, CSS e JavaScript. Os arquivos da interface ficam em `dist/`; `npm run build` prepara o Worker em `dist/server/` e copia os arquivos públicos para `dist/client/`. O backend persistente mantém a contagem de visitantes.
 
 ## Dados
 
@@ -14,7 +14,7 @@ Datas `d_i` são interpretadas como timestamps e apresentadas em `America/Sao_Pa
 
 ## Prévia
 
-Sirva `dist/` por HTTP. Não há dependências nem etapa de compilação. O arquivo `.openai/hosting.json` associa este projeto à sua publicação Sites.
+Sirva `dist/` por HTTP para uma prévia da interface. O contador requer o Worker e o banco D1. Antes de publicar, execute `npm ci`, `npm test` e `npm run build`. O arquivo `.openai/hosting.json` associa este projeto à sua publicação Sites.
 
 ## Odds e simulação semanal
 
@@ -39,3 +39,17 @@ A aba `#selection` permite consultar as rodadas publicadas, abrir os perfis e ve
 Cada seleção pode ter um campo `poster` apontando para seu PNG em `dist/images/selections/`. A aba exibe a arte correspondente à rodada selecionada e links para abrir e baixar o arquivo. A arte da primeira rodada mede 1080 × 1350 pixels.
 
 Os arquivos originais dos jogadores ficam em `assets/selections/round-1/`, com os endereços de origem em `sources.json`. O fundo foi gerado separadamente, sem pessoas; `scripts/render-selection.cjs` compõe as sete fotos completas, apenas redimensionando proporcionalmente, e acrescenta os nomes e equipes. Não há recriação de rostos, retoque, filtros ou cortes nas fotos. O script usa `@napi-rs/canvas` no ambiente de criação; o site publicado é estático e não depende dessa biblioteca. Para as próximas rodadas, guardar novas fotos e fontes na pasta correspondente, definir `poster` e gerar uma arte própria sem sobrescrever as rodadas anteriores.
+
+## Visitantes
+
+O rodapé consulta `/api/visitors`: POST registra uma visita, GET apenas lê o total e o total diário. O Worker usa D1 (`DB`) com tabelas `visitors` e `daily_visitors`, chave única por navegador e por dia. Um cookie anônimo HTTP-only, Secure e SameSite identifica o navegador; não são armazenados IP, nome ou e-mail. Recarregamentos e trocas de abas não somam novos visitantes para o mesmo cookie. O dia vira à meia-noite de Brasília. O contador inicia na ativação e não estima acessos anteriores. Limpar cookies ou usar outro navegador pode contar novamente; não representa pessoas identificadas. Robôs reconhecíveis são ignorados e falhas não produzem números fictícios.
+
+O schema está em `db/schema.ts`; as migrações são geradas por `npm run db:generate`. O Worker tem inicialização idempotente como contingência. A publicação preserva o banco existente. A documentação de referência está em https://developers.cloudflare.com/d1/worker-api/d1-database/ e https://developers.cloudflare.com/workers/static-assets/binding/.
+
+## Resumos e panfletos das partidas
+
+`dist/match-preview.mjs` monta textos apenas com resultados encerrados anteriores ao confronto, gols/cartões da última súmula disponível e seleção enviada da respectiva rodada. Não infere escalação ou suspensão. A situação em pontos é calculada pelos resultados encerrados da fase; alcançar a pontuação atual da liderança não significa garantir o primeiro lugar após os outros resultados. Sem histórico, isso é informado. A fonte das súmulas recentes é renovada conforme a política de atualização.
+
+`dist/match-flyer.mjs` gera PNGs de 1080 × 1350 no navegador com escudos, data e horário de Brasília, quadra e local. Os panfletos são permitidos somente para os jogos futuros da próxima rodada, determinada pela primeira partida futura e seu identificador de fase/rodada. Ao avançar o calendário, a elegibilidade muda sem republicação. O download é uma imagem PNG completa; as imagens temporárias não são um histórico público de panfletos antigos. Os escudos originais usam cópias locais para garantir a exportação; equipes novas podem utilizar a imagem da fonte.
+
+Local fixo informado pela organização: **Pro Beach — Av. Cézar Magnani, N° 840 - Paulicéia, São Bernardo do Campo - SP, 09694-000**. Datas e horários continuam vindo do Copa Fácil.

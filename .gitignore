@@ -1,5 +1,8 @@
 .DS_Store
 .sites-runtime/
 node_modules/
+dist/server/
+dist/client/
+dist/.openai/
 .env
 .env.*

@@ -6,6 +6,7 @@ import * as forecast from '../dist/forecast.mjs';
 import * as schedule from '../dist/schedule.mjs';
 import { summarizeMatch } from '../dist/match-stats.mjs';
 import { championshipSelections, selectionsForPlayer } from '../dist/selections.mjs';
+import {matchPreview,nextRoundMatches,VENUE} from '../dist/match-preview.mjs';
 
 const source=(await readFile(new URL('../dist/app.js',import.meta.url),'utf8'))
   .replace(/^import .*;\n/gm,'').replace(/\ninit\(\);\s*$/,'');
@@ -18,7 +19,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,summarizeMatch,championshipSelections,selectionsForPlayer,fetch,AbortSignal,URL,
+  const context=vm.createContext({...forecast,...schedule,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
