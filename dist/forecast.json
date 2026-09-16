@@ -1,0 +1,220 @@
+{
+  "modelVersion": "poisson-shrinkage-v1",
+  "cutoff": 1789387200000,
+  "nextUpdate": 1789992000000,
+  "historyCount": 5,
+  "historyFingerprint": "476057be",
+  "leagueGoalsPerTeam": 2.9,
+  "trials": 20000,
+  "priorMatches": 4,
+  "teamWindow": 8,
+  "roundId": "1780480347872",
+  "phaseId": "1780479913323",
+  "predictions": [
+    {
+      "matchId": "1780480363729",
+      "team1": "-OuCEPqc-2Ju1pdvU4j1",
+      "team2": "-OuCEIPXbahnsYG98j_K",
+      "startsAt": 1789776000000,
+      "status": "ready",
+      "probabilities": [
+        0.4153,
+        0.1694,
+        0.4153
+      ],
+      "odds": [
+        2.4078979051288227,
+        5.90318772136954,
+        2.4078979051288227
+      ],
+      "topScores": [
+        {
+          "score": "2-2",
+          "probability": 0.0529
+        },
+        {
+          "score": "2-3",
+          "probability": 0.05255
+        },
+        {
+          "score": "3-2",
+          "probability": 0.05255
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        2.9000000000000004,
+        2.9000000000000004
+      ],
+      "teamGames": [
+        0,
+        0
+      ],
+      "limitedHistory": true
+    },
+    {
+      "matchId": "1786231940049",
+      "team1": "-OuCEAFLB6cDtcv8W1dI",
+      "team2": "-OuCEBQOxXueVsu4_Pbt",
+      "startsAt": 1789779600000,
+      "status": "ready",
+      "probabilities": [
+        0.6053,
+        0.16385,
+        0.23085
+      ],
+      "odds": [
+        1.6520733520568314,
+        6.103143118706134,
+        4.331817197314273
+      ],
+      "topScores": [
+        {
+          "score": "3-2",
+          "probability": 0.06215
+        },
+        {
+          "score": "3-1",
+          "probability": 0.0602
+        },
+        {
+          "score": "2-1",
+          "probability": 0.05885
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        3.1415172413793107,
+        2.016
+      ],
+      "teamGames": [
+        1,
+        1
+      ],
+      "limitedHistory": true
+    },
+    {
+      "matchId": "1786231940683",
+      "team1": "-OuCE79e187h1srqNCAK",
+      "team2": "-OuCE5UUPYmEL7Mnf4-D",
+      "startsAt": 1789779600000,
+      "status": "ready",
+      "probabilities": [
+        0.2796,
+        0.1542,
+        0.5662
+      ],
+      "odds": [
+        3.5765379113018594,
+        6.485084306095979,
+        1.7661603673613564
+      ],
+      "topScores": [
+        {
+          "score": "2-3",
+          "probability": 0.05625
+        },
+        {
+          "score": "3-3",
+          "probability": 0.0482
+        },
+        {
+          "score": "2-4",
+          "probability": 0.04675
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        2.656,
+        3.5718620689655176
+      ],
+      "teamGames": [
+        1,
+        1
+      ],
+      "limitedHistory": true
+    },
+    {
+      "matchId": "1786231941308",
+      "team1": "-OuCE1lbs7UFbj9mOJgT",
+      "team2": "-OuCECnOQDCHySBDLAxx",
+      "startsAt": 1789783200000,
+      "status": "ready",
+      "probabilities": [
+        0.3895,
+        0.1532,
+        0.4573
+      ],
+      "odds": [
+        2.5673940949935816,
+        6.527415143603133,
+        2.1867483052700636
+      ],
+      "topScores": [
+        {
+          "score": "3-3",
+          "probability": 0.04545
+        },
+        {
+          "score": "2-3",
+          "probability": 0.04275
+        },
+        {
+          "score": "3-2",
+          "probability": 0.0409
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        3.342896551724138,
+        3.5718620689655176
+      ],
+      "teamGames": [
+        1,
+        1
+      ],
+      "limitedHistory": true
+    },
+    {
+      "matchId": "1786231942016",
+      "team1": "-OuCE2n4ni8czw1OPXtQ",
+      "team2": "-OuCEUdiPg-VFiAmxP-W",
+      "startsAt": 1789783200000,
+      "status": "ready",
+      "probabilities": [
+        0.51505,
+        0.1657,
+        0.31925
+      ],
+      "odds": [
+        1.9415590719347635,
+        6.035003017501509,
+        3.1323414252153485
+      ],
+      "topScores": [
+        {
+          "score": "3-2",
+          "probability": 0.05655
+        },
+        {
+          "score": "2-2",
+          "probability": 0.0527
+        },
+        {
+          "score": "3-3",
+          "probability": 0.04965
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        3.1415172413793107,
+        2.5373793103448277
+      ],
+      "teamGames": [
+        1,
+        1
+      ],
+      "limitedHistory": true
+    }
+  ]
+}

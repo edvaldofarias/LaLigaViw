@@ -15,3 +15,15 @@ Datas `d_i` são interpretadas como timestamps e apresentadas em `America/Sao_Pa
 ## Prévia
 
 Sirva `dist/` por HTTP. Não há dependências nem etapa de compilação. O arquivo `.openai/hosting.json` associa este projeto à sua publicação Sites.
+
+## Odds e simulação semanal
+
+`dist/forecast.mjs` contém o mesmo modelo usado no navegador e na atualização semanal. Cada confronto da próxima rodada recebe 20.000 cenários de placares por distribuições de Poisson independentes. A força ofensiva da equipe é combinada à força defensiva adversária, usando os últimos oito jogos por equipe, com regularização equivalente a quatro jogos da média da competição. Equipes sem histórico usam a média; sem resultados da liga, não há odds. Não é aplicado bônus de mando. As médias esperadas são limitadas ao intervalo 0,05–15 gols para estabilidade diante de entradas extremas.
+
+Probabilidades são frequências dos cenários; odds decimais são `1 / probabilidade`, sem margem. Cenários espelhados removem viés artificial de mando entre equipes com forças iguais. A semente combina versão do modelo, edição semanal, resultados e confronto, mantendo a reprodução dos números. O placar mais frequente é exibido com sua própria probabilidade, sem promessa de acerto. O modelo é exploratório, não calibrado nesta competição.
+
+A edição muda na segunda-feira às 9h de Brasília. Só entram no treino partidas encerradas e registradas antes desse corte. Correções na base anterior ao corte podem mudar as projeções. O navegador recalcula com os dados recebidos e na virada semanal, inclusive se a atualização agendada não puder executar. Partidas sem equipes, iniciadas ou encerradas não recebem odds pré-jogo.
+
+`node scripts/update-forecast.mjs` consulta as três fontes e salva uma cópia atualizada dos dados e a última edição em `dist/forecast.json`. Falhas de consulta não sobrescrevem os arquivos anteriores. Uma automação semanal nesta tarefa executa a atualização e republica pelo Sites, mantendo o acesso vigente. A atualização no navegador funciona independentemente dessa publicação semanal enquanto as fontes públicas estiverem acessíveis.
+
+Validação: `node --test tests/forecast.test.mjs`. Os testes verificam o corte semanal, ausência de resultados futuros no treino, probabilidades normalizadas, odds recíprocas, reprodução, simetria e ausência de histórico. Referência da distribuição: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.poisson.html.
