@@ -4,13 +4,13 @@ Central de acompanhamento em português, feita com HTML, CSS e JavaScript. O con
 
 ## Dados
 
-Leitura dos endpoints públicos `matchs.json`, `teams.json` e `player.json` em `https://copafacil-web.firebaseio.com/events/-ciddy/`, a cada 60 segundos enquanto a página estiver visível. Atualização manual e atualização ao retornar à página também disponíveis. As três respostas são trocadas em conjunto; falhas preservam os últimos dados e exibem sua data. `data.json` é uma cópia consultada em 16/09/2026 para abertura inicial e contingência, sempre identificada como tal.
+Leitura dos endpoints públicos `matchs.json`, `teams.json` e `player.json` em `https://copafacil-web.firebaseio.com/events/-ciddy/`, a cada 10 minutos em dias com partidas no calendário de Brasília e a cada 12 horas nos demais dias, enquanto a página estiver visível. A consulta inicial e a atualização manual são imediatas. Ao retornar à página, só há nova consulta se o intervalo estiver vencido. A política é reavaliada à meia-noite de Brasília, sem esperar 12 horas para detectar um dia de jogos. As três respostas são trocadas em conjunto; falhas preservam os últimos dados e exibem sua data. `data.json` é uma cópia consultada em 16/09/2026 para abertura inicial e contingência, sempre identificada como tal.
 
 Estatísticas de jogadores: `0` = gols, `2` = jogos, `14` = amarelos, conforme o dicionário fornecido. Os campos são separados por `#` e chave/valor por `=`. Jogadores sem `dt` mostram estatísticas indisponíveis. Os registros `SUSP` são identificados sem presumir suspensão vigente.
 
 Na classificação, `col` define a ordem. As estatísticas de equipes foram conferidas com a classificação fornecida no diretório original: `0` pontos, `1` jogos, `2` vitórias, `3` empates, `4` derrotas, `5` gols pró, `6` gols contra, `7` saldo e `8` aproveitamento. As partidas encerradas permitem calcular estatísticas na ausência de um registro; a página não inventa uma classificação para fases sem dados de classificação.
 
-Datas `d_i` são interpretadas como timestamps e apresentadas em `America/Sao_Paulo`, conforme solicitado. Fases e rodadas recebem números pela primeira partida no calendário; os nomes oficiais não estão nos endpoints. Códigos de local e identificação são mantidos sem atribuir significado não confirmado. Gols individuais não são associados a partidas porque não há esse vínculo nos dados.
+Datas `d_i` são interpretadas como timestamps e apresentadas em `America/Sao_Paulo`, conforme solicitado. Fases e rodadas recebem números pela primeira partida no calendário; os nomes oficiais não estão nos endpoints. Q1 é apresentado como Quadra 1 e Q2 como Quadra 2, conforme confirmado pelo usuário. O código do local é preservado quando o nome do estabelecimento não está disponível. Gols individuais não são associados a partidas porque não há esse vínculo nos dados.
 
 ## Prévia
 
