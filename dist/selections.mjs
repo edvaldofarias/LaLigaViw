@@ -3,6 +3,7 @@
 export const championshipSelections = [
   {
     id:'2026-round-1', season:2026, roundNumber:1,
+    poster:'images/selections/2026-round-1.png',
     phaseId:'1780479913323', roundId:'1780480342602',
     source:'Seleção informada pela organização',
     players:[
