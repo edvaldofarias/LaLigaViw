@@ -1,4 +1,4 @@
-import { writeFile, rename } from 'node:fs/promises';
+import { readFile, writeFile, rename } from 'node:fs/promises';
 import { buildWeeklyForecast } from '../dist/forecast.mjs';
 
 const root = new URL('../dist/', import.meta.url);
@@ -12,6 +12,26 @@ const entries = await Promise.all(['matchs', 'teams', 'player'].map(async key =>
   return [key, value];
 }));
 const data = { ...Object.fromEntries(entries), fetchedAt: new Date(now).toISOString() };
+let previous={};
+try{previous=JSON.parse(await readFile(new URL('data.json',root),'utf8')).matchDetails||{}}catch{}
+const completed=Object.entries(data.matchs).filter(([,m])=>m.st===3||m.finished).map(([id])=>id);
+data.matchDetails={};
+let cursor=0,detailFailures=0;
+await Promise.all(Array.from({length:Math.min(4,completed.length)},async()=>{
+  while(cursor<completed.length){
+    const id=completed[cursor++];
+    try{
+      const response=await fetch(`${base}details/${encodeURIComponent(id)}.json`,{signal:AbortSignal.timeout(20000),cache:'no-store'});
+      if(!response.ok)throw new Error(`HTTP ${response.status}`);
+      const sheet=await response.json();
+      if(sheet!==null&&(typeof sheet!=='object'||Array.isArray(sheet)))throw new Error('Invalid match sheet');
+      data.matchDetails[id]={data:sheet,fetchedAt:Date.now(),error:false};
+    }catch{
+      detailFailures++;
+      if(previous[id])data.matchDetails[id]={...previous[id],error:true};
+    }
+  }
+}));
 const forecast = buildWeeklyForecast(data, now);
 for (const [filename, value] of [['data.json', data], ['forecast.json', forecast]]) {
   const destination = new URL(filename, root), temporary = new URL(filename + '.tmp', root);
@@ -20,4 +40,5 @@ for (const [filename, value] of [['data.json', data], ['forecast.json', forecast
 }
 console.log(JSON.stringify({ cutoff: new Date(forecast.cutoff).toISOString(),
   historyMatches: forecast.historyCount, nextRound: forecast.predictions.length,
-  forecasts: forecast.predictions.filter(p => p.status === 'ready').length }));
+  forecasts: forecast.predictions.filter(p => p.status === 'ready').length,
+  matchSheets:Object.keys(data.matchDetails).length,detailFailures }));
