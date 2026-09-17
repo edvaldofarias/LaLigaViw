@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#111a2b"><meta name="description" content="Acompanhe a La Liga Viw: classificação, calendário, resultados, equipes e estatísticas de todos os jogadores.">
+<meta name="app-version" content="__BUILD_VERSION__">
 <title>La Liga Viw · Central da competição</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23111a2b'/%3E%3Cpath d='M9 10h7l5 17 5-17h6l-8 23h-7z' fill='%23c7ef60'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script>
@@ -13,11 +14,12 @@
 <header class="topbar"><a href="#overview" class="brand">LA LIGA <strong>VIW</strong><span class="edition">2026</span></a><div class="top-actions"><span class="source-label">CENTRAL DA COMPETIÇÃO</span><button class="icon-button" id="refresh" aria-label="Atualizar dados" title="Atualizar dados">↻</button></div></header>
 <main>
 <section class="page-heading"><div><div class="eyebrow">TEMPORADA 2026 <span>/</span> FUTEBOL</div><h1>Cada jogo conta<span>.</span></h1></div><div class="sync"><span id="sync-state">Carregando a competição…</span><small id="refresh-policy">10 min em dias de jogos · 12 h nos demais dias</small></div></section>
-<nav class="tabs" aria-label="Áreas da competição"><a href="#overview" data-view="overview" class="active">Visão geral</a><a href="#matches" data-view="matches">Partidas</a><a href="#odds" data-view="odds">Odds & simulações</a><a href="#standings" data-view="standings">Classificação</a><a href="#teams" data-view="teams">Equipes</a><a href="#players" data-view="players">Jogadores</a><a href="#selection" data-view="selection">Seleção do campeonato</a></nav>
+<nav class="tabs" aria-label="Áreas da competição"><a href="#overview" data-view="overview" class="active">Visão geral</a><a href="#matches" data-view="matches">Partidas</a><a href="#odds" data-view="odds">Odds & simulações</a><a href="#standings" data-view="standings">Classificação</a><a href="#teams" data-view="teams">Equipes</a><a href="#players" data-view="players">Jogadores</a><a href="#selection" data-view="selection">Seleção do campeonato</a><a href="#motm" data-view="motm">Melhor em campo</a><a href="#ballon" data-view="ballon">Bola de Ouro</a></nav>
 <div id="notice" role="status" hidden></div>
 <div id="content" aria-live="polite"><div class="loading">Buscando os dados da La Liga Viw…</div></div>
 <footer><span><b>LA LIGA VIW</b> · A competição em detalhes.</span><span id="visitor-count" role="status">Carregando visitantes…</span><span>Dados: <a href="https://copafacil-web.firebaseio.com/events/-ciddy/matchs.json" target="_blank" rel="noreferrer">Copa Fácil ↗</a></span></footer>
 </main>
 </div>
 <dialog id="detail"><div class="dialog-top"><span>LA LIGA VIW / DETALHES</span><button class="icon-button" id="close-detail" aria-label="Fechar detalhes">×</button></div><div id="detail-content"></div></dialog>
+<dialog id="version-dialog" aria-labelledby="version-title"><div class="version-body"><span class="eyebrow">LA LIGA VIW</span><h2 id="version-title">Uma nova versão está disponível</h2><p>Recarregue a página para ver as novidades. Você continuará na mesma aba do site.</p><div class="version-actions"><button id="reload-version" class="button selection-download">Recarregar agora</button><button id="later-version" class="button">Depois</button></div></div></dialog>
 </body></html>
