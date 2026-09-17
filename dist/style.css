@@ -70,3 +70,6 @@ tr.qualification-advantage>td:first-child{box-shadow:inset 4px 0 #d2a422}
 .badge.coach-result-V{background:#e5f4e9;color:#23673b}
 .badge.coach-result-E{background:#eef0f3;color:#586171}
 .badge.coach-result-D{background:#fde8e9;color:#a12f3a}
+.site-logo{display:block;width:48px;height:48px;object-fit:contain;flex:none;margin-right:8px}
+.monogram{display:block;letter-spacing:normal;line-height:0}.rail-logo{display:block;width:52px;height:52px;object-fit:contain}
+@media(max-width:600px){.site-logo{width:40px;height:40px;margin-right:4px}.brand{font-size:23px}.brand .edition{display:none}}

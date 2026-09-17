@@ -68,7 +68,7 @@ Por padrão, a atualização depende do botão. Para uma atualização crítica,
 
 ## Identidade VIW e artes de melhor em campo
 
-`dist/images/viw-logo.png` é o arquivo original enviado pela organização. O logo faz parte da seleção (gerada por `scripts/render-selection.cjs`), dos panfletos da próxima rodada e das artes Man of the Match. Os arquivos de foto originais dos premiados ficam em `dist/images/players/`, com procedência em `assets/motm-photo-sources.json`.
+`dist/images/viw-logo-transparent.png` é a versão com transparência externa do novo logo enviado pela organização. É usado também no cabeçalho, na lateral e no favicon do site. O círculo, fundo preto interno e elementos brancos do desenho foram preservados visualmente. O logo faz parte da seleção (gerada por `scripts/render-selection.cjs`), dos panfletos da próxima rodada e das artes Man of the Match. Os arquivos de foto originais dos premiados ficam em `dist/images/players/`, com procedência em `assets/motm-photo-sources.json`.
 
 `dist/motm-poster.mjs` compõe o PNG 1080 × 1350 no navegador com a foto inteira, sem edição do rosto, retoques ou cortes, o logo, nome, time, confronto, placar, rodada, data e horário de Brasília. O botão “Imagem para Instagram” fica nos cards de Melhor em campo e nos detalhes da partida. A imagem pode ser exibida e baixada; dados atuais do jogo alimentam cada geração. Novos prêmios em `dist/awards.mjs` ganham o mesmo botão automaticamente. Guardar também as fotos originais locais dos novos premiados; se não existirem, o renderer tenta a URL pública do jogador. Falhas de foto/escudo/logo não produzem imagens incompletas. `scripts/render-motm-samples.cjs` permite conferir o mesmo renderer usando `@napi-rs/canvas` no ambiente de criação.
 

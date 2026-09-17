@@ -1,0 +1,3 @@
+Source supplied by organizer: new.png (1254 × 1254), exterior white and opaque.
+Edited using the built-in image editor. Final project asset: dist/images/viw-logo-transparent.png.
+Prompt: Make only the white exterior outside the cyan circular border transparent with real PNG alpha. Preserve the circular emblem, black interior, white football and lettering, colors, proportions and the text VIW / FUNCIONAL SOCCER. No redesign, recoloring, shadows or added elements.
