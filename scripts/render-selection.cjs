@@ -41,6 +41,8 @@ const path = require('node:path');
     text(p.teamName,x+w/2,y+photoHeight+61,'18px Label','#5e6777');
   }
   ctx.fillStyle=lime;ctx.fillRect(460,1110,160,3);
+  const logo=await loadImage(path.join(root,'dist/images/viw-logo.png'));
+  ctx.drawImage(logo,66,1150,140,140);
   text('OS DESTAQUES DA RODADA',540,1160,'bold 26px LabelBold','#ffffff');
   text('Sete jogadores. Uma seleção.',540,1200,'23px Label','#c4cedc');
   text('FOTOS ORIGINAIS DOS JOGADORES',540,1290,'16px Label','#b7c3d2');

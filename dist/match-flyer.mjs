@@ -1,3 +1,4 @@
+import {contain,VIW_LOGO} from './poster-assets.mjs';
 import {nextRoundMatches,VENUE} from './match-preview.mjs';
 import {courtLabel} from './schedule.mjs';
 function browserImage(url){return new Promise((resolve,reject)=>{const img=new Image();img.crossOrigin='anonymous';img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('Não foi possível carregar o escudo.'));img.src=url})}
@@ -13,13 +14,14 @@ export async function makeMatchFlyer(match,data,roundLabel,{now=Date.now(),canva
   const assets=await Promise.all([loadImage('images/match-background.png'),...[match.team1,match.team2].map(async(id,i)=>{
     const ext=teams[i].url?.includes('.png?')?'png':'jpg';
     try{return await loadImage(`images/teams/${encodeURIComponent(id)}.${ext}`)}catch{return loadImage(teams[i].url)}
-  })]);
+  }),loadImage(VIW_LOGO)]);
   canvas.width=1080;canvas.height=1350;
   const ctx=canvas.getContext('2d'),lime='#c7ef60';
   ctx.drawImage(assets[0],0,0,1080,1350);
   ctx.textAlign='center';ctx.fillStyle='#fff';ctx.font='bold 30px Arial';ctx.fillText('LA LIGA VIW',540,76);
   ctx.fillStyle=lime;ctx.font='bold 66px Arial';ctx.fillText('PRÓXIMA RODADA',540,179);
   ctx.fillStyle='#c9d1df';ctx.font='30px Arial';ctx.fillText(roundLabel,540,235);
+  contain(ctx,assets[3],45,30,115,115);
   for(let i=0;i<2;i++){
     const cx=i?804:276,img=assets[i+1],scale=Math.min(280/img.width,280/img.height);
     ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(cx-165,298,330,330,26);ctx.fill();

@@ -46,3 +46,15 @@ footer{flex-wrap:wrap;gap:12px}#visitor-count{color:#536942}.fixture-preview{dis
 .motm-card .motm-read{margin:0;align-self:flex-start;text-align:left}
 .goalkeeper-badge,.player-name .goalkeeper-badge{display:block;width:fit-content;margin-top:6px;padding:3px 7px;border-radius:5px;background:#eaf0dd;color:#48622a;font-size:12px;font-weight:600;line-height:1.5}
 @media(max-width:480px){.motm-card{padding:16px;gap:16px}.motm-card .motm-banner{padding:16px;gap:12px}.motm-copy{padding-right:0}.motm-card .fixture-team{flex-direction:column;text-align:center}.motm-card .fixture-team:last-child{flex-direction:column;text-align:center}}
+.coach-person{display:inline-flex;align-items:center;gap:12px;text-align:left;background:none;border:0;padding:6px 0;font-weight:650;color:var(--ink)}
+.coach-person small{display:block;font-size:13px;font-weight:400;color:var(--muted);margin-top:4px}
+.coach-avatar{width:50px;height:50px;object-fit:cover;border-radius:10px;flex:none}
+.profile-heading>.coach-avatar{width:85px;height:85px}
+.fixture-coaches{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--line);padding-top:12px;margin-top:12px;font-size:12px;line-height:1.6;color:var(--muted);font-weight:400}
+.fixture-coaches>span:last-child{text-align:right}.fixture-coaches b{font-weight:600;color:var(--ink)}
+.match-coaches{padding:20px 0;border-top:1px solid var(--line)}.match-coaches h3{font-size:19px;margin-bottom:16px}
+.coach-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}.coach-pair>div>p{font-size:14px;color:var(--muted);margin-bottom:8px}
+.coach-history{display:grid;gap:12px}.coach-history>button{display:flex;align-items:center;gap:16px;padding:16px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:left;color:var(--ink)}
+.coach-history>button>span:nth-child(2){flex:1;font-size:15px}.coach-history small{display:block;font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6}.coach-history strong{white-space:nowrap}
+.motm-art-button{display:block;margin-top:10px!important}.motm-poster-image{display:block;width:100%;max-width:480px;height:auto;margin:22px auto;border-radius:10px}
+@media(max-width:480px){.coach-history>button{flex-wrap:wrap;gap:12px}.coach-history>button>span:nth-child(2){flex-basis:65%}.coach-pair{gap:12px}.coach-person{gap:8px}.coach-person .coach-avatar{width:40px;height:40px}}
