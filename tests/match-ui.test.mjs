@@ -1,3 +1,4 @@
+import {isGoalkeeper} from '../dist/goalkeepers.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -22,7 +23,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,matchRecap,updateVisitors(){},fetch,AbortSignal,URL,
+  const context=vm.createContext({...forecast,...schedule,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,matchRecap,isGoalkeeper,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);

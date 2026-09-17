@@ -27,3 +27,22 @@ footer{flex-wrap:wrap;gap:12px}#visitor-count{color:#536942}.fixture-preview{dis
 @media(max-width:700px){.version-body{padding:24px 20px}.version-body h2{font-size:22px}.score-rules{grid-template-columns:repeat(2,minmax(0,1fr))}.player-score{padding:18px}.score-ledger small{display:block;margin:4px 0 0}.motm-banner{padding:18px;gap:13px}.motm-banner h3{font-size:22px}.motm-banner .avatar{width:55px;height:66px}.motm-banner p{font-size:13px}.motm-banner .award-mark{display:none}}
 
 .match-recap>h3{font-size:clamp(30px,4vw,38px);line-height:1.15;margin-bottom:16px}.match-recap .recap-intro{font-size:17px;line-height:1.75;color:var(--ink);margin-bottom:26px}.match-recap .newspaper-column>p{font-size:16px;line-height:1.85}.match-recap .motm-banner{margin-bottom:0}
+/* Prêmio com uma única margem e espaço estável para foto, nome e escudos. */
+.motm-card{display:flex;flex-direction:column;min-width:0;padding:20px;gap:20px}
+.motm-card-meta{padding:0}
+.motm-banner{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center}
+.motm-photo{display:flex;align-items:center;justify-content:center}
+.motm-copy{min-width:0;padding-right:24px;overflow-wrap:anywhere}
+.motm-banner .award-mark{position:absolute;top:16px;right:16px;margin:0;font-size:22px}
+.motm-card .motm-banner{margin:0;flex:1;padding:18px;gap:14px}
+.motm-card .motm-banner .eyebrow{font-size:12px;letter-spacing:1px;line-height:1.5}
+.motm-card .motm-banner p{font-size:14px;margin-top:6px}
+.motm-card .motm-banner .text-link{margin-top:12px}
+.motm-card>.fixture{margin:0;padding:16px 0;border-top:1px solid var(--line);max-width:none}
+.motm-card .fixture-meta{gap:12px;align-items:center;flex-wrap:wrap;font-size:14px}
+.motm-card .fixture-team{min-width:0;align-self:start}
+.motm-card .fixture-team>span{overflow-wrap:anywhere}
+.motm-card .fixture-body{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+.motm-card .motm-read{margin:0;align-self:flex-start;text-align:left}
+.goalkeeper-badge,.player-name .goalkeeper-badge{display:block;width:fit-content;margin-top:6px;padding:3px 7px;border-radius:5px;background:#eaf0dd;color:#48622a;font-size:12px;font-weight:600;line-height:1.5}
+@media(max-width:480px){.motm-card{padding:16px;gap:16px}.motm-card .motm-banner{padding:16px;gap:12px}.motm-copy{padding-right:0}.motm-card .fixture-team{flex-direction:column;text-align:center}.motm-card .fixture-team:last-child{flex-direction:column;text-align:center}}
