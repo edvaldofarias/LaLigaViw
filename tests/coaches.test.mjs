@@ -1,11 +1,11 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 import {coachAssignments,coachFor,coachStatistics} from '../dist/coaches.mjs';
-const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+const data=JSON.parse(readFileSync(new URL('./fixtures/round-1.json',import.meta.url),'utf8'));
 test('first-round coaches count the exact teams commanded and preserve goals',()=>{
  const stats=coachStatistics(data);
  assert.deepEqual(stats.map(c=>[c.id,c.played,c.wins,c.draws,c.losses,c.gf,c.ga,c.points]),[
  ['patrick',3,0,2,1,10,11,2],['enio',3,1,2,0,11,10,5],['renan',2,2,0,0,7,1,6],['guto',2,0,0,2,1,7,0]]);
- for(const a of coachAssignments)assert.ok([data.matchs[a.matchId].team1,data.matchs[a.matchId].team2].includes(a.teamId));
+ for(const a of coachAssignments.filter(a=>data.matchs[a.matchId]))assert.ok([data.matchs[a.matchId].team1,data.matchs[a.matchId].team2].includes(a.teamId));
 });
 test('new assignments do not leak into past games or count scheduled and missing-score games',()=>{
  const original=coachAssignments[0],m=data.matchs[original.matchId];

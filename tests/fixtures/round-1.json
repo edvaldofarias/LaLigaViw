@@ -1,0 +1,208 @@
+{
+  "player": {
+    "1789172492805": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "FELIPE",
+      "team": "-OuCE2n4ni8czw1OPXtQ",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789172492805.png?alt=media&token=1&m=1789220277135"
+    },
+    "1789193322187": {
+      "CAR": 0,
+      "dt": "2=1#14=0#",
+      "fs": {
+        "1780479913323": {
+          "CAR": 0,
+          "dt": "2=1#14=0#"
+        }
+      },
+      "name": "GUSTAVO",
+      "team": "-OuCE1lbs7UFbj9mOJgT",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789193322187.jpg?alt=media&token=1&m=1789193475707"
+    },
+    "1789194015748": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "PANOSSO",
+      "team": "-OuCEUdiPg-VFiAmxP-W",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789194015748.jpg?alt=media&token=1&m=1789194093841"
+    },
+    "1789194951922": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "GUSTHAVO",
+      "team": "-OuCEAFLB6cDtcv8W1dI",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789194951922.jpg?alt=media&token=1&m=1789196173556"
+    },
+    "1789196204246": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "CAUAN",
+      "team": "-OuCECnOQDCHySBDLAxx",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789196204246.jpg?alt=media&token=1&m=1789196278312"
+    },
+    "1789196734409": {
+      "CAR": 1,
+      "dt": "2=1#14=1#",
+      "fs": {
+        "1780479913323": {
+          "CAR": 1,
+          "dt": "2=1#14=1#"
+        }
+      },
+      "name": "MINEIRO",
+      "team": "-OuCE79e187h1srqNCAK",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789196734409.jpg?alt=media&token=1&m=1789196839877"
+    },
+    "1789199087770": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "DIEGO COSTA",
+      "team": "-OuCE3jNN_OU-QexjdHw",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789199087770.jpg?alt=media&token=1&m=1789199209323"
+    },
+    "1789199512178": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "COROTINHO",
+      "team": "-OuCEBQOxXueVsu4_Pbt",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789199512178.jpg?alt=media&token=1&m=1789199648828"
+    },
+    "1789220310276": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "JORGE",
+      "team": "-OuCE8ygQVY-3BXzP80H",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789220310276.jpg?alt=media&token=1&m=1789220379338"
+    },
+    "1789220893017": {
+      "dt": "2=1#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=1#"
+        }
+      },
+      "name": "WILL",
+      "team": "-OuCE5UUPYmEL7Mnf4-D",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789220893017.png?alt=media&token=1&m=1789221601164"
+    },
+    "1789257856480": {
+      "name": "FELIPE HERMÍNIO ",
+      "team": "-OuCEIPXbahnsYG98j_K"
+    },
+    "1789257941190": {
+      "name": "KAIQUE ",
+      "team": "-OuCEPqc-2Ju1pdvU4j1"
+    }
+  },
+  "matchs": {
+    "1780480362137": {
+      "d_i": 1789171200000,
+      "dt": {
+        "qt_g1": 3,
+        "qt_g2": 4
+      },
+      "finished": 1789222926807,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCE1lbs7UFbj9mOJgT",
+      "team2": "-OuCE2n4ni8czw1OPXtQ",
+      "title": "Q1"
+    },
+    "1786231624057": {
+      "d_i": 1789174800000,
+      "dt": {
+        "qt_g1": 1,
+        "qt_g2": 3
+      },
+      "finished": 1789196121961,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCEUdiPg-VFiAmxP-W",
+      "team2": "-OuCEAFLB6cDtcv8W1dI",
+      "title": "Q2"
+    },
+    "1786231624682": {
+      "d_i": 1789174800000,
+      "dt": {
+        "qt_g1": 5,
+        "qt_g2": 5
+      },
+      "finished": 1789197354599,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCE79e187h1srqNCAK",
+      "team2": "-OuCECnOQDCHySBDLAxx",
+      "title": "Q1"
+    },
+    "1786231625365": {
+      "d_i": 1789178400000,
+      "dt": {
+        "qt_g1": 0,
+        "qt_g2": 4
+      },
+      "finished": 1789221867838,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCEBQOxXueVsu4_Pbt",
+      "team2": "-OuCE5UUPYmEL7Mnf4-D",
+      "title": "Q2"
+    },
+    "1786231626282": {
+      "d_i": 1789178400000,
+      "dt": {
+        "qt_g1": 2,
+        "qt_g2": 2
+      },
+      "finished": 1789222045961,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCE3jNN_OU-QexjdHw",
+      "team2": "-OuCE8ygQVY-3BXzP80H",
+      "title": "Q1"
+    }
+  }
+}

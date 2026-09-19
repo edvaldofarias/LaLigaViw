@@ -12,5 +12,5 @@ const fs=require('node:fs/promises'),path=require('node:path');
  }
  const {makeMatchFlyer}=await import('../dist/match-flyer.mjs'),{nextRoundMatches}=await import('../dist/match-preview.mjs');
  const m=nextRoundMatches(data)[0];if(m){const canvas=await makeMatchFlyer(m,data,'Rodada 2',{canvas:createCanvas(1080,1350),loadImage:u=>loadImage(path.join(root,'dist',u))});await fs.writeFile(path.join(out,'next-round.png'),canvas.toBuffer('image/png'))}
- console.log('Rendered all five award posters and upcoming flyer in '+out);
+ console.log(`Rendered ${matchAwards.length} award posters and upcoming flyer in ${out}`);
 })().catch(e=>{console.error(e);process.exitCode=1});

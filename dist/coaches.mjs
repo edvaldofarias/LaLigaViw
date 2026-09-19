@@ -17,6 +17,10 @@ export const coachAssignments=[
   {matchId:'1786231625365',teamId:'-OuCE5UUPYmEL7Mnf4-D',coachId:'renan'},
   {matchId:'1786231626282',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'enio'},
   {matchId:'1786231626282',teamId:'-OuCE8ygQVY-3BXzP80H',coachId:'patrick'},
+  {matchId:'1786231942016',teamId:'-OuCE2n4ni8czw1OPXtQ',coachId:'enio'},
+  {matchId:'1786231940049',teamId:'-OuCEBQOxXueVsu4_Pbt',coachId:'enio'},
+  {matchId:'1786231940049',teamId:'-OuCEAFLB6cDtcv8W1dI',coachId:'patrick'},
+  {matchId:'1786231942016',teamId:'-OuCEUdiPg-VFiAmxP-W',coachId:'patrick'},
 ];
 export function coachFor(matchId,teamId,assignments=coachAssignments){return coaches.find(c=>c.id===assignments.slice().reverse().find(a=>a.matchId===matchId&&a.teamId===teamId)?.coachId)||null;}
 export function coachStatistics(data,assignments=coachAssignments){

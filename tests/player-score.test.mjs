@@ -34,7 +34,7 @@ test('keeper clean sheets earn five instead of two, and every conceded goal dedu
   assert.ok(!g.components.some(c=>c.key==='outfieldCleanSheets'));
 });
 test('all twelve keepers match their registered teams and namesakes remain outfield',()=>{
-  const d=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+  const d=JSON.parse(readFileSync(new URL('./fixtures/round-1.json',import.meta.url),'utf8'));
   assert.equal(goalkeepers.length,12);assert.equal(new Set(goalkeepers.map(p=>p.teamId)).size,12);
   for(const k of goalkeepers){assert.equal(d.player[k.playerId].team,k.teamId);assert.equal(d.player[k.playerId].name.trim().toLocaleLowerCase('pt-BR'),k.name.toLocaleLowerCase('pt-BR'));assert.ok(isGoalkeeper(k.playerId,k.teamId));}
   assert.equal(isGoalkeeper('1789220352095','-OuCE8ygQVY-3BXzP80H'),false); // Felipe, Rayo

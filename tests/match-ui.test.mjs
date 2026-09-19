@@ -1,3 +1,4 @@
+import {normalizeCompetition} from '../dist/match-data.mjs';
 import {coaches,coachFor,coachStatistics} from '../dist/coaches.mjs';
 import {isGoalkeeper} from '../dist/goalkeepers.mjs';
 import test from 'node:test';
@@ -24,7 +25,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
+  const context=vm.createContext({...forecast,...schedule,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
@@ -79,7 +80,7 @@ test('a failed refresh preserves the last match sheet with an explicit warning',
 test('award download and historical coaches appear in cards and coach profiles',async()=>{
   const data=JSON.parse(await readFile(new URL('../dist/data.json',import.meta.url),'utf8'));
   const app=harness(async()=>response(null));app.run(`prepare(${JSON.stringify(data)})`);
-  assert.equal(app.run('motmView().split("data-motm-poster=").length-1'),5);
+  assert.equal(app.run('motmView().split("data-motm-poster=").length-1'),matchAwards.length);
   const caption=app.run("fixture(matches.find(m=>m.id==='1780480362137'))");
   assert.match(caption,/Patrick/);assert.match(caption,/Ênio/);
   assert.doesNotMatch(app.run("fixture({...matches[0],id:'new',st:0,finished:false})"),/fixture-coaches/);
@@ -87,4 +88,13 @@ test('award download and historical coaches appear in cards and coach profiles',
   assert.match(app.html(),/Real Bétis/);assert.match(app.html(),/Sevilla/);
   assert.equal((app.html().match(/data-match=/g)||[]).length,2);
   assert.equal(app.run('coachesView().split("coach-placeholder.svg").length-1'),4);
+});
+
+test('sparse completed scores render the zero and award points; absent score stays pending',()=>{
+ const app=harness(async()=>response(null));
+ app.run(`prepare({teams:{h:{name:'Casa'},a:{name:'Visitante'}},player:{p:{name:'Jogador',team:'h'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:3}}}})`);
+ assert.match(app.run('fixture(matches[0])'),/3<small>:<\/small>0/);
+ assert.equal(app.run("ranking.find(p=>p.id==='p').total"),5);
+ assert.match(app.run('matchHTML(matches[0])'),/3 a 0/);
+ assert.match(app.run("fixture({id:'pending',st:3,team1:'h',team2:'a'})"),/placar pendente/);
 });

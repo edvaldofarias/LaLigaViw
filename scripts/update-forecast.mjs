@@ -1,3 +1,4 @@
+import { normalizeCompetition } from '../dist/match-data.mjs';
 import { readFile, writeFile, rename } from 'node:fs/promises';
 import { buildWeeklyForecast } from '../dist/forecast.mjs';
 
@@ -11,7 +12,7 @@ const entries = await Promise.all(['matchs', 'teams', 'player'].map(async key =>
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${key}: unavailable data; preserving previous files`);
   return [key, value];
 }));
-const data = { ...Object.fromEntries(entries), fetchedAt: new Date(now).toISOString() };
+const data = normalizeCompetition({ ...Object.fromEntries(entries), fetchedAt: new Date(now).toISOString() });
 let previous={};
 try{previous=JSON.parse(await readFile(new URL('data.json',root),'utf8')).matchDetails||{}}catch{}
 const completed=Object.entries(data.matchs).filter(([,m])=>m.st===3||m.finished).map(([id])=>id);

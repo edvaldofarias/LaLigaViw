@@ -75,3 +75,9 @@ Por padrão, a atualização depende do botão. Para uma atualização crítica,
 ## Técnicos
 
 `dist/coaches.mjs` guarda Patrick, Ênio, Renan e Guto e os dez vínculos históricos de equipe/partida da primeira rodada. Acrescentar os novos vínculos quando a organização informar; nunca aplicar o técnico atual retroativamente. `photo` aceita uma imagem real quando fornecida; enquanto isso aparece um avatar cinza. A aba `#coaches` mostra jogos, vitórias, empates, derrotas, gols pró/contra, saldo e aproveitamento, e cada perfil abre o histórico e os jogos. Jogos contam pela equipe comandada, apenas encerrados com placar válido. Os cards e detalhes das partidas encerradas mostram seus técnicos. Vínculos ausentes nunca são inferidos.
+
+## Segunda rodada e placares com zero omitido
+
+A segunda rodada tem cinco melhores em campo cadastrados em `dist/awards.mjs`, com fotos originais locais. Os únicos técnicos informados para ela são Ênio (Barcelona e Real Sociedad) e Patrick (Real Bétis e Celta); demais vínculos aguardam a organização.
+
+`dist/match-data.mjs` normaliza a entrada do Copa Fácil no navegador (`prepare`) e na atualização de dados (`scripts/update-forecast.mjs`). Em partida encerrada, quando existe um dos campos numéricos de gols e o outro está ausente, o ausente representa zero. Conferido em Atlético de Madrid 3–0 Athletico Bilbao e Real Bétis 2–0 Real Sociedad, por súmulas e totais das equipes. Não preenche placares inteiramente ausentes, valores inválidos/nulos ou jogos agendados. Assim, rankings, pontos por defesa, jornais, artes, técnicos e previsões recebem os mesmos placares. Quando não há placar suficiente, a interface sinaliza “Encerrado · placar pendente”.
