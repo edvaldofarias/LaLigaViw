@@ -86,7 +86,7 @@ test('award download and historical coaches appear in cards and coach profiles',
   assert.doesNotMatch(app.run("fixture({...matches[0],id:'new',st:0,finished:false})"),/fixture-coaches/);
   app.run("openCoach('renan')");assert.match(app.html(),/Renan/);assert.match(app.html(),/Histórico de partidas/);
   assert.match(app.html(),/Real Bétis/);assert.match(app.html(),/Sevilla/);
-  assert.equal((app.html().match(/data-match=/g)||[]).length,2);
+  assert.equal((app.html().match(/data-match=/g)||[]).length,coachStatistics(data).find(c=>c.id==='renan').played);
   assert.equal(app.run('coachesView().split("coach-placeholder.svg").length-1'),4);
 });
 

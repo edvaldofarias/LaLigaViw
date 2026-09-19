@@ -78,6 +78,6 @@ Por padrão, a atualização depende do botão. Para uma atualização crítica,
 
 ## Segunda rodada e placares com zero omitido
 
-A segunda rodada tem cinco melhores em campo cadastrados em `dist/awards.mjs`, com fotos originais locais. Os únicos técnicos informados para ela são Ênio (Barcelona e Real Sociedad) e Patrick (Real Bétis e Celta); demais vínculos aguardam a organização.
+A segunda rodada tem cinco melhores em campo cadastrados em `dist/awards.mjs`, com fotos originais locais. Os técnicos da segunda rodada são Ênio (Barcelona e Real Sociedad), Patrick (Real Bétis e Celta), Guto (Athletico Bilbao, Villareal e Getafe) e Renan (Atlético de Madrid, Sevilla e Real Madrid). Os dez vínculos estão completos e preservam os da primeira rodada.
 
 `dist/match-data.mjs` normaliza a entrada do Copa Fácil no navegador (`prepare`) e na atualização de dados (`scripts/update-forecast.mjs`). Em partida encerrada, quando existe um dos campos numéricos de gols e o outro está ausente, o ausente representa zero. Conferido em Atlético de Madrid 3–0 Athletico Bilbao e Real Bétis 2–0 Real Sociedad, por súmulas e totais das equipes. Não preenche placares inteiramente ausentes, valores inválidos/nulos ou jogos agendados. Assim, rankings, pontos por defesa, jornais, artes, técnicos e previsões recebem os mesmos placares. Quando não há placar suficiente, a interface sinaliza “Encerrado · placar pendente”.

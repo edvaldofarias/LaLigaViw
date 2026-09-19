@@ -9,7 +9,7 @@ test('completed sparse scores supply only the missing zero and do not mutate sou
  assert.deepEqual(normalizeMatch({st:3,dt:{qt_g2:2}}).dt,{qt_g1:0,qt_g2:2});
  for(const m of [{st:0,dt:{qt_g1:3}},{st:3},{st:3,dt:{}},{st:3,dt:{qt_g1:3,qt_g2:null}},{st:3,dt:{qt_g1:'3'}},{st:3,dt:{qt_g1:-1}}])assert.equal(normalizeMatch(m),m);
 });
-test('round two scores, five awards and four coach assignments are coherent',()=>{
+test('round two scores, five awards and ten coach assignments are coherent',()=>{
  const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
  // Simulate the sparse live response, rather than relying on the repaired snapshot.
  delete data.matchs['1780480363729'].dt.qt_g2;delete data.matchs['1786231940049'].dt.qt_g2;
@@ -21,6 +21,6 @@ test('round two scores, five awards and four coach assignments are coherent',()=
  assert.equal(rows.find(p=>p.id==='1789257941190').counts.goalkeeperCleanSheets,1);
  assert.equal(rows.find(p=>p.id==='1789257954893').counts.outfieldCleanSheets,1);
  assert.equal(rows.find(p=>p.id==='1789194951922').counts.goalkeeperCleanSheets,1);
- const secondRoundIds=new Set(picks.map(a=>a.matchId)),assignments=coachAssignments.filter(a=>secondRoundIds.has(a.matchId));assert.equal(assignments.length,4);
- const stats=coachStatistics(d,assignments);assert.deepEqual(stats.filter(c=>c.played).map(c=>[c.id,c.played,c.wins,c.draws,c.losses,c.gf,c.ga]),[['patrick',2,1,1,0,6,4],['enio',2,0,1,1,4,6]]);
+ const secondRoundIds=new Set(picks.map(a=>a.matchId)),assignments=coachAssignments.filter(a=>secondRoundIds.has(a.matchId));assert.equal(assignments.length,10);
+ const stats=coachStatistics(d,assignments);assert.deepEqual(stats.filter(c=>c.played).map(c=>[c.id,c.played,c.wins,c.draws,c.losses,c.gf,c.ga]),[['patrick',2,1,1,0,6,4],['enio',2,0,1,1,4,6],['renan',3,1,0,2,8,7],['guto',3,2,0,1,7,8]]);
 });
