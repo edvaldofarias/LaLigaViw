@@ -16,6 +16,59 @@ export const championshipSelections = [
       {playerId:'1789196227773',name:'Jeferson',teamId:'-OuCECnOQDCHySBDLAxx',teamName:'Getafe'},
     ],
   },
+  {
+    "id": "2026-round-2",
+    "season": 2026,
+    "roundNumber": 2,
+    "poster": "images/selections/2026-round-2.png",
+    "phaseId": "1780479913323",
+    "roundId": "1780480347872",
+    "source": "Seleção informada pela organização",
+    "players": [
+      {
+        "playerId": "1789194951922",
+        "name": "Gusthavo",
+        "teamId": "-OuCEAFLB6cDtcv8W1dI",
+        "teamName": "Real Bétis"
+      },
+      {
+        "playerId": "1789194969408",
+        "name": "Presida",
+        "teamId": "-OuCEAFLB6cDtcv8W1dI",
+        "teamName": "Real Bétis"
+      },
+      {
+        "playerId": "1789257954893",
+        "name": "Paschoali",
+        "teamId": "-OuCEPqc-2Ju1pdvU4j1",
+        "teamName": "Atlético de Madrid"
+      },
+      {
+        "playerId": "1789196216230",
+        "name": "Biel",
+        "teamId": "-OuCECnOQDCHySBDLAxx",
+        "teamName": "Getafe"
+      },
+      {
+        "playerId": "1789193322187",
+        "name": "Gustavo",
+        "teamId": "-OuCE1lbs7UFbj9mOJgT",
+        "teamName": "Real Madrid"
+      },
+      {
+        "playerId": "1789194059686",
+        "name": "Renato",
+        "teamId": "-OuCEUdiPg-VFiAmxP-W",
+        "teamName": "Celta"
+      },
+      {
+        "playerId": "1789196750970",
+        "name": "Jhow",
+        "teamId": "-OuCE79e187h1srqNCAK",
+        "teamName": "Villareal"
+      }
+    ]
+  },
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){

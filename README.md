@@ -30,13 +30,13 @@ Validação: `node --test tests/*.test.mjs`. Os testes de súmula verificam gols
 
 ## Seleção do campeonato
 
-`dist/selections.mjs` mantém as seleções enviadas pela organização, separadas das consultas e atualizações automáticas do Copa Fácil. Cada rodada tem temporada, número, identificador da fase/rodada e uma lista de jogadores com IDs estáveis, nome e equipe na época da escolha. A primeira rodada contém os sete nomes fornecidos. Novas listas devem ser acrescentadas, sem substituir o histórico; correções devem editar o registro da rodada correspondente. Não criar uma seleção automaticamente nem inferir posições ou notas.
+`dist/selections.mjs` mantém as seleções enviadas pela organização, separadas das consultas e atualizações automáticas do Copa Fácil. Cada rodada tem temporada, número, identificador da fase/rodada e uma lista de jogadores com IDs estáveis, nome e equipe na época da escolha. As duas primeiras rodadas contêm os sete nomes fornecidos para cada uma. Novas listas devem ser acrescentadas, sem substituir o histórico; correções devem editar o registro da rodada correspondente. Não criar uma seleção automaticamente nem inferir posições ou notas.
 
 A aba `#selection` permite consultar as rodadas publicadas, abrir os perfis e ver o total de indicações de cada jogador. Os perfis dos escolhidos mostram as rodadas e equipes históricas. Cada indicação vale +4 pontos na Bola de Ouro. A atualização semanal de odds não altera esse arquivo.
 
 ### Imagens por rodada
 
-Cada seleção pode ter um campo `poster` apontando para seu PNG em `dist/images/selections/`. A aba exibe a arte correspondente à rodada selecionada e links para abrir e baixar o arquivo. A arte da primeira rodada mede 1080 × 1350 pixels.
+Cada seleção pode ter um campo `poster` apontando para seu PNG em `dist/images/selections/`. A aba exibe a arte correspondente à rodada selecionada e links para abrir e baixar o arquivo. As artes das rodadas medem 1080 × 1350 pixels.
 
 Os arquivos originais dos jogadores ficam em `assets/selections/round-1/`, com os endereços de origem em `sources.json`. O fundo foi gerado separadamente, sem pessoas; `scripts/render-selection.cjs` compõe as sete fotos completas, apenas redimensionando proporcionalmente, e acrescenta os nomes e equipes. Não há recriação de rostos, retoque, filtros ou cortes nas fotos. O script usa `@napi-rs/canvas` no ambiente de criação; o site publicado é estático e não depende dessa biblioteca. Para as próximas rodadas, guardar novas fotos e fontes na pasta correspondente, definir `poster` e gerar uma arte própria sem sobrescrever as rodadas anteriores.
 
