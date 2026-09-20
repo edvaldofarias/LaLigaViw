@@ -20,7 +20,7 @@ export const championshipSelections = [
     "id": "2026-round-2",
     "season": 2026,
     "roundNumber": 2,
-    "poster": "images/selections/2026-round-2.png",
+    "poster": "images/selections/2026-round-2.png?v=2",
     "phaseId": "1780479913323",
     "roundId": "1780480347872",
     "source": "Seleção informada pela organização",
@@ -50,8 +50,8 @@ export const championshipSelections = [
         "teamName": "Getafe"
       },
       {
-        "playerId": "1789193322187",
-        "name": "Gustavo",
+        "playerId": "1789193447398",
+        "name": "Gustavo Marques",
         "teamId": "-OuCE1lbs7UFbj9mOJgT",
         "teamName": "Real Madrid"
       },

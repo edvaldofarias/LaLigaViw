@@ -30,7 +30,7 @@ Validação: `node --test tests/*.test.mjs`. Os testes de súmula verificam gols
 
 ## Seleção do campeonato
 
-`dist/selections.mjs` mantém as seleções enviadas pela organização, separadas das consultas e atualizações automáticas do Copa Fácil. Cada rodada tem temporada, número, identificador da fase/rodada e uma lista de jogadores com IDs estáveis, nome e equipe na época da escolha. As duas primeiras rodadas contêm os sete nomes fornecidos para cada uma. Novas listas devem ser acrescentadas, sem substituir o histórico; correções devem editar o registro da rodada correspondente. Não criar uma seleção automaticamente nem inferir posições ou notas.
+`dist/selections.mjs` mantém as seleções enviadas pela organização, separadas das consultas e atualizações automáticas do Copa Fácil. Cada rodada tem temporada, número, identificador da fase/rodada e uma lista de jogadores com IDs estáveis, nome e equipe na época da escolha. As duas primeiras rodadas contêm os sete nomes fornecidos para cada uma. Novas listas devem ser acrescentadas, sem substituir o histórico; correções devem editar o registro da rodada correspondente. Não criar uma seleção automaticamente nem inferir posições ou notas. Cada seleção deve ter no máximo um goleiro, identificado por ID e equipe em `dist/goalkeepers.mjs`; nunca resolver homônimos apenas pelo primeiro nome. Na segunda rodada, o escolhido do Real Madrid é Gustavo Marques (1789193447398), não o goleiro Gustavo.
 
 A aba `#selection` permite consultar as rodadas publicadas, abrir os perfis e ver o total de indicações de cada jogador. Os perfis dos escolhidos mostram as rodadas e equipes históricas. Cada indicação vale +4 pontos na Bola de Ouro. A atualização semanal de odds não altera esse arquivo.
 

@@ -23,3 +23,21 @@ test('history counts rounds by player ID and keeps the team from each selection'
   assert.equal(selectionsForPlayer('q',history).length,1);
   assert.equal(selectionsForPlayer('missing',history).length,0);
 });
+
+test('every published selection has at most one goalkeeper',async()=>{
+  const {isGoalkeeper}=await import('../dist/goalkeepers.mjs');
+  for(const round of championshipSelections){
+    assert.ok(round.players.filter(p=>isGoalkeeper(p.playerId,p.teamId)).length<=1,round.id);
+  }
+});
+
+test('round two credits Gustavo Marques instead of the Real Madrid goalkeeper',async()=>{
+  const {calculateScores}=await import('../dist/player-score.mjs');
+  const {readFileSync}=await import('node:fs');
+  const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url)));
+  const round=championshipSelections.find(r=>r.id==='2026-round-2');
+  assert.equal(round.players.find(p=>p.teamName==='Real Madrid').playerId,'1789193447398');
+  const scores=calculateScores(data,[],championshipSelections);
+  assert.equal(scores.find(p=>p.id==='1789193447398').components.find(c=>c.key==='selections').earned,4);
+  assert.equal(scores.find(p=>p.id==='1789193322187').counts.selections,0);
+});
