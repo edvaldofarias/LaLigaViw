@@ -13,12 +13,14 @@ export const SCORE_RULES=[
   {key:'selections',label:'Seleção da rodada',points:4},
 ];
 const stats=value=>Object.fromEntries(String(value||'').split('#').filter(s=>s.includes('=')).map(s=>{const [k,v]=s.split('=');return[k,Math.max(0,Number(v)||0)]}));
-// Copa Fácil ac=7 is a match roster entry. val1 distinguishes lineup roles;
-// both 0 and 1 are related players (including reserves), not absence flags.
-export function relatedPlayers(sheet,match){
+// Organization rule: ac=7 / val1=1 (reserve) means absent in this league.
+// Only val1=0 (or the source default when omitted) counts as attendance.
+export function relatedPlayers(sheet,match,includeAbsent=false){
   const byTeam=new Map([[match.team1,new Set()],[match.team2,new Set()]]);
   for(const event of Object.values(sheet?.list||{})){
     if(Number(event?.ac)!==7||!event.pl_id1||!byTeam.has(event.team1))continue;
+    const role=Number(event.val1??0);
+    if(role!==0&&!(includeAbsent&&role===1))continue;
     byTeam.get(event.team1).add(String(event.pl_id1));
   }
   return byTeam;
@@ -29,7 +31,7 @@ export function scoreDataStatus(data){
   for(const [id,m] of Object.entries(data.matchs||{})){
     if(!finishedWithScore(m))continue;
     const entry=data.matchDetails?.[id];
-    if([...relatedPlayers(entry?.data,m).values()].some(ids=>!ids.size))pending++;
+    if([...relatedPlayers(entry?.data,m,true).values()].some(ids=>!ids.size))pending++;
     if(entry?.error&&entry.data)stale++;
   }
   return {pending,stale};

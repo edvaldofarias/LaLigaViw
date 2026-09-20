@@ -16,7 +16,7 @@ test('uses exact weights only for related players and excludes unfinished matche
   assert.equal(rows.find(p=>p.id==='d').rank,null);
 });
 test('ties share a rank and a draw earns one point without goal assumptions',()=>{
-  const rows=calculateScores({...data,matchDetails:{m:sheet(['a','h'],['b','a',1])},player:{a:{name:'Ana',team:'h'},b:{name:'Bia',team:'a'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:0,qt_g2:0}}}});
+  const rows=calculateScores({...data,matchDetails:{m:sheet(['a','h'],['b','a',0])},player:{a:{name:'Ana',team:'h'},b:{name:'Bia',team:'a'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:0,qt_g2:0}}}});
   assert.deepEqual(rows.map(p=>p.total),[3,3]);assert.deepEqual(rows.map(p=>p.rank),[1,1]);
 });
 
@@ -25,7 +25,7 @@ test('keeper clean sheets earn five instead of two, and every conceded goal dedu
   const player={[keeper.playerId]:{name:'Felipe',team:h},line:{name:'Colega',team:h},absent:{name:'Ausente',team:h}};
   const match=(a,b)=>({team1:h,team2:'away',st:3,dt:{qt_g1:a,qt_g2:b}});
   const d={player,matchs:{win:match(2,0),draw:match(0,0),loss:match(1,3),scheduled:{...match(0,0),st:0},missing:{...match(0,0),dt:{}},invalid:match(1,-1)}};
-  d.matchDetails=Object.fromEntries(Object.keys(d.matchs).map(id=>[id,sheet([keeper.playerId,h],['line',h,1])]));
+  d.matchDetails=Object.fromEntries(Object.keys(d.matchs).map(id=>[id,sheet([keeper.playerId,h],['line',h,0])]));
   const rows=calculateScores(d),g=rows.find(p=>p.id===keeper.playerId),l=rows.find(p=>p.id==='line');
   assert.equal(rows.find(p=>p.id==='absent').total,0);
   assert.equal(g.total,9); // results +2, two clean sheets +10, conceded -3
@@ -49,11 +49,11 @@ test('all twelve keepers match their registered teams and namesakes remain outfi
 });
 
 
-test('missing relations stay pending, goals are not proof of a roster, and reserves count once',()=>{
+test('missing relations stay pending, goals are not proof of attendance, and duplicates count once',()=>{
   const noSheet=calculateScores({...data,matchDetails:{}});
   assert.equal(noSheet.find(p=>p.id==='a').total,8,'only individual goals/cards remain');
   assert.deepEqual(scoreDataStatus({...data,matchDetails:{}}),{pending:1,stale:0});
-  const entry=sheet(['a','h',1],['a','h',1],['c','a']);
+  const entry=sheet(['a','h',0],['a','h',0],['c','a']);
   entry.data.list.goal={ac:1,pl_id1:'b',team1:'h'};
   entry.data.list.foreign={ac:7,pl_id1:'b',team1:'other'};
   const rows=calculateScores({...data,matchDetails:{m:entry}});
@@ -73,10 +73,24 @@ test('results follow the team in the match sheet after a transfer',()=>{
   assert.equal(p.components.find(c=>c.key==='goalkeeperCleanSheets').earned,5);
 });
 
-test('current player game totals match the per-match roster counts for both rounds',()=>{
+test('reserve means absent even when the source cumulative games include that match',()=>{
   const d=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
-  for(const p of calculateScores(d)){
-    const official=Object.fromEntries(String(p.dt||'').split('#').filter(s=>s.includes('=')).map(s=>s.split('=')));
-    assert.equal(p.teamGames,Number(official['2']||0),p.name);
+  const rows=calculateScores(d);
+  const indio=rows.find(p=>p.id==='1789194958115');
+  assert.equal(indio.teamGames,0,'Índio was reserve/absent in both rounds');
+  assert.equal(indio.counts.wins,0);assert.equal(indio.counts.goalsAgainst,0);
+  const valtinho=rows.find(p=>p.id==='1789193346099');
+  assert.equal(valtinho.teamGames,1,'Valtinho was absent in round two');
+  assert.equal(valtinho.counts.goalsAgainst,4,'only round-one goals conceded');
+});
+
+test('absent reserves earn no result or defense points and known absences are not pending',()=>{
+  const absent=sheet(['a','h',1],['b','h',1],['c','a',1]);
+  const d={...data,matchDetails:{m:absent}};
+  const rows=calculateScores(d);
+  for(const p of rows){
+    assert.equal(p.teamGames,0);
+    for(const key of ['wins','draws','losses','goalkeeperCleanSheets','outfieldCleanSheets','goalsAgainst'])assert.equal(p.counts[key],0);
   }
+  assert.deepEqual(scoreDataStatus(d),{pending:0,stale:0});
 });

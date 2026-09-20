@@ -101,7 +101,7 @@ test('sparse completed scores render the zero and award points; absent score sta
 
 
 test('live roster updates recalculate scores and a top-level refresh preserves roster data',async()=>{
-  const app=harness(async()=>response({list:{p:{ac:7,pl_id1:'p',team1:'h',val1:1}}}));
+  const app=harness(async()=>response({list:{p:{ac:7,pl_id1:'p',team1:'h',val1:0}}}));
   const before=app.run("ranking.find(p=>p.id==='p').total");
   await app.run("loadMatchSheet('first',true)");
   assert.equal(app.run("ranking.find(p=>p.id==='p').total"),before+5);
@@ -117,4 +117,16 @@ test('all completed match sheets are loaded for scoring, even without opening ma
   await app.run('updateCompletedDetails()');
   assert.equal(urls.length,2);
   assert.equal(app.run("ranking.find(p=>p.id==='p').teamGames"),2);
+});
+
+
+test('correcting a roster entry to reserve removes collective points from the ranking',async()=>{
+  let val1=0;
+  const app=harness(async()=>response({list:{p:{ac:7,pl_id1:'p',team1:'h',val1}}}));
+  const before=app.run("ranking.find(p=>p.id==='p').total");
+  await app.run("loadMatchSheet('first',true)");
+  assert.equal(app.run("ranking.find(p=>p.id==='p').total"),before+5);
+  val1=1;await app.run("loadMatchSheet('first',true)");
+  assert.equal(app.run("ranking.find(p=>p.id==='p').total"),before);
+  assert.match(app.run('scoreView()'),/Reservas e jogadores não relacionados não ganham nem perdem pontos/);
 });
