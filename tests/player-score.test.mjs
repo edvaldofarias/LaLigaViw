@@ -2,29 +2,32 @@ import {goalkeepers,isGoalkeeper} from '../dist/goalkeepers.mjs';
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {calculateScores} from '../dist/player-score.mjs';
+import {calculateScores,scoreDataStatus} from '../dist/player-score.mjs';
+const sheet=(...players)=>({data:{list:Object.fromEntries(players.map(([id,team,val1=0],i)=>[i,{ac:7,pl_id1:id,team1:team,val1}]))}});
 const data={player:{a:{name:'Ana',team:'h',dt:'0=2#14=1'},b:{name:'Bia',team:'h'},c:{name:'Caio',team:'a',dt:'16=1'},d:{name:'Davi',team:'new'}},
-  matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:2,qt_g2:0}},scheduled:{team1:'h',team2:'a',dt:{qt_g1:5,qt_g2:0}}}};
-test('uses exact weights, includes every registered teammate, and excludes unfinished matches',()=>{
+  matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:2,qt_g2:0}},scheduled:{team1:'h',team2:'a',dt:{qt_g1:5,qt_g2:0}}},matchDetails:{m:sheet(['a','h'],['c','a'])}};
+test('uses exact weights only for related players and excludes unfinished matches',()=>{
   const awards=[{matchId:'m',playerId:'a'},{matchId:'m',playerId:'a'}];
   const picks=[{id:'r1',players:[{playerId:'a'},{playerId:'a'}]}];
   const rows=calculateScores(data,awards,picks),a=rows.find(p=>p.id==='a');
   assert.equal(a.total,19);assert.equal(a.components.reduce((n,c)=>n+c.earned,0),a.total);
-  assert.equal(rows.find(p=>p.id==='b').total,5,'all registered teammates get the win');
+  assert.equal(rows.find(p=>p.id==='b').total,0,'an unlisted teammate gets neither win nor clean-sheet bonus');
   assert.equal(rows.find(p=>p.id==='c').total,-12);
   assert.equal(rows.find(p=>p.id==='d').rank,null);
 });
 test('ties share a rank and a draw earns one point without goal assumptions',()=>{
-  const rows=calculateScores({...data,player:{a:{name:'Ana',team:'h'},b:{name:'Bia',team:'a'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:0,qt_g2:0}}}});
+  const rows=calculateScores({...data,matchDetails:{m:sheet(['a','h'],['b','a',1])},player:{a:{name:'Ana',team:'h'},b:{name:'Bia',team:'a'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:0,qt_g2:0}}}});
   assert.deepEqual(rows.map(p=>p.total),[3,3]);assert.deepEqual(rows.map(p=>p.rank),[1,1]);
 });
 
-test('keeper clean sheets earn five instead of two, and every conceded goal deducts one for everyone',()=>{
+test('keeper clean sheets earn five instead of two, and every conceded goal deducts one only for related players',()=>{
   const keeper=goalkeepers[0],h=keeper.teamId;
-  const player={[keeper.playerId]:{name:'Felipe',team:h},line:{name:'Colega',team:h}};
+  const player={[keeper.playerId]:{name:'Felipe',team:h},line:{name:'Colega',team:h},absent:{name:'Ausente',team:h}};
   const match=(a,b)=>({team1:h,team2:'away',st:3,dt:{qt_g1:a,qt_g2:b}});
   const d={player,matchs:{win:match(2,0),draw:match(0,0),loss:match(1,3),scheduled:{...match(0,0),st:0},missing:{...match(0,0),dt:{}},invalid:match(1,-1)}};
+  d.matchDetails=Object.fromEntries(Object.keys(d.matchs).map(id=>[id,sheet([keeper.playerId,h],['line',h,1])]));
   const rows=calculateScores(d),g=rows.find(p=>p.id===keeper.playerId),l=rows.find(p=>p.id==='line');
+  assert.equal(rows.find(p=>p.id==='absent').total,0);
   assert.equal(g.total,9); // results +2, two clean sheets +10, conceded -3
   assert.equal(l.total,3); // results +2, two clean sheets +4, conceded -3
   assert.equal(g.shirtNumber,1);assert.equal(g.teamGames,3);
@@ -39,7 +42,41 @@ test('all twelve keepers match their registered teams and namesakes remain outfi
   for(const k of goalkeepers){assert.equal(d.player[k.playerId].team,k.teamId);assert.equal(d.player[k.playerId].name.trim().toLocaleLowerCase('pt-BR'),k.name.toLocaleLowerCase('pt-BR'));assert.ok(isGoalkeeper(k.playerId,k.teamId));}
   assert.equal(isGoalkeeper('1789220352095','-OuCE8ygQVY-3BXzP80H'),false); // Felipe, Rayo
   assert.equal(isGoalkeeper('1789199136075','-OuCE3jNN_OU-QexjdHw'),false); // Will, Valencia
+  d.matchDetails=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8')).matchDetails;
   const rows=calculateScores(d);
   assert.equal(rows.find(p=>p.id==='1789220893017').total,8,'Will: win +3 and clean sheet +5');
   assert.equal(rows.find(p=>p.id==='1789172492805').total,0,'Felipe: win +3 and three conceded goals -3');
+});
+
+
+test('missing relations stay pending, goals are not proof of a roster, and reserves count once',()=>{
+  const noSheet=calculateScores({...data,matchDetails:{}});
+  assert.equal(noSheet.find(p=>p.id==='a').total,8,'only individual goals/cards remain');
+  assert.deepEqual(scoreDataStatus({...data,matchDetails:{}}),{pending:1,stale:0});
+  const entry=sheet(['a','h',1],['a','h',1],['c','a']);
+  entry.data.list.goal={ac:1,pl_id1:'b',team1:'h'};
+  entry.data.list.foreign={ac:7,pl_id1:'b',team1:'other'};
+  const rows=calculateScores({...data,matchDetails:{m:entry}});
+  assert.equal(rows.find(p=>p.id==='a').total,13);
+  assert.equal(rows.find(p=>p.id==='a').teamGames,1);
+  assert.equal(rows.find(p=>p.id==='b').total,0);
+  assert.deepEqual(scoreDataStatus({...data,matchDetails:{m:{...entry,error:true}}}),{pending:0,stale:1});
+});
+
+test('results follow the team in the match sheet after a transfer',()=>{
+  const keeper=goalkeepers[0];
+  const d={player:{[keeper.playerId]:{name:'Felipe',team:'new'}},
+    matchs:{m:{team1:keeper.teamId,team2:'away',st:3,dt:{qt_g1:1,qt_g2:0}}},
+    matchDetails:{m:sheet([keeper.playerId,keeper.teamId])}};
+  const p=calculateScores(d)[0];
+  assert.equal(p.total,8);assert.equal(p.counts.goalkeeperCleanSheets,1);
+  assert.equal(p.components.find(c=>c.key==='goalkeeperCleanSheets').earned,5);
+});
+
+test('current player game totals match the per-match roster counts for both rounds',()=>{
+  const d=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+  for(const p of calculateScores(d)){
+    const official=Object.fromEntries(String(p.dt||'').split('#').filter(s=>s.includes('=')).map(s=>s.split('=')));
+    assert.equal(p.teamGames,Number(official['2']||0),p.name);
+  }
 });

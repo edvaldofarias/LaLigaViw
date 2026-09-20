@@ -11,7 +11,7 @@ import { summarizeMatch } from '../dist/match-stats.mjs';
 import { championshipSelections, selectionsForPlayer } from '../dist/selections.mjs';
 import {matchPreview,nextRoundMatches,VENUE} from '../dist/match-preview.mjs';
 import {matchAwards} from '../dist/awards.mjs';
-import {calculateScores,SCORE_RULES} from '../dist/player-score.mjs';
+import {calculateScores,SCORE_RULES,scoreDataStatus} from '../dist/player-score.mjs';
 import {matchRecap} from '../dist/match-recap.mjs';
 
 const source=(await readFile(new URL('../dist/app.js',import.meta.url),'utf8'))
@@ -25,8 +25,8 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
-    document:{querySelector:element,addEventListener(){}},window:{addEventListener(){}},
+  const context=vm.createContext({...forecast,...schedule,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
+    document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
   run(source);
@@ -92,9 +92,29 @@ test('award download and historical coaches appear in cards and coach profiles',
 
 test('sparse completed scores render the zero and award points; absent score stays pending',()=>{
  const app=harness(async()=>response(null));
- app.run(`prepare({teams:{h:{name:'Casa'},a:{name:'Visitante'}},player:{p:{name:'Jogador',team:'h'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:3}}}})`);
+ app.run(`prepare({teams:{h:{name:'Casa'},a:{name:'Visitante'}},player:{p:{name:'Jogador',team:'h'}},matchs:{m:{team1:'h',team2:'a',st:3,dt:{qt_g1:3}}},matchDetails:{m:{data:{list:{p:{ac:7,pl_id1:'p',team1:'h'}}}}}})`);
  assert.match(app.run('fixture(matches[0])'),/3<small>:<\/small>0/);
  assert.equal(app.run("ranking.find(p=>p.id==='p').total"),5);
  assert.match(app.run('matchHTML(matches[0])'),/3 a 0/);
  assert.match(app.run("fixture({id:'pending',st:3,team1:'h',team2:'a'})"),/placar pendente/);
+});
+
+
+test('live roster updates recalculate scores and a top-level refresh preserves roster data',async()=>{
+  const app=harness(async()=>response({list:{p:{ac:7,pl_id1:'p',team1:'h',val1:1}}}));
+  const before=app.run("ranking.find(p=>p.id==='p').total");
+  await app.run("loadMatchSheet('first',true)");
+  assert.equal(app.run("ranking.find(p=>p.id==='p').total"),before+5);
+  app.run('prepare({teams:db.teams,player:db.player,matchs:db.matchs})');
+  assert.equal(app.run("ranking.find(p=>p.id==='p').total"),before+5);
+  assert.match(app.run('scoreView()'),/Pontuação parcial/);
+  assert.match(app.run('playerScoreHTML("p")'),/apenas nos jogos em que o atleta foi relacionado/);
+});
+
+test('all completed match sheets are loaded for scoring, even without opening match details',async()=>{
+  const urls=[];
+  const app=harness(async url=>{urls.push(url);return response({list:{p:{ac:7,pl_id1:'p',team1:'h'}}})});
+  await app.run('updateCompletedDetails()');
+  assert.equal(urls.length,2);
+  assert.equal(app.run("ranking.find(p=>p.id==='p').teamGames"),2);
 });
