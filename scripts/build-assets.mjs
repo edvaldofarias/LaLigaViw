@@ -17,7 +17,7 @@ for(const file of files){
   }
 }
 const htmlFile=new URL('index.html',client);
-const html=(await readFile(htmlFile,'utf8')).replace('__BUILD_VERSION__',version).replace(/(href|src)="(style\.css|app\.js)"/g,`$1="$2?v=${version}"`);
+const html=(await readFile(htmlFile,'utf8')).replace('__BUILD_VERSION__',version).replace(/(href|src)="(style\.css|app\.js|install\.mjs)"/g,`$1="$2?v=${version}"`);
 await writeFile(htmlFile,html);
 await writeFile(new URL('version.json',client),JSON.stringify({version,forceReload}));
 console.log('Static site assets copied to dist/client.');
