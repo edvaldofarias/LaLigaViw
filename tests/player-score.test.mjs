@@ -94,3 +94,16 @@ test('absent reserves earn no result or defense points and known absences are no
   }
   assert.deepEqual(scoreDataStatus(d),{pending:0,stale:0});
 });
+
+test('confirmed appearances deduplicate rosters, follow historical teams and ignore future matches',async()=>{
+  const {playerAppearances}=await import('../dist/player-score.mjs');
+  const d={player:{a:{team:'new',dt:'2=99'}},matchs:{
+    past:{team1:'h',team2:'a',st:3,fs:'one'},
+    absent:{team1:'h',team2:'a',st:3,fs:'one'},
+    later:{team1:'new',team2:'a',finished:true,fs:'two'},
+    future:{team1:'new',team2:'a',st:0,fs:'two'},
+    missing:{team1:'new',team2:'a',st:3,fs:'two'}
+  },matchDetails:{past:sheet(['a','h'],['a','h']),absent:sheet(['a','h',1]),later:sheet(['a','new']),future:sheet(['a','new'])}};
+  assert.deepEqual(playerAppearances(d).get('a'),{total:2,byPhase:{one:1,two:1}});
+  assert.equal(d.player.a.dt,'2=99');
+});

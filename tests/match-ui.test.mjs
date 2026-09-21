@@ -11,7 +11,7 @@ import { summarizeMatch } from '../dist/match-stats.mjs';
 import { championshipSelections, selectionsForPlayer } from '../dist/selections.mjs';
 import {matchPreview,nextRoundMatches,VENUE} from '../dist/match-preview.mjs';
 import {matchAwards} from '../dist/awards.mjs';
-import {calculateScores,SCORE_RULES,scoreDataStatus} from '../dist/player-score.mjs';
+import {calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances} from '../dist/player-score.mjs';
 import {matchRecap} from '../dist/match-recap.mjs';
 
 const source=(await readFile(new URL('../dist/app.js',import.meta.url),'utf8'))
@@ -25,7 +25,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
+  const context=vm.createContext({...forecast,...schedule,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
@@ -129,4 +129,36 @@ test('correcting a roster entry to reserve removes collective points from the ra
   val1=1;await app.run("loadMatchSheet('first',true)");
   assert.equal(app.run("ranking.find(p=>p.id==='p').total"),before);
   assert.match(app.run('scoreView()'),/Reservas e jogadores não relacionados não ganham nem perdem pontos/);
+});
+
+test('Índio displays zero games in the list, team roster and profile despite source total 2',async()=>{
+  const data=JSON.parse(await readFile(new URL('../dist/data.json',import.meta.url),'utf8'));
+  const app=harness(async()=>response(null));app.run(`prepare(${JSON.stringify(data)})`);
+  const id='1789194958115';
+  assert.equal(app.run(`statValue(players.find(p=>p.id==='${id}'),2)`),0);
+  const row=app.run(`playerTable(players.filter(p=>p.id==='${id}'))`);
+  assert.match(row,/<td>0<\/td>/);assert.doesNotMatch(row,/<td>2<\/td>/);
+  app.run(`openPlayer('${id}')`);
+  assert.match(app.html(),/<b>0<\/b>Jogos/);
+  assert.match(app.html(),/Média de gols por jogo<\/span>Não disponível/);
+  assert.match(app.html(),/Fase 1<\/td><td>0<\/td><td>0<\/td>/);
+  assert.match(app.html(),/Reservas e não relacionados não contam/);
+  app.run(`openTeam(db.player['${id}'].team)`);
+  const indioRow=app.html().split('<tr>').find(row=>row.includes(`data-player="${id}"`));
+  assert.doesNotMatch(indioRow,/<td>2<\/td>/);
+});
+
+test('presence correction updates games, phase totals and average in an already open profile',async()=>{
+  let val1=0;
+  const app=harness(async()=>response({list:{p:{ac:7,pl_id1:'p',team1:'h',val1}}}));
+  app.run("db.matchs.first.fs='phase';db.player.p.dt='0=2#2=99';db.player.p.fs={phase:{dt:'0=2#2=99'}};recalculateScores()");
+  app.run("openPlayer('p')");
+  await app.run("loadMatchSheet('first',true)");
+  assert.match(app.html(),/<b>1<\/b>Jogos/);
+  assert.match(app.html(),/Média de gols por jogo<\/span>2/);
+  assert.equal(app.run("players[0].appearances.byPhase.phase"),1);
+  val1=1;await app.run("loadMatchSheet('first',true)");
+  assert.match(app.html(),/<b>0<\/b>Jogos/);
+  assert.match(app.html(),/Média de gols por jogo<\/span>Não disponível/);
+  assert.equal(app.run("players[0].stats[2]"),0);
 });

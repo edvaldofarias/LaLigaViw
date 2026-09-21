@@ -26,6 +26,22 @@ export function relatedPlayers(sheet,match,includeAbsent=false){
   return byTeam;
 }
 const finishedWithScore=m=>(Number(m.st)===3||m.finished)&&[m.dt?.qt_g1,m.dt?.qt_g2].every(n=>Number.isInteger(n)&&n>=0)&&m.team1&&m.team2&&m.team1!==m.team2;
+// Games played are confirmed attendances, never Copa Fácil's cumulative stat 2,
+// which also includes this competition's absent reserves. Scores are not required.
+export function playerAppearances(data){
+  const counts=new Map();
+  for(const [id,match] of Object.entries(data.matchs||{})){
+    if(!(Number(match.st)===3||match.finished))continue;
+    const teams=relatedPlayers(data.matchDetails?.[id]?.data,match);
+    for(const playerId of new Set([...teams.values()].flatMap(ids=>[...ids]))){
+      const row=counts.get(playerId)||{total:0,byPhase:{}};
+      row.total++;
+      if(match.fs)row.byPhase[match.fs]=(row.byPhase[match.fs]||0)+1;
+      counts.set(playerId,row);
+    }
+  }
+  return counts;
+}
 export function scoreDataStatus(data){
   let pending=0,stale=0;
   for(const [id,m] of Object.entries(data.matchs||{})){
