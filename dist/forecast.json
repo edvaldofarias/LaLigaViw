@@ -1,10 +1,10 @@
 {
   "modelVersion": "poisson-shrinkage-v1",
-  "cutoff": 1789387200000,
-  "nextUpdate": 1789992000000,
-  "historyCount": 4,
-  "historyFingerprint": "146eca34",
-  "leagueGoalsPerTeam": 2.375,
+  "cutoff": 1789992000000,
+  "nextUpdate": 1790596800000,
+  "historyCount": 10,
+  "historyFingerprint": "46be1610",
+  "leagueGoalsPerTeam": 2.7,
   "trials": 20000,
   "priorMatches": 4,
   "teamWindow": 8,
@@ -18,37 +18,37 @@
       "startsAt": 1790380800000,
       "status": "ready",
       "probabilities": [
-        0.33235,
-        0.19085,
-        0.4768
+        0.3378,
+        0.1521,
+        0.5101
       ],
       "odds": [
-        3.008876184744998,
-        5.239717055279015,
-        2.097315436241611
+        2.960331557134399,
+        6.574621959237343,
+        1.9603999215840031
       ],
       "topScores": [
         {
-          "score": "2-2",
-          "probability": 0.07005
-        },
-        {
-          "score": "1-2",
-          "probability": 0.0672
+          "score": "3-3",
+          "probability": 0.04795
         },
         {
           "score": "2-3",
-          "probability": 0.05705
+          "probability": 0.04625
+        },
+        {
+          "score": "3-4",
+          "probability": 0.0449
         }
       ],
       "trials": 20000,
       "expectedGoals": [
-        2.1,
-        2.5
+        3.0559670781893002,
+        3.625925925925926
       ],
       "teamGames": [
-        1,
-        0
+        2,
+        2
       ],
       "limitedHistory": true
     },
@@ -59,37 +59,37 @@
       "startsAt": 1790384400000,
       "status": "ready",
       "probabilities": [
-        0.4405,
-        0.18895,
-        0.37055
+        0.4256,
+        0.1488,
+        0.4256
       ],
       "odds": [
-        2.2701475595913734,
-        5.292405398253506,
-        2.6986911347996223
+        2.349624060150376,
+        6.720430107526882,
+        2.349624060150376
       ],
       "topScores": [
         {
-          "score": "2-2",
-          "probability": 0.0676
-        },
-        {
-          "score": "3-2",
-          "probability": 0.0569
+          "score": "3-3",
+          "probability": 0.0444
         },
         {
           "score": "2-3",
-          "probability": 0.052
+          "probability": 0.0442
+        },
+        {
+          "score": "3-2",
+          "probability": 0.0442
         }
       ],
       "trials": 20000,
       "expectedGoals": [
-        2.7,
-        2.5
+        3.4427983539094646,
+        3.4427983539094646
       ],
       "teamGames": [
-        1,
-        0
+        2,
+        2
       ],
       "limitedHistory": true
     },
@@ -100,37 +100,37 @@
       "startsAt": 1790384400000,
       "status": "ready",
       "probabilities": [
-        0.4078,
-        0.1844,
-        0.4078
+        0.30735,
+        0.1827,
+        0.50995
       ],
       "odds": [
-        2.4521824423737124,
-        5.422993492407809,
-        2.4521824423737124
+        3.253619651862697,
+        5.473453749315818,
+        1.9609765663300323
       ],
       "topScores": [
         {
           "score": "2-2",
-          "probability": 0.0693
+          "probability": 0.0676
         },
         {
           "score": "1-2",
-          "probability": 0.0634
+          "probability": 0.0642
         },
         {
-          "score": "2-1",
-          "probability": 0.0634
+          "score": "2-3",
+          "probability": 0.0579
         }
       ],
       "trials": 20000,
       "expectedGoals": [
-        2.3,
-        2.3
+        2.048,
+        2.616888888888889
       ],
       "teamGames": [
         1,
-        0
+        1
       ],
       "limitedHistory": true
     },
@@ -141,37 +141,37 @@
       "startsAt": 1790388000000,
       "status": "ready",
       "probabilities": [
-        0.477,
-        0.1906,
-        0.3324
+        0.61565,
+        0.1757,
+        0.20865
       ],
       "odds": [
-        2.0964360587002098,
-        5.246589716684156,
-        3.008423586040915
+        1.6242995208316413,
+        5.691519635742743,
+        4.792715073088905
       ],
       "topScores": [
         {
-          "score": "2-2",
-          "probability": 0.07025
-        },
-        {
           "score": "2-1",
-          "probability": 0.0654
+          "probability": 0.0828
         },
         {
-          "score": "3-2",
-          "probability": 0.05705
+          "score": "3-1",
+          "probability": 0.06955
+        },
+        {
+          "score": "1-1",
+          "probability": 0.06185
         }
       ],
       "trials": 20000,
       "expectedGoals": [
-        2.5,
-        2.1
+        2.691851851851852,
+        1.5733333333333333
       ],
       "teamGames": [
-        1,
-        0
+        2,
+        1
       ],
       "limitedHistory": true
     },
@@ -182,37 +182,37 @@
       "startsAt": 1790388000000,
       "status": "ready",
       "probabilities": [
-        0.44575,
-        0.1783,
-        0.37595
+        0.4632,
+        0.1822,
+        0.3546
       ],
       "odds": [
-        2.243409983174425,
-        5.608524957936063,
-        2.6599281819390876
+        2.158894645941278,
+        5.48847420417124,
+        2.8200789622109417
       ],
       "topScores": [
         {
           "score": "2-2",
-          "probability": 0.0664
-        },
-        {
-          "score": "2-1",
-          "probability": 0.0568
+          "probability": 0.0623
         },
         {
           "score": "3-2",
-          "probability": 0.0557
+          "probability": 0.05975
+        },
+        {
+          "score": "3-3",
+          "probability": 0.05045
         }
       ],
       "trials": 20000,
       "expectedGoals": [
-        2.614736842105263,
-        2.4210526315789473
+        2.8128395061728395,
+        2.49679012345679
       ],
       "teamGames": [
         1,
-        1
+        2
       ],
       "limitedHistory": true
     }
