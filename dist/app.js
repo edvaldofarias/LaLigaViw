@@ -115,7 +115,7 @@ async function openFlyer(id){
   }catch(e){if(activeFlyerId===id)$('#flyer-result').innerHTML=`<p class="sheet-warning">${esc(e.message||'Não foi possível gerar o panfleto.')}</p><button class="button" data-flyer="${esc(id)}">Tentar novamente</button>`;}
 }
 function fixtureCrest(m,id,away=false){
-  const rank=m.fs===FIRST_PHASE?team(id)?.dt?.[FIRST_PHASE]?.col:null;
+  const rank=m.fs===FIRST_PHASE&&!isFinished(m)&&isNextRound(m)?team(id)?.dt?.[FIRST_PHASE]?.col:null;
   const badge=Number.isInteger(rank)&&rank>=0?`<small class="fixture-position" title="Posição atual na Primeira Fase" aria-label="${rank+1}º lugar na classificação atual">${rank+1}º</small>`:'';
   return `<span class="fixture-crest-position">${away?'':badge}${crest(id)}${away?badge:''}</span>`;
 }
