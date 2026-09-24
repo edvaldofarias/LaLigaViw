@@ -176,3 +176,19 @@ test('qualification chances appear only in the full Phase 1 standings with cutof
   assert.match(summary,/G8 inclui as equipes do G4/);
   assert.doesNotMatch(app.run('oddsView()'),/9h|EDIÇÃO SEMANAL/);
 });
+
+test('phase names are stable, standings only exist in the first phase and match badges use current official ranks',async()=>{
+  const data=JSON.parse(await readFile(new URL('../dist/data.json',import.meta.url),'utf8'));
+  const app=harness(async()=>response(null));app.run(`prepare(${JSON.stringify(data)})`);
+  assert.equal(app.run('phases.map(phaseLabel).join("|")'),'Primeira Fase|Repescagem|Quartas de Finais|Semi Finais|Grande FINAL');
+  assert.doesNotMatch(app.run('standingsView()'),/Fase da classificação|<select/);
+  assert.equal(app.run('standings(phases[1]).length'),0);
+  assert.equal(app.run('tableHTML(true,phases[1])'),'');
+  const badge=app.run("fixtureCrest({fs:FIRST_PHASE},'-OuCEAFLB6cDtcv8W1dI')");
+  assert.match(badge,/1º lugar na classificação atual/);
+  assert.ok(badge.indexOf('1º</small>')<badge.indexOf('<img'));
+  const away=app.run("fixtureCrest({fs:FIRST_PHASE},'-OuCEBQOxXueVsu4_Pbt',true)");
+  assert.match(away,/12º<\/small>/);assert.ok(away.indexOf('<img')<away.indexOf('12º</small>'));
+  assert.doesNotMatch(app.run("fixture({...matches[0],fs:phases[1]})"),/fixture-position/);
+  assert.doesNotMatch(app.run("matchHTML({...matches[0],fs:phases[1]})"),/As equipes nesta fase|fixture-position/);
+});
