@@ -32,3 +32,11 @@ test('ordinary checks wait the full interval and finished matches still count fo
   assert.equal(nextPolicyCheck([],now,now),t('2026-09-19T03:00:00Z'));
   assert.equal(refreshPolicy([{d_i:null},{d_i:'invalid'}],now).interval,REST_DAY_INTERVAL);
 });
+
+test('late Saturday games keep ten-minute checks after midnight until the final score arrives',()=>{
+  const m={d_i:t('2026-09-27T02:30:00Z')}; // Saturday 23:30 Brasília
+  const now=t('2026-09-27T03:30:00Z');
+  assert.equal(refreshPolicy([m],now).interval,MATCH_DAY_INTERVAL);
+  m.st=3;assert.equal(refreshPolicy([m],now).interval,MATCH_DAY_INTERVAL);
+  m.dt={qt_g1:2,qt_g2:2};assert.equal(refreshPolicy([m],now).interval,REST_DAY_INTERVAL);
+});

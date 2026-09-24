@@ -162,3 +162,17 @@ test('presence correction updates games, phase totals and average in an already 
   assert.match(app.html(),/Média de gols por jogo<\/span>Não disponível/);
   assert.equal(app.run("players[0].stats[2]"),0);
 });
+
+test('qualification chances appear only in the full Phase 1 standings with cutoff explanations',async()=>{
+  const data=JSON.parse(await readFile(new URL('../dist/data.json',import.meta.url),'utf8'));
+  const app=harness(async()=>response(null));app.run(`prepare(${JSON.stringify(data)})`);
+  const full=app.run('tableHTML(true,phases[0])');
+  assert.match(full,/Chance G4/);assert.match(full,/Chance G8/);
+  assert.equal((full.match(/class="qualification-probability"/g)||[]).length,24);
+  assert.doesNotMatch(app.run('tableHTML()'),/Chance G4|Chance G8/);
+  assert.doesNotMatch(app.run('tableHTML(true,phases[1])'),/Chance G4|Chance G8/);
+  const summary=app.run('qualificationSummary(phases[0])');
+  assert.match(summary,/20.000 simulações/);assert.match(summary,/não garante/);
+  assert.match(summary,/G8 inclui as equipes do G4/);
+  assert.doesNotMatch(app.run('oddsView()'),/9h|EDIÇÃO SEMANAL/);
+});

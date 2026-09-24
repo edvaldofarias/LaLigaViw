@@ -1,7 +1,19 @@
 {
   "modelVersion": "poisson-shrinkage-v1",
-  "cutoff": 1789992000000,
-  "nextUpdate": 1790596800000,
+  "updatePolicy": "completed-round",
+  "cutoff": 1789837475151,
+  "completedRounds": [
+    {
+      "key": "1780479913323:1780480342602",
+      "phaseId": "1780479913323",
+      "roundId": "1780480342602"
+    },
+    {
+      "key": "1780479913323:1780480347872",
+      "phaseId": "1780479913323",
+      "roundId": "1780480347872"
+    }
+  ],
   "historyCount": 10,
   "historyFingerprint": "46be1610",
   "leagueGoalsPerTeam": 2.7,
@@ -18,27 +30,27 @@
       "startsAt": 1790380800000,
       "status": "ready",
       "probabilities": [
-        0.3378,
-        0.1521,
-        0.5101
+        0.33775,
+        0.1545,
+        0.50775
       ],
       "odds": [
-        2.960331557134399,
-        6.574621959237343,
-        1.9603999215840031
+        2.9607698001480385,
+        6.472491909385114,
+        1.9694731659281142
       ],
       "topScores": [
         {
           "score": "3-3",
-          "probability": 0.04795
+          "probability": 0.0483
         },
         {
           "score": "2-3",
-          "probability": 0.04625
+          "probability": 0.0462
         },
         {
-          "score": "3-4",
-          "probability": 0.0449
+          "score": "2-4",
+          "probability": 0.04445
         }
       ],
       "trials": 20000,
@@ -59,14 +71,14 @@
       "startsAt": 1790384400000,
       "status": "ready",
       "probabilities": [
-        0.4256,
-        0.1488,
-        0.4256
+        0.42615,
+        0.1477,
+        0.42615
       ],
       "odds": [
-        2.349624060150376,
-        6.720430107526882,
-        2.349624060150376
+        2.346591575736243,
+        6.7704807041299935,
+        2.346591575736243
       ],
       "topScores": [
         {
@@ -74,12 +86,12 @@
           "probability": 0.0444
         },
         {
-          "score": "2-3",
-          "probability": 0.0442
+          "score": "3-4",
+          "probability": 0.044
         },
         {
-          "score": "3-2",
-          "probability": 0.0442
+          "score": "4-3",
+          "probability": 0.044
         }
       ],
       "trials": 20000,
@@ -100,27 +112,27 @@
       "startsAt": 1790384400000,
       "status": "ready",
       "probabilities": [
-        0.30735,
-        0.1827,
-        0.50995
+        0.30705,
+        0.18665,
+        0.5063
       ],
       "odds": [
-        3.253619651862697,
-        5.473453749315818,
-        1.9609765663300323
+        3.2567985670086306,
+        5.357621216180016,
+        1.9751135690302193
       ],
       "topScores": [
         {
           "score": "2-2",
-          "probability": 0.0676
+          "probability": 0.06785
         },
         {
           "score": "1-2",
-          "probability": 0.0642
+          "probability": 0.066
         },
         {
-          "score": "2-3",
-          "probability": 0.0579
+          "score": "1-3",
+          "probability": 0.05805
         }
       ],
       "trials": 20000,
@@ -141,27 +153,27 @@
       "startsAt": 1790388000000,
       "status": "ready",
       "probabilities": [
-        0.61565,
-        0.1757,
-        0.20865
+        0.61185,
+        0.17505,
+        0.2131
       ],
       "odds": [
-        1.6242995208316413,
-        5.691519635742743,
-        4.792715073088905
+        1.6343875132793986,
+        5.712653527563553,
+        4.692632566870014
       ],
       "topScores": [
         {
           "score": "2-1",
-          "probability": 0.0828
+          "probability": 0.082
         },
         {
           "score": "3-1",
-          "probability": 0.06955
+          "probability": 0.073
         },
         {
-          "score": "1-1",
-          "probability": 0.06185
+          "score": "2-2",
+          "probability": 0.0635
         }
       ],
       "trials": 20000,
@@ -182,27 +194,27 @@
       "startsAt": 1790388000000,
       "status": "ready",
       "probabilities": [
-        0.4632,
-        0.1822,
-        0.3546
+        0.46525,
+        0.17725,
+        0.3575
       ],
       "odds": [
-        2.158894645941278,
-        5.48847420417124,
-        2.8200789622109417
+        2.14938205265986,
+        5.6417489421720735,
+        2.7972027972027975
       ],
       "topScores": [
         {
           "score": "2-2",
-          "probability": 0.0623
+          "probability": 0.0611
         },
         {
           "score": "3-2",
-          "probability": 0.05975
+          "probability": 0.05655
         },
         {
-          "score": "3-3",
-          "probability": 0.05045
+          "score": "2-3",
+          "probability": 0.0514
         }
       ],
       "trials": 20000,
@@ -216,5 +228,163 @@
       ],
       "limitedHistory": true
     }
-  ]
+  ],
+  "qualification": {
+    "phaseId": "1780479913323",
+    "trials": 20000,
+    "teamCount": 12,
+    "scheduledGames": 36,
+    "status": "ready",
+    "historyCount": 10,
+    "remainingGames": 26,
+    "completedRounds": 2,
+    "partialRoundResults": 0,
+    "officialFinal": false,
+    "cutoffs": {
+      "top4": {
+        "median": 11,
+        "low": 10,
+        "high": 12
+      },
+      "top8": {
+        "median": 7,
+        "low": 6,
+        "high": 8
+      }
+    },
+    "teams": [
+      {
+        "id": "-OuCE1lbs7UFbj9mOJgT",
+        "points": 0,
+        "wins": 0,
+        "gf": 5,
+        "ga": 7,
+        "played": 2,
+        "top4": 0.03885,
+        "top8": 0.32445,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCE2n4ni8czw1OPXtQ",
+        "points": 4,
+        "wins": 1,
+        "gf": 8,
+        "ga": 7,
+        "played": 2,
+        "top4": 0.30495,
+        "top8": 0.799,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCE3jNN_OU-QexjdHw",
+        "points": 1,
+        "wins": 0,
+        "gf": 2,
+        "ga": 2,
+        "played": 1,
+        "top4": 0.29705,
+        "top8": 0.74915,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCE5UUPYmEL7Mnf4-D",
+        "points": 3,
+        "wins": 1,
+        "gf": 7,
+        "ga": 4,
+        "played": 2,
+        "top4": 0.51665,
+        "top8": 0.90275,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCE79e187h1srqNCAK",
+        "points": 4,
+        "wins": 1,
+        "gf": 9,
+        "ga": 8,
+        "played": 2,
+        "top4": 0.5082,
+        "top8": 0.90185,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCE8ygQVY-3BXzP80H",
+        "points": 1,
+        "wins": 0,
+        "gf": 2,
+        "ga": 2,
+        "played": 1,
+        "top4": 0.2086,
+        "top8": 0.65845,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCEAFLB6cDtcv8W1dI",
+        "points": 6,
+        "wins": 2,
+        "gf": 5,
+        "ga": 1,
+        "played": 2,
+        "top4": 0.8739,
+        "top8": 0.99165,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCEBQOxXueVsu4_Pbt",
+        "points": 0,
+        "wins": 0,
+        "gf": 0,
+        "ga": 6,
+        "played": 2,
+        "top4": 0.0082,
+        "top8": 0.1236,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCECnOQDCHySBDLAxx",
+        "points": 4,
+        "wins": 1,
+        "gf": 8,
+        "ga": 7,
+        "played": 2,
+        "top4": 0.46405,
+        "top8": 0.89365,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCEIPXbahnsYG98j_K",
+        "points": 0,
+        "wins": 0,
+        "gf": 0,
+        "ga": 3,
+        "played": 1,
+        "top4": 0.0457,
+        "top8": 0.2868,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCEPqc-2Ju1pdvU4j1",
+        "points": 3,
+        "wins": 1,
+        "gf": 3,
+        "ga": 0,
+        "played": 1,
+        "top4": 0.65625,
+        "top8": 0.9419,
+        "totalGames": 6
+      },
+      {
+        "id": "-OuCEUdiPg-VFiAmxP-W",
+        "points": 1,
+        "wins": 0,
+        "gf": 5,
+        "ga": 7,
+        "played": 2,
+        "top4": 0.0776,
+        "top8": 0.42675,
+        "totalGames": 6
+      }
+    ]
+  }
 }

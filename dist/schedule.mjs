@@ -15,8 +15,12 @@ export function brasiliaDate(timestamp) {
 export function refreshPolicy(matches, now = Date.now()) {
   const today = brasiliaDate(now);
   const matchDay = matches.some(m => brasiliaDate(m.d_i) === today);
-  return { matchDay, interval: matchDay ? MATCH_DAY_INTERVAL : REST_DAY_INTERVAL,
-    label: matchDay ? 'Atualização a cada 10 min · Dia de jogos' : 'Atualização a cada 12 h · Hoje sem jogos' };
+  // A late game can end after midnight. Keep checking its final score for six
+  // hours after kickoff instead of switching immediately to a twelve-hour wait.
+  const awaitingFinal = matches.some(m => Number.isFinite(m.d_i) && m.d_i <= now && now-m.d_i < 6*3600000 &&
+    !((Number(m.st)===3||m.finished) && [m.dt?.qt_g1,m.dt?.qt_g2].every(n=>Number.isInteger(n)&&n>=0)));
+  return { matchDay, interval: matchDay || awaitingFinal ? MATCH_DAY_INTERVAL : REST_DAY_INTERVAL,
+    label: matchDay ? 'Atualização a cada 10 min · Dia de jogos' : awaitingFinal ? 'Atualização a cada 10 min · Aguardando placares finais' : 'Atualização a cada 12 h · Hoje sem jogos' };
 }
 
 export function nextPolicyCheck(matches, lastAttempt, now = Date.now()) {
