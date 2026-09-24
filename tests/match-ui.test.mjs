@@ -141,7 +141,7 @@ test('Índio displays zero games in the list, team roster and profile despite so
   app.run(`openPlayer('${id}')`);
   assert.match(app.html(),/<b>0<\/b>Jogos/);
   assert.match(app.html(),/Média de gols por jogo<\/span>Não disponível/);
-  assert.match(app.html(),/Fase 1<\/td><td>0<\/td><td>0<\/td>/);
+  assert.match(app.html(),/Primeira Fase<\/td><td>0<\/td><td>0<\/td>/);
   assert.match(app.html(),/Reservas e não relacionados não contam/);
   app.run(`openTeam(db.player['${id}'].team)`);
   const indioRow=app.html().split('<tr>').find(row=>row.includes(`data-player="${id}"`));
