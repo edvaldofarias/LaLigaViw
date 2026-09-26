@@ -10,4 +10,9 @@ export const matchAwards=[
   {matchId:'1786231940683',playerId:'1789196750970',teamId:'-OuCE79e187h1srqNCAK',name:'Jhow',round:2},
   {matchId:'1786231941308',playerId:'1789196216230',teamId:'-OuCECnOQDCHySBDLAxx',name:'Biel',round:2},
   {matchId:'1786231942016',playerId:'1789194059686',teamId:'-OuCEUdiPg-VFiAmxP-W',name:'Renato',round:2},
+  {matchId:'1780480364862',playerId:'1789196740260',teamId:'-OuCE79e187h1srqNCAK',name:'Thiago',round:3},
+  {matchId:'1786235078628',playerId:'1789199154526',teamId:'-OuCE3jNN_OU-QexjdHw',name:'Vamp',round:3},
+  {matchId:'1786235079278',playerId:'1789194981526',teamId:'-OuCEAFLB6cDtcv8W1dI',name:'Valmir',round:3},
+  {matchId:'1786235077995',playerId:'1789172492805',teamId:'-OuCE2n4ni8czw1OPXtQ',name:'Felipe',round:3},
+  {matchId:'1786235079970',playerId:'1789220352095',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Felipe',round:3},
 ];
