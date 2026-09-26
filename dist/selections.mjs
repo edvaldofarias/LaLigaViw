@@ -3,7 +3,7 @@
 export const championshipSelections = [
   {
     id:'2026-round-1', season:2026, roundNumber:1,
-    poster:'images/selections/2026-round-1.png',
+    poster:'images/selections/2026-round-1-gold.png',
     phaseId:'1780479913323', roundId:'1780480342602',
     source:'Seleção informada pela organização',
     players:[
@@ -20,7 +20,7 @@ export const championshipSelections = [
     "id": "2026-round-2",
     "season": 2026,
     "roundNumber": 2,
-    "poster": "images/selections/2026-round-2.png?v=2",
+    "poster": "images/selections/2026-round-2-gold.png",
     "phaseId": "1780479913323",
     "roundId": "1780480347872",
     "source": "Seleção informada pela organização",
@@ -73,7 +73,7 @@ export const championshipSelections = [
   "id": "2026-round-3",
   "season": 2026,
   "roundNumber": 3,
-  "poster": "images/selections/2026-round-3.png",
+  "poster": "images/selections/2026-round-3-gold.png",
   "phaseId": "1780479913323",
   "roundId": "1780480349945",
   "source": "Seleção informada pela organização",
