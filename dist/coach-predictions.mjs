@@ -24,5 +24,14 @@ export function predictMatchCoaches(match,data,assignments=coachAssignments,now=
  const confirmed=teams.map(id=>coachFor(match.id,id,assignments));
  const sides=teams.map((teamId,i)=>({teamId,confirmed:confirmed[i],candidates:confirmed[i]?[confirmed[i]]:eligible.filter(c=>c.id!==confirmed[1-i]?.id&&history.some(a=>a.teamId===teamId&&a.coachId===c.id))}));
  const shared=sides[0].candidates.filter(c=>sides[1].candidates.some(other=>other.id===c.id));
- return {sides:sides.map(s=>({...s,coach:s.confirmed||(!shared.length&&s.candidates.length===1?s.candidates[0]:null)})),shared};
+ const resolved=sides.map(s=>({...s,coach:s.confirmed||(!shared.length&&s.candidates.length===1?s.candidates[0]:null)}));
+ // Once history fixes one side, the only other coach on this court takes the
+ // opponent, even without a prior assignment to that team. Never break a tie.
+ if(!shared.length)for(const [i,side] of resolved.entries()){
+  const opponent=resolved[1-i].coach;
+  if(side.coach||side.candidates.length||!opponent)continue;
+  const remaining=eligible.filter(c=>c.id!==opponent.id);
+  if(remaining.length===1)side.coach=remaining[0];
+ }
+ return {sides:resolved,shared};
 }

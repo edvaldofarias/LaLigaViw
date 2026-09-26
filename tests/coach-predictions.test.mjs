@@ -29,3 +29,17 @@ test('missing previous-round assignments, unknown courts and unfinished prior ro
  const d={matchs:{...data.matchs,gap:{...old('c','d','Q2'),m_set:'gap',d_i:150}}};
  assert.ok(predictMatchCoaches(next,d,assignments,200).sides.every(s=>!s.coach));
 });
+
+test('the remaining court coach takes a team without history only when the opponent is resolved',()=>{
+ const fixture={...next,team1:'new-team'};
+ const d={matchs:{...data.matchs,next:fixture}};
+ assert.deepEqual(predictMatchCoaches(fixture,d,assignments,200).sides.map(s=>s.coach?.id),['enio','renan']);
+ const reversed={...fixture,team1:'b',team2:'new-team'};
+ assert.deepEqual(predictMatchCoaches(reversed,{matchs:{...d.matchs,next:reversed}},assignments,200).sides.map(s=>s.coach?.id),['renan','enio']);
+ const neither={...fixture,team2:'another-new-team'};
+ assert.ok(predictMatchCoaches(neither,{matchs:{...d.matchs,next:neither}},assignments,200).sides.every(s=>!s.coach));
+ const ambiguous=[...assignments,{matchId:'one',teamId:'a',coachId:'guto'}];
+ const prediction=predictMatchCoaches(fixture,d,ambiguous,200);
+ assert.equal(prediction.sides[0].coach,null);assert.equal(prediction.sides[1].coach.id,'renan');
+ assert.equal(predictMatchCoaches(fixture,d,assignments.slice(1),200).sides[0].coach,null);
+});
