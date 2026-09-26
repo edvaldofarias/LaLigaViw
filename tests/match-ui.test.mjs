@@ -1,3 +1,4 @@
+import {predictMatchCoaches} from '../dist/coach-predictions.mjs';
 import {normalizeCompetition} from '../dist/match-data.mjs';
 import {coaches,coachFor,coachStatistics} from '../dist/coaches.mjs';
 import {isGoalkeeper} from '../dist/goalkeepers.mjs';
@@ -25,7 +26,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
+  const context=vm.createContext({...forecast,...schedule,predictMatchCoaches,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
