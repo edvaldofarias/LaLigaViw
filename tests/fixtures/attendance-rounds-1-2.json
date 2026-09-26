@@ -1,0 +1,413 @@
+{
+  "teams": {
+    "-OuCE1lbs7UFbj9mOJgT": {
+      "dt": {
+        "1780479913323": {
+          "col": 9,
+          "dt": "1=2#9=0#2=0#3=0#4=2#0=0#5=5#6=7#7=-2#13=1#14=0#15=0#12=1#16=0#17=10#11=0#18=0.71#19=0.00#8=0#"
+        }
+      },
+      "name": "REAL MADRID",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE1lbs7UFbj9mOJgT.png?alt=media&token=1&m=1780486258622"
+    },
+    "-OuCE2n4ni8czw1OPXtQ": {
+      "dt": {
+        "1780479913323": {
+          "col": 2,
+          "dt": "1=2#9=0#2=1#3=1#4=0#0=4#5=8#6=7#7=1#13=0#14=1#15=0#12=1#16=0#17=5#11=0#18=1.14#19=2.00#8=67#"
+        }
+      },
+      "name": "BARCELONA",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE2n4ni8czw1OPXtQ.png?alt=media&token=1&m=1780486248020"
+    },
+    "-OuCE3jNN_OU-QexjdHw": {
+      "dt": {
+        "1780479913323": {
+          "col": 7,
+          "dt": "1=1#9=0#2=0#3=1#4=0#0=1#5=2#6=2#7=0#13=0#14=1#15=0#12=1#16=0#17=5#11=0#18=1.00#19=1.00#8=33#"
+        }
+      },
+      "name": "VALÊNCIA ",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE3jNN_OU-QexjdHw.jpg?alt=media&token=1&m=1780486237207"
+    },
+    "-OuCE5UUPYmEL7Mnf4-D": {
+      "dt": {
+        "1780479913323": {
+          "col": 4,
+          "dt": "1=2#9=0#2=1#3=0#4=1#0=3#5=7#6=4#7=3#13=0#14=3#15=0#12=3#16=0#17=15#11=0#18=1.75#19=1.50#8=50#"
+        }
+      },
+      "name": "SEVILLA",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE5UUPYmEL7Mnf4-D.jpg?alt=media&token=1&m=1780486225730"
+    },
+    "-OuCE79e187h1srqNCAK": {
+      "dt": {
+        "1780479913323": {
+          "col": 1,
+          "dt": "1=2#9=0#2=1#3=1#4=0#0=4#5=9#6=8#7=1#13=0#14=3#15=0#12=3#16=0#17=15#11=0#18=1.13#19=2.00#8=67#"
+        }
+      },
+      "name": "VILLAREAL",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE79e187h1srqNCAK.png?alt=media&token=1&m=1780486214562"
+    },
+    "-OuCE8ygQVY-3BXzP80H": {
+      "dt": {
+        "1780479913323": {
+          "col": 6,
+          "dt": "1=1#9=0#2=0#3=1#4=0#0=1#5=2#6=2#7=0#13=0#14=0#15=0#12=0#16=0#17=0#11=0#18=1.00#19=1.00#8=33#"
+        }
+      },
+      "name": "RAYO VALLECANO",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE8ygQVY-3BXzP80H.png?alt=media&token=1&m=1780486202332"
+    },
+    "-OuCEAFLB6cDtcv8W1dI": {
+      "dt": {
+        "1780479913323": {
+          "col": 0,
+          "dt": "1=2#9=0#2=2#3=0#4=0#0=6#5=5#6=1#7=4#13=0#14=3#15=0#12=3#16=0#17=15#11=0#18=5.00#19=3.00#8=100#"
+        }
+      },
+      "name": "REAL BÉTIS ",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEAFLB6cDtcv8W1dI.jpg?alt=media&token=1&m=1780486184928"
+    },
+    "-OuCEBQOxXueVsu4_Pbt": {
+      "dt": {
+        "1780479913323": {
+          "col": 11,
+          "dt": "1=2#9=0#2=0#3=0#4=2#0=0#5=0#6=6#7=-6#13=0#14=0#15=0#12=0#16=0#17=0#11=0#18=0.00#19=0.00#8=0#"
+        }
+      },
+      "name": "REAL SOCIEDAD",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEBQOxXueVsu4_Pbt.png?alt=media&token=1&m=1780486174129"
+    },
+    "-OuCECnOQDCHySBDLAxx": {
+      "dt": {
+        "1780479913323": {
+          "col": 3,
+          "dt": "1=2#9=0#2=1#3=1#4=0#0=4#5=8#6=7#7=1#13=0#14=1#15=0#12=1#16=0#17=5#11=0#18=1.14#19=2.00#8=67#"
+        }
+      },
+      "name": "GETAFE",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCECnOQDCHySBDLAxx.jpg?alt=media&token=1&m=1780486165873"
+    },
+    "-OuCEIPXbahnsYG98j_K": {
+      "dt": {
+        "1780479913323": {
+          "col": 10,
+          "dt": "1=1#9=0#2=0#3=0#4=1#0=0#5=0#6=3#7=-3#13=0#14=0#15=0#12=0#16=0#17=0#11=0#18=0.00#19=0.00#8=0#"
+        }
+      },
+      "name": "ATHLETICO BILBAO",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEIPXbahnsYG98j_K.png?alt=media&token=1&m=1780486156323"
+    },
+    "-OuCEPqc-2Ju1pdvU4j1": {
+      "dt": {
+        "1780479913323": {
+          "col": 5,
+          "dt": "1=1#9=0#2=1#3=0#4=0#0=3#5=3#6=0#7=3#13=0#14=1#15=0#12=1#16=0#17=5#11=0#18=3.00#19=3.00#8=100#"
+        }
+      },
+      "name": "ATLÉTICO DE MADRID",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEPqc-2Ju1pdvU4j1.png?alt=media&token=1&m=1780486145929"
+    },
+    "-OuCEUdiPg-VFiAmxP-W": {
+      "dt": {
+        "1780479913323": {
+          "col": 8,
+          "dt": "1=2#9=0#2=0#3=1#4=1#0=1#5=5#6=7#7=-2#13=0#14=4#15=0#12=4#16=0#17=20#11=0#18=0.71#19=0.50#8=17#"
+        }
+      },
+      "name": "CELTA DE VIGO",
+      "qtd_p": 13,
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEUdiPg-VFiAmxP-W.png?alt=media&token=1&m=1780486128245"
+    }
+  },
+  "player": {
+    "1789194958115": {
+      "dt": "2=2#",
+      "fs": {
+        "1780479913323": {
+          "dt": "2=2#"
+        }
+      },
+      "name": "ÍNDIO",
+      "team": "-OuCEAFLB6cDtcv8W1dI"
+    },
+    "1789193346099": {
+      "CAR": 10000,
+      "SUSP": 1789171200000,
+      "dt": "2=2#16=1#",
+      "fs": {
+        "1780479913323": {
+          "CAR": 10000,
+          "dt": "2=2#16=1#"
+        }
+      },
+      "id_susp": "1789222926807",
+      "name": "VALTINHO",
+      "team": "-OuCE1lbs7UFbj9mOJgT",
+      "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789193346099.jpg?alt=media&token=1&m=1789193583023"
+    }
+  },
+  "matchs": {
+    "1780480362137": {
+      "d_i": 1789171200000,
+      "dt": {
+        "qt_g1": 3,
+        "qt_g2": 4
+      },
+      "finished": 1789222926807,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCE1lbs7UFbj9mOJgT",
+      "team2": "-OuCE2n4ni8czw1OPXtQ",
+      "title": "Q1"
+    },
+    "1780480363729": {
+      "d_i": 1789776000000,
+      "dt": {
+        "qt_g1": 3,
+        "qt_g2": 0
+      },
+      "finished": 1789780246551,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480347872",
+      "st": 3,
+      "team1": "-OuCEPqc-2Ju1pdvU4j1",
+      "team2": "-OuCEIPXbahnsYG98j_K",
+      "title": "Q1"
+    },
+    "1786231624057": {
+      "d_i": 1789174800000,
+      "dt": {
+        "qt_g1": 1,
+        "qt_g2": 3
+      },
+      "finished": 1789196121961,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCEUdiPg-VFiAmxP-W",
+      "team2": "-OuCEAFLB6cDtcv8W1dI",
+      "title": "Q2"
+    },
+    "1786231624682": {
+      "d_i": 1789174800000,
+      "dt": {
+        "qt_g1": 5,
+        "qt_g2": 5
+      },
+      "finished": 1789656358856,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCE79e187h1srqNCAK",
+      "team2": "-OuCECnOQDCHySBDLAxx",
+      "title": "Q1"
+    },
+    "1786231625365": {
+      "d_i": 1789178400000,
+      "dt": {
+        "qt_g1": 0,
+        "qt_g2": 4
+      },
+      "finished": 1789221867838,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCEBQOxXueVsu4_Pbt",
+      "team2": "-OuCE5UUPYmEL7Mnf4-D",
+      "title": "Q2"
+    },
+    "1786231626282": {
+      "d_i": 1789178400000,
+      "dt": {
+        "qt_g1": 2,
+        "qt_g2": 2
+      },
+      "finished": 1789222045961,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480342602",
+      "st": 3,
+      "team1": "-OuCE3jNN_OU-QexjdHw",
+      "team2": "-OuCE8ygQVY-3BXzP80H",
+      "title": "Q1"
+    },
+    "1786231940049": {
+      "d_i": 1789779600000,
+      "dt": {
+        "qt_g1": 2,
+        "qt_g2": 0
+      },
+      "finished": 1789783548607,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480347872",
+      "st": 3,
+      "team1": "-OuCEAFLB6cDtcv8W1dI",
+      "team2": "-OuCEBQOxXueVsu4_Pbt",
+      "title": "Q2"
+    },
+    "1786231940683": {
+      "d_i": 1789779600000,
+      "dt": {
+        "qt_g1": 4,
+        "qt_g2": 3
+      },
+      "finished": 1789784514134,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480347872",
+      "st": 3,
+      "team1": "-OuCE79e187h1srqNCAK",
+      "team2": "-OuCE5UUPYmEL7Mnf4-D",
+      "title": "Q1"
+    },
+    "1786231941308": {
+      "d_i": 1789783200000,
+      "dt": {
+        "qt_g1": 2,
+        "qt_g2": 3
+      },
+      "finished": 1789837475151,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480347872",
+      "st": 3,
+      "team1": "-OuCE1lbs7UFbj9mOJgT",
+      "team2": "-OuCECnOQDCHySBDLAxx",
+      "title": "Q1"
+    },
+    "1786231942016": {
+      "d_i": 1789783200000,
+      "dt": {
+        "qt_g1": 4,
+        "qt_g2": 4
+      },
+      "finished": 1789821172195,
+      "fs": "1780479913323",
+      "gmt": 10800000,
+      "l": "1815318",
+      "m_set": "1780480347872",
+      "st": 3,
+      "team1": "-OuCE2n4ni8czw1OPXtQ",
+      "team2": "-OuCEUdiPg-VFiAmxP-W",
+      "title": "Q2"
+    }
+  },
+  "matchDetails": {
+    "1780480363729": {
+      "data": {
+        "list": {}
+      }
+    },
+    "1780480362137": {
+      "data": {
+        "list": {
+          "1789193346099": {
+            "ac": 7,
+            "pl_id1": "1789193346099",
+            "team1": "-OuCE1lbs7UFbj9mOJgT",
+            "val1": 0
+          },
+          "1789222923665": {
+            "ac": 4,
+            "min": 0,
+            "per": 1,
+            "pl_id1": "1789193346099",
+            "sec": 29,
+            "team1": "-OuCE1lbs7UFbj9mOJgT"
+          }
+        }
+      }
+    },
+    "1786231624057": {
+      "data": {
+        "list": {
+          "1789194958115": {
+            "ac": 7,
+            "pl_id1": "1789194958115",
+            "team1": "-OuCEAFLB6cDtcv8W1dI",
+            "val1": 1
+          }
+        }
+      }
+    },
+    "1786231626282": {
+      "data": {
+        "list": {}
+      }
+    },
+    "1786231624682": {
+      "data": {
+        "list": {}
+      }
+    },
+    "1786231941308": {
+      "data": {
+        "list": {
+          "1789193346099": {
+            "ac": 7,
+            "pl_id1": "1789193346099",
+            "team1": "-OuCE1lbs7UFbj9mOJgT",
+            "val1": 1
+          }
+        }
+      }
+    },
+    "1786231940683": {
+      "data": {
+        "list": {}
+      }
+    },
+    "1786231940049": {
+      "data": {
+        "list": {
+          "1789194958115": {
+            "ac": 7,
+            "pl_id1": "1789194958115",
+            "team1": "-OuCEAFLB6cDtcv8W1dI",
+            "val1": 1
+          }
+        }
+      }
+    },
+    "1786231625365": {
+      "data": {
+        "list": {}
+      }
+    },
+    "1786231942016": {
+      "data": {
+        "list": {}
+      }
+    }
+  }
+}

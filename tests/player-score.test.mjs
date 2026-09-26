@@ -74,7 +74,7 @@ test('results follow the team in the match sheet after a transfer',()=>{
 });
 
 test('reserve means absent even when the source cumulative games include that match',()=>{
-  const d=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+  const d=JSON.parse(readFileSync(new URL('./fixtures/attendance-rounds-1-2.json',import.meta.url),'utf8'));
   const rows=calculateScores(d);
   const indio=rows.find(p=>p.id==='1789194958115');
   assert.equal(indio.teamGames,0,'Índio was reserve/absent in both rounds');

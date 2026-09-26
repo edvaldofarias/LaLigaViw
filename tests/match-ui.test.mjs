@@ -132,7 +132,7 @@ test('correcting a roster entry to reserve removes collective points from the ra
 });
 
 test('Índio displays zero games in the list, team roster and profile despite source total 2',async()=>{
-  const data=JSON.parse(await readFile(new URL('../dist/data.json',import.meta.url),'utf8'));
+  const data=JSON.parse(await readFile(new URL('./fixtures/attendance-rounds-1-2.json',import.meta.url),'utf8'));
   const app=harness(async()=>response(null));app.run(`prepare(${JSON.stringify(data)})`);
   const id='1789194958115';
   assert.equal(app.run(`statValue(players.find(p=>p.id==='${id}'),2)`),0);
