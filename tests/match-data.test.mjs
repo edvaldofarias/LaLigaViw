@@ -22,5 +22,5 @@ test('round two scores, five awards and ten coach assignments are coherent',()=>
  assert.equal(rows.find(p=>p.id==='1789257954893').counts.outfieldCleanSheets,1);
  assert.equal(rows.find(p=>p.id==='1789194951922').counts.goalkeeperCleanSheets,1);
  const secondRoundIds=new Set(picks.map(a=>a.matchId)),assignments=coachAssignments.filter(a=>secondRoundIds.has(a.matchId));assert.equal(assignments.length,10);
- const stats=coachStatistics(d,assignments);assert.deepEqual(stats.filter(c=>c.played).map(c=>[c.id,c.played,c.wins,c.draws,c.losses,c.gf,c.ga]),[['patrick',2,1,1,0,6,4],['enio',2,0,1,1,4,6],['renan',3,1,0,2,8,7],['guto',3,2,0,1,7,8]]);
+ const stats=coachStatistics(d,assignments);assert.deepEqual(stats.filter(c=>c.played).map(c=>[c.id,c.played,c.wins,c.draws,c.losses,c.gf,c.ga]),[['patrick',2,1,1,0,6,4],['enio',2,0,1,1,4,6],['renan',3,0,0,3,5,10],['guto',3,3,0,0,10,5]]);
 });
