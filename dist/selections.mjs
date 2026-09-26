@@ -69,6 +69,59 @@ export const championshipSelections = [
       }
     ]
   },
+  {
+  "id": "2026-round-3",
+  "season": 2026,
+  "roundNumber": 3,
+  "poster": "images/selections/2026-round-3.png",
+  "phaseId": "1780479913323",
+  "roundId": "1780480349945",
+  "source": "Seleção informada pela organização",
+  "players": [
+    {
+      "playerId": "1789199087770",
+      "name": "Diego Costa",
+      "teamId": "-OuCE3jNN_OU-QexjdHw",
+      "teamName": "Valência"
+    },
+    {
+      "playerId": "1789196740260",
+      "name": "Thiago",
+      "teamId": "-OuCE79e187h1srqNCAK",
+      "teamName": "Villareal"
+    },
+    {
+      "playerId": "1789220330560",
+      "name": "Bruno Sales",
+      "teamId": "-OuCE8ygQVY-3BXzP80H",
+      "teamName": "Rayo Vallecano"
+    },
+    {
+      "playerId": "1789196762979",
+      "name": "Ricardinho",
+      "teamId": "-OuCE79e187h1srqNCAK",
+      "teamName": "Villareal"
+    },
+    {
+      "playerId": "1789220352095",
+      "name": "Felipe",
+      "teamId": "-OuCE8ygQVY-3BXzP80H",
+      "teamName": "Rayo Vallecano"
+    },
+    {
+      "playerId": "1789194048904",
+      "name": "R. Lourenço",
+      "teamId": "-OuCEUdiPg-VFiAmxP-W",
+      "teamName": "Celta"
+    },
+    {
+      "playerId": "1789199154526",
+      "name": "Vamp",
+      "teamId": "-OuCE3jNN_OU-QexjdHw",
+      "teamName": "Valência"
+    }
+  ]
+},
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){
