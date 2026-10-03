@@ -5,6 +5,7 @@ export const coaches=[
   {id:'enio',name:'Ênio',photo:null},
   {id:'renan',name:'Renan',photo:null},
   {id:'guto',name:'Guto',photo:null},
+  {id:'joao',name:'João',photo:null},
 ];
 export const coachAssignments=[
   {matchId:'1780480362137',teamId:'-OuCE1lbs7UFbj9mOJgT',coachId:'patrick'},
@@ -37,6 +38,16 @@ export const coachAssignments=[
   {matchId:'1786235078628',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'enio'},
   {matchId:'1780480364862',teamId:'-OuCE79e187h1srqNCAK',coachId:'enio'},
   {matchId:'1786235079278',teamId:'-OuCEIPXbahnsYG98j_K',coachId:'enio'},
+  {matchId:'1780480365913',teamId:'-OuCE1lbs7UFbj9mOJgT',coachId:'joao',substituteFor:'enio'},
+  {matchId:'1780480365913',teamId:'-OuCEAFLB6cDtcv8W1dI',coachId:'patrick'},
+  {matchId:'1786245748227',teamId:'-OuCE8ygQVY-3BXzP80H',coachId:'guto'},
+  {matchId:'1786245748227',teamId:'-OuCE5UUPYmEL7Mnf4-D',coachId:'renan'},
+  {matchId:'1786245748918',teamId:'-OuCEIPXbahnsYG98j_K',coachId:'renan'},
+  {matchId:'1786245748918',teamId:'-OuCEUdiPg-VFiAmxP-W',coachId:'guto'},
+  {matchId:'1786245750160',teamId:'-OuCEPqc-2Ju1pdvU4j1',coachId:'patrick'},
+  {matchId:'1786245750160',teamId:'-OuCE2n4ni8czw1OPXtQ',coachId:'joao',substituteFor:'enio'},
+  {matchId:'1786246233389',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'renan'},
+  {matchId:'1786246233389',teamId:'-OuCEBQOxXueVsu4_Pbt',coachId:'guto'},
 ];
 export function coachFor(matchId,teamId,assignments=coachAssignments){return coaches.find(c=>c.id===assignments.slice().reverse().find(a=>a.matchId===matchId&&a.teamId===teamId)?.coachId)||null;}
 export function coachStatistics(data,assignments=coachAssignments){
