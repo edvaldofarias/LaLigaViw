@@ -187,10 +187,12 @@ test('phase names are stable, standings only exist in the first phase and only n
   assert.equal(app.run('tableHTML(true,phases[1])'),'');
   app.run("const nextMatch=nextRoundMatches(db)[0]");
   const badge=app.run("fixtureCrest(nextMatch,'-OuCEAFLB6cDtcv8W1dI')");
-  assert.match(badge,/1º lugar na classificação atual/);
-  assert.ok(badge.indexOf('1º</small>')<badge.indexOf('<img'));
+  const homeRank=data.teams['-OuCEAFLB6cDtcv8W1dI'].dt['1780479913323'].col+1;
+  assert.ok(badge.includes(`${homeRank}º lugar na classificação atual`));
+  assert.ok(badge.indexOf(`${homeRank}º</small>`)<badge.indexOf('<img'));
   const away=app.run("fixtureCrest(nextMatch,'-OuCEBQOxXueVsu4_Pbt',true)");
-  assert.match(away,/12º<\/small>/);assert.ok(away.indexOf('<img')<away.indexOf('12º</small>'));
+  const awayRank=data.teams['-OuCEBQOxXueVsu4_Pbt'].dt['1780479913323'].col+1;
+  assert.ok(away.includes(`${awayRank}º</small>`));assert.ok(away.indexOf('<img')<away.indexOf(`${awayRank}º</small>`));
   for(const expression of ["matches.find(isFinished)","{...nextMatch,st:3}","matches.find(m=>!isFinished(m)&&m.fs===FIRST_PHASE&&m.m_set!==nextMatch.m_set&&m.d_i>nextMatch.d_i)"]){
     assert.doesNotMatch(app.run(`fixture(${expression})`),/class="fixture-position"/);
     assert.doesNotMatch(app.run(`matchHTML(${expression})`),/class="fixture-position"/);
