@@ -43,3 +43,14 @@ test('the remaining court coach takes a team without history only when the oppon
  assert.equal(prediction.sides[0].coach,null);assert.equal(prediction.sides[1].coach.id,'renan');
  assert.equal(predictMatchCoaches(fixture,d,assignments.slice(1),200).sides[0].coach,null);
 });
+test('a temporary substitute keeps his own statistics but the regular coach returns in predictions',()=>{
+ const rows=[{matchId:'one',teamId:'a',coachId:'joao',substituteFor:'enio'},assignments[1]];
+ const before=JSON.stringify(rows);
+ const prediction=predictMatchCoaches(next,data,rows,200);
+ assert.deepEqual(prediction.sides.map(s=>s.coach?.id),['enio','renan']);
+ assert.ok(prediction.sides.every(s=>!s.candidates.some(c=>c.id==='joao')));
+ const stats=coachStatistics(data,rows);
+ assert.equal(stats.find(c=>c.id==='joao').played,1);
+ assert.equal(stats.find(c=>c.id==='enio').played,0);
+ assert.equal(JSON.stringify(rows),before);
+});

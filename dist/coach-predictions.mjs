@@ -14,7 +14,8 @@ export function predictMatchCoaches(match,data,assignments=coachAssignments,now=
  const latest=[...earlier].sort((a,b)=>b.d_i-a.d_i)[0];
  const previous=latest?earlier.filter(m=>roundKey(m)===roundKey(latest)):[];
  const previousIds=new Set(previous.map(m=>m.id));
- const history=assignments.filter(a=>earlier.some(m=>m.id===a.matchId&&finished(m)&&[m.team1,m.team2].includes(a.teamId)));
+ // A temporary substitute represents the regular coach only in predictions.
+ const history=assignments.filter(a=>earlier.some(m=>m.id===a.matchId&&finished(m)&&[m.team1,m.team2].includes(a.teamId))).map(a=>a.substituteFor?{...a,coachId:a.substituteFor}:a);
  const targetCourt=court(match);
  const eligible=coaches.filter(c=>{
   const courts=new Set(history.filter(a=>a.coachId===c.id&&previousIds.has(a.matchId)).map(a=>court(data.matchs[a.matchId])));
