@@ -122,6 +122,59 @@ export const championshipSelections = [
     }
   ]
 },
+{
+  "id": "2026-round-4",
+  "season": 2026,
+  "roundNumber": 4,
+  "poster": "images/selections/2026-round-4-gold.png",
+  "phaseId": "1780479913323",
+  "roundId": "1780480351486",
+  "source": "Seleção informada pela organização",
+  "players": [
+    {
+      "playerId": "1789193322187",
+      "name": "Gustavo",
+      "teamId": "-OuCE1lbs7UFbj9mOJgT",
+      "teamName": "Real Madrid"
+    },
+    {
+      "playerId": "1789199620438",
+      "name": "Diego Proença",
+      "teamId": "-OuCEBQOxXueVsu4_Pbt",
+      "teamName": "Real Sociedad"
+    },
+    {
+      "playerId": "1789220355162",
+      "name": "Guilherme",
+      "teamId": "-OuCE8ygQVY-3BXzP80H",
+      "teamName": "Rayo Vallecano"
+    },
+    {
+      "playerId": "1789220929755",
+      "name": "Lucas",
+      "teamId": "-OuCE5UUPYmEL7Mnf4-D",
+      "teamName": "Sevilla"
+    },
+    {
+      "playerId": "1789257981838",
+      "name": "Will",
+      "teamId": "-OuCEPqc-2Ju1pdvU4j1",
+      "teamName": "Atlético de Madrid"
+    },
+    {
+      "playerId": "1789220352095",
+      "name": "Felipe",
+      "teamId": "-OuCE8ygQVY-3BXzP80H",
+      "teamName": "Rayo Vallecano"
+    },
+    {
+      "playerId": "1789257979705",
+      "name": "Melchiades",
+      "teamId": "-OuCEPqc-2Ju1pdvU4j1",
+      "teamName": "Atlético de Madrid"
+    }
+  ]
+},
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){

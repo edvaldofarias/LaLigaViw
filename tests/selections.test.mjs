@@ -37,7 +37,20 @@ test('round two credits Gustavo Marques instead of the Real Madrid goalkeeper',a
   const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url)));
   const round=championshipSelections.find(r=>r.id==='2026-round-2');
   assert.equal(round.players.find(p=>p.teamName==='Real Madrid').playerId,'1789193447398');
-  const scores=calculateScores(data,[],championshipSelections);
+  const scores=calculateScores(data,[],[round]);
   assert.equal(scores.find(p=>p.id==='1789193447398').components.find(c=>c.key==='selections').earned,4);
   assert.equal(scores.find(p=>p.id==='1789193322187').counts.selections,0);
+});
+
+test('round four credits the confirmed goalkeeper and seven distinct players',async()=>{
+ const {calculateScores}=await import('../dist/player-score.mjs');
+ const {readFileSync}=await import('node:fs');
+ const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url)));
+ const round=championshipSelections.find(r=>r.id==='2026-round-4');
+ assert.equal(round.players.length,7);
+ assert.equal(new Set(round.players.map(p=>p.playerId)).size,7);
+ assert.equal(round.players[0].playerId,'1789193322187');
+ assert.equal(round.players[2].playerId,'1789220355162');
+ const scores=calculateScores(data,[],[round]);
+ for(const p of round.players)assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,4);
 });
