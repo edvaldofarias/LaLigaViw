@@ -1,0 +1,14 @@
+import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFileSync} from 'node:fs';
+const source=readFileSync(new URL('../dist/live-court.mjs',import.meta.url),'utf8');
+function setup(native=true,denyFullscreen=false){
+ const handlers={},controls={},statuses=[{},{}],listeners={};let removed=false,fullCalls=0;
+ const videos=[0,1].map(()=>({paused:true,muted:false,events:{},canPlayType:()=>native?'maybe':'',addEventListener(k,f){this.events[k]=f},async play(){this.paused=false;this.plays=(this.plays||0)+1},pause(){this.paused=true},load(){},removeAttribute(){}}));
+ for(const key of ['data-play','data-close','data-retry','data-full','data-sound'])controls[`[${key}]`]={textContent:''};
+ const classes=new Set();const doc={fullscreenElement:null,body:{append(){}},createElement(){return dialog},addEventListener(k,f){listeners[k]=f},async exitFullscreen(){doc.fullscreenElement=null}};
+ const dialog={classList:{add:c=>classes.add(c)},setAttribute(){},querySelectorAll:s=>s==='video'?videos:statuses,querySelector:s=>controls[s],showModal(){},addEventListener(k,f){handlers[k]=f},close(){handlers.close()},remove(){removed=true},async requestFullscreen(){fullCalls++;if(denyFullscreen)throw Error('unsupported');doc.fullscreenElement=dialog}};
+ const hs=[];class Hls{static Events={ERROR:'error',MANIFEST_PARSED:'manifest'};static isSupported(){return true}constructor(){this.events={};hs.push(this)}on(k,f){this.events[k]=f}loadSource(){}attachMedia(){}destroy(){this.destroyed=true}}
+ const context=vm.createContext({document:doc,window:{matchMedia:()=>({matches:true}),Hls},Promise,Error});vm.runInContext(source,context);if(!native)vm.runInContext('loader=Promise.resolve(window.Hls)',context);
+ return {open:()=>vm.runInContext('openLive()',context),videos,controls,hs,classes,doc,dialog,get removed(){return removed},get fullCalls(){return fullCalls}};
+}
+test('mobile opens fullscreen during the click and native cameras start muted when ready',async()=>{const s=setup();await s.open();assert.equal(s.fullCalls,1);assert.equal(s.doc.fullscreenElement,s.dialog);for(const v of s.videos){assert.equal(v.muted,true);assert.equal(v.autoplay,true);await v.events.canplay();assert.equal(v.paused,false)}s.controls['[data-play]'].onclick();for(const v of s.videos){assert.equal(v.paused,true);v.events.canplay();assert.equal(v.paused,true)}s.controls['[data-close]'].onclick();assert.equal(s.removed,true)});
+test('unsupported mobile fullscreen expands the panel and HLS starts only after manifest readiness',async()=>{const s=setup(false,true);await s.open();assert(s.classes.has('live-expanded'));assert.equal(s.hs.length,2);for(const p of s.hs)await p.events.manifest();assert(s.videos.every(v=>!v.paused));s.controls['[data-close]'].onclick();assert(s.hs.every(p=>p.destroyed));});
