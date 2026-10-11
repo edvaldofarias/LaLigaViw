@@ -21,3 +21,12 @@ test('round teams contain one goalkeeper and six outfield players with only roun
  }
 });
 test('missing sheets do not fabricate zero-point players',()=>{const r=roundCartola({...data,matchDetails:{}},championshipSelections[0].roundId);assert.equal(r.best.length,0);assert.ok(r.pending>0)});
+
+test('future suggestions select seven distinct eligible athletes with one goalkeeper and exclude byes',async()=>{
+ const {suggestCartola}=await import('../dist/cartola.mjs');
+ const rounds=[...new Set(Object.values(data.matchs).map(m=>m.m_set))];
+ for(const round of rounds.slice(4,7)){
+  const rows=suggestCartola(data,round,matchAwards,championshipSelections);assert.equal(rows.length,7);assert.equal(new Set(rows.map(p=>p.id)).size,7);assert.equal(rows.filter(p=>p.goalkeeper).length,1);
+  for(const p of rows){assert.ok(p.games>0);assert.ok(Number.isFinite(p.average));assert.ok(Object.values(data.matchs).some(m=>m.m_set===round&&[m.team1,m.team2].includes(p.team)));}
+ }
+});
