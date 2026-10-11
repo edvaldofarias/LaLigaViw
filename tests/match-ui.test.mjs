@@ -88,7 +88,7 @@ test('award download and historical coaches appear in cards and coach profiles',
   app.run("openCoach('renan')");assert.match(app.html(),/Renan/);assert.match(app.html(),/Histórico de partidas/);
   assert.match(app.html(),/Real Bétis/);assert.match(app.html(),/Sevilla/);
   assert.equal((app.html().match(/data-match=/g)||[]).length,coachStatistics(data).find(c=>c.id==='renan').played);
-  assert.equal(app.run('coachesView().split("coach-placeholder.svg").length-1'),coachStatistics(data).filter(c=>!c.photo).length);
+  assert.equal(app.run('coachesView().split(PHOTO_PLACEHOLDER).length-1'),coachStatistics(data).filter(c=>!c.photo).length);
 });
 
 test('sparse completed scores render the zero and award points; absent score stays pending',()=>{
