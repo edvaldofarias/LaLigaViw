@@ -19,7 +19,7 @@ function enhance(){
   const headers=[...table.tHead.rows[0].cells].map(c=>c.textContent.trim());
   const priorities=headers.map((h,i)=>({targets:i,responsivePriority:['Jogador','Técnico/Professor'].includes(h)?1:['Pontos','G','Aprov.'].includes(h)?2:h==='Equipe'?3:h==='#'?4:10+i}));
   try{
-   const api=new window.DataTable(table,{language,order:[],ordering:true,paging:paged,pageLength:20,lengthMenu:[10,20,50,100],searching:!!main&&full,info:paged,autoWidth:false,responsive:{details:{type:'inline',target:'td:first-child'}},columnDefs:priorities,layout:{topStart:paged?'pageLength':null,topEnd:main&&full?'search':null,bottomStart:paged?'info':null,bottomEnd:paged?'paging':null}});
+   const api=new window.DataTable(table,{language,order:[],ordering:true,paging:paged,pageLength:20,lengthMenu:[10,20,50,100],searching:!!main&&full,info:paged,autoWidth:false,responsive:table.closest('.cartola-team')?false:{details:{type:'inline',target:'td:first-child'}},columnDefs:priorities,layout:{topStart:paged?'pageLength':null,topEnd:main&&full?'search':null,bottomStart:paged?'info':null,bottomEnd:paged?'paging':null}});
    instances.set(table,api);table.parentElement.classList.add('enhanced-table');
    if(paged){table.closest('.panel')?.querySelector(':scope > .pagination')?.remove();document.querySelector('.filters input[data-filter="query"]')?.remove();}
   }catch(e){console.warn('A tabela permanece disponível no formato simples.',e)}

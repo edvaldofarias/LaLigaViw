@@ -21,7 +21,7 @@ export function roundCartola(data,roundId,awards=[],selections=[]){
  const selected=selections.filter(s=>s.roundId===roundId);
  const rows=calculateScores({...data,matchs,player},awards,selected);
  const choose=reverse=>{const sorted=[...rows].sort((a,b)=>(reverse?a.total-b.total:b.total-a.total)||String(a.name).localeCompare(String(b.name),'pt-BR'));return [...sorted.filter(p=>p.goalkeeper).slice(0,1),...sorted.filter(p=>!p.goalkeeper).slice(0,6)];};
- return {best:choose(false),worst:choose(true),pending,players:rows.length,complete:Object.values(matchs).every(m=>Number(m.st)===3||m.finished)};
+ return {rows,best:choose(false),worst:choose(true),pending,players:rows.length,complete:Object.values(matchs).every(m=>Number(m.st)===3||m.finished)};
 }
 
 // Suggestions are separate from earned points; keep the official forecast untouched.

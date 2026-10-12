@@ -1,3 +1,5 @@
+import * as evolution from '../dist/evolution.mjs';
+import {roundCartola,suggestCartola} from '../dist/cartola.mjs';
 import {predictMatchCoaches} from '../dist/coach-predictions.mjs';
 import {normalizeCompetition} from '../dist/match-data.mjs';
 import {coaches,coachFor,coachStatistics} from '../dist/coaches.mjs';
@@ -26,7 +28,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({...forecast,...schedule,predictMatchCoaches,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
+  const context=vm.createContext({...evolution,roundCartola,suggestCartola,...forecast,...schedule,predictMatchCoaches,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
@@ -182,7 +184,7 @@ test('phase names are stable, standings only exist in the first phase and only n
   const data=JSON.parse(await readFile(new URL('../dist/data.json',import.meta.url),'utf8'));
   const app=harness(async()=>response(null));app.run(`prepare(${JSON.stringify(data)})`);
   assert.equal(app.run('phases.map(phaseLabel).join("|")'),'Primeira Fase|Repescagem|Quartas de Finais|Semi Finais|Grande FINAL');
-  assert.doesNotMatch(app.run('standingsView()'),/Fase da classificação|<select/);
+  assert.doesNotMatch(app.run('standingsView()'),/Fase da classificação|data-filter="phase"/);
   assert.equal(app.run('standings(phases[1]).length'),0);
   assert.equal(app.run('tableHTML(true,phases[1])'),'');
   app.run("const nextMatch=nextRoundMatches(db)[0]");

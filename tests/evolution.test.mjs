@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {completedRoundGroups,playerEvolution,teamEvolution,lineChart} from '../dist/evolution.mjs';
+const m=(r,g1,g2)=>({m_set:r,fs:'first',d_i:+r,st:3,team1:'a',team2:'b',dt:{qt_g1:g1,qt_g2:g2}});
+const data={teams:{a:{},b:{}},player:{p:{name:'Ana',team:'a',dt:'0=999'}},matchs:{one:m('1',1,0),two:m('2',0,2)},matchDetails:{one:{data:{list:{present:{ac:7,pl_id1:'p',team1:'a',val1:0},away:{ac:7,pl_id1:'q',team1:'b',val1:0},goal:{ac:1,pl_id1:'p',team1:'a'}}}},two:{data:{list:{reserve:{ac:7,pl_id1:'p',team1:'a',val1:1},away:{ac:7,pl_id1:'q',team1:'b',val1:0}}}}}};
+test('player history uses round scores, absent players earn zero, ranks carry cumulative points',()=>{const h=playerEvolution(data,'p');assert.deepEqual(h.map(p=>p.points),[10,0]);assert.deepEqual(h.map(p=>p.cumulative),[10,10]);assert.deepEqual(h.map(p=>p.rank),[1,1]);assert.equal(h[1].present,false)});
+test('team history reconstructs points and ranking without source current totals',()=>{const h=teamEvolution(data,'first');assert.deepEqual(h.get('a').map(p=>p.points),[3,3]);assert.deepEqual(h.get('a').map(p=>p.rank),[1,2]);assert.deepEqual(h.get('b').map(p=>p.rank),[2,1]);});
+test('partial rounds are not charted and charts safely escape labels',()=>{assert.equal(completedRoundGroups({...data,matchs:{...data.matchs,two:{...data.matchs.two,st:1}}}).length,1);const svg=lineChart([{name:'<Ana>',values:[{round:1,value:2}]}],{title:'Teste'});assert.ok(svg.includes('&lt;Ana&gt;'));assert.ok(!svg.includes('NaN'))});
