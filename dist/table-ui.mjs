@@ -21,6 +21,13 @@ function enhance(){
   try{
    const api=new window.DataTable(table,{language,order:[],ordering:true,paging:paged,pageLength:20,lengthMenu:[10,20,50,100],searching:!!main&&full,info:paged,autoWidth:false,responsive:table.closest('.cartola-team')?false:{details:{type:'inline',target:'td:first-child'}},columnDefs:priorities,layout:{topStart:paged?'pageLength':null,topEnd:main&&full?'search':null,bottomStart:paged?'info':null,bottomEnd:paged?'paging':null}});
    instances.set(table,api);table.parentElement.classList.add('enhanced-table');
+   const search=api.table().container().querySelector('.dt-search input');
+   if(search&&globalThis.Fuse){
+    const records=api.rows().indexes().toArray().map(index=>({index,text:api.row(index).node().textContent.trim()}));
+    const fuse=new Fuse(records,{keys:['text'],ignoreLocation:true,ignoreDiacritics:true,threshold:.32});
+    globalThis.jQuery?.(search).off('.DT');
+    search.addEventListener('input',()=>{const query=search.value.trim(),found=query?new Set(fuse.search(query).map(r=>r.item.index)):null;api.search((_text,_data,index)=>!found||found.has(index)).draw();});
+   }
    if(paged){table.closest('.panel')?.querySelector(':scope > .pagination')?.remove();document.querySelector('.filters input[data-filter="query"]')?.remove();}
   }catch(e){console.warn('A tabela permanece disponível no formato simples.',e)}
  }

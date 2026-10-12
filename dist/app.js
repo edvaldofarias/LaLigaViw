@@ -1,3 +1,6 @@
+import {} from './charts-ui.mjs';
+import {} from './gallery-ui.mjs';
+import {brasiliaDate,brasiliaTime} from './date-utils.mjs';
 import {completedRoundGroups,playerEvolution,teamEvolution,lineChart,chartColors} from './evolution.mjs';
 import {roundCartola,suggestCartola} from './cartola.mjs';
 import {} from './table-ui.mjs';
@@ -41,8 +44,8 @@ function goalkeeperBadge(p){return isGoalkeeper(p.id,p.team)?'<small class="goal
 const PHOTO_PLACEHOLDER='https://placehold.co/160x160/e9edf2/647186/png?text=';
 function photoPlaceholder(personName){return PHOTO_PLACEHOLDER+encodeURIComponent(initials(personName||''))}
 function avatar(p){return `<img class="avatar" data-person-photo data-person-initials="${esc(initials(p.name||''))}" data-photo-placeholder="${photoPlaceholder(p.name)}" src="${p.url?safeURL(p.url):photoPlaceholder(p.name)}" alt="${p.url?'':'Foto não disponível'}" loading="lazy" referrerpolicy="no-referrer">`}
-function fmtDate(m,opts={day:'2-digit',month:'short'}){return m.d_i?new Intl.DateTimeFormat('pt-BR',{...opts,timeZone:'America/Sao_Paulo'}).format(new Date(m.d_i)):'Data a definir'}
-function fmtTime(m){return m.d_i?new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date(m.d_i)):'Horário a definir'}
+function fmtDate(m,opts={day:'2-digit',month:'short'}){return brasiliaDate(m.d_i,opts)}
+function fmtTime(m){return brasiliaTime(m.d_i)}
 const FIRST_PHASE='1780479913323';
 const PHASE_NAMES={
   '1780479913323':'Primeira Fase',
