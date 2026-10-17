@@ -20,4 +20,5 @@ export const matchAwards=[
   {matchId:'1786246233389',playerId:'1789199572267',teamId:'-OuCEBQOxXueVsu4_Pbt',name:'Souza',round:4},
   {matchId:'1786245750160',playerId:'1789257979705',teamId:'-OuCEPqc-2Ju1pdvU4j1',name:'Melchiades',round:4},
   {matchId:'1780480365913',playerId:'1789193330189',teamId:'-OuCE1lbs7UFbj9mOJgT',name:'Léo Dantas',round:4},
+  {matchId:'1786246792897',playerId:'1789220340061',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Welton',round:5},
 ];

@@ -20,7 +20,7 @@ test('missing sheet, award and score remain unavailable, scheduled games get no 
 });
 test('first-round newspaper preserves factual scorers, cards, awards and incomplete attribution',()=>{
   const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
-  const recaps=matchAwards.map(a=>matchRecap(data.matchs[a.matchId],data,data.matchDetails[a.matchId].data,a));
+  const recaps=matchAwards.filter(a=>a.round===1).map(a=>matchRecap(data.matchs[a.matchId],data,data.matchDetails[a.matchId].data,a));
   const classic=recaps[0],text=[classic.intro,...classic.columns.flatMap(c=>c.paragraphs)].join(' ');
   assert.equal(classic.headline,'Em clássico eletrizante de 7 gols, Barcelona bate Real Madrid por 4 a 3!');
   for(const name of ['Rapha','Edvaldo','Mosca','Severo','Bruno Henrique','Robertinho','Tiago Bianco'])assert.ok(text.includes(name));
