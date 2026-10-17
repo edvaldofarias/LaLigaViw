@@ -6,3 +6,11 @@ dist/client/
 dist/.openai/
 .env
 .env.*
+
+.angular/
+.angular-output/
+.angular-cache/
+dist/angular/
+
+playwright-report/
+test-results/

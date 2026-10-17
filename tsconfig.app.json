@@ -1,0 +1,1 @@
+{"extends":"./tsconfig.json","compilerOptions":{"outDir":"./.angular-cache"},"files":["src/main.ts","src/types.d.ts"],"include":["src/**/*.ts"]}

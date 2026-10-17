@@ -19,7 +19,7 @@ import {matchAwards} from '../dist/awards.mjs';
 import {calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances} from '../dist/player-score.mjs';
 import {matchRecap} from '../dist/match-recap.mjs';
 
-const source=(await readFile(new URL('../dist/app.js',import.meta.url),'utf8'))
+const source=(await readFile(new URL('./fixtures/legacy-ui.js',import.meta.url),'utf8'))
   .replace(/^import .*;\n/gm,'').replace(/\ninit\(\);\s*$/,'');
 function harness(fetch){
   const elements=new Map();

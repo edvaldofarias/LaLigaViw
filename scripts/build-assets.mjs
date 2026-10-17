@@ -4,6 +4,9 @@ const root=new URL('../dist/',import.meta.url),client=new URL('client/',root);
 await rm(client,{recursive:true,force:true});
 await mkdir(client,{recursive:true});
 for(const entry of await readdir(root)){if(['server','client','.openai'].includes(entry))continue;await cp(new URL(entry,root),new URL(entry,client),{recursive:true});}
+// Angular owns the production entrypoint and compiled UI; domain data remain in dist.
+await cp(new URL('../.angular-output/browser/',import.meta.url),client,{recursive:true});
+await cp(new URL('../.angular-output/3rdpartylicenses.txt',import.meta.url),new URL('3rdpartylicenses.txt',client));
 async function filesAt(dir){const paths=[];for(const entry of await readdir(dir,{withFileTypes:true})){const path=new URL(entry.name+(entry.isDirectory()?'/':''),dir);if(entry.isDirectory())paths.push(...await filesAt(path));else paths.push(path)}return paths.sort((a,b)=>a.href.localeCompare(b.href));}
 const files=await filesAt(client),hash=createHash('sha256');
 for(const file of files){hash.update(file.href.slice(client.href.length));hash.update(await readFile(file));}

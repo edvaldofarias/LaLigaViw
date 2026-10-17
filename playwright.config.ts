@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'tests/e2e',fullyParallel:false,workers:1,timeout:45000,use:{baseURL:'http://127.0.0.1:4181',channel:process.env.PLAYWRIGHT_CHANNEL||'chrome',headless:true},projects:[{name:'mobile',use:{viewport:{width:390,height:950}}},{name:'desktop',use:{viewport:{width:1440,height:950}}}],webServer:{command:'python3 -m http.server 4181 --directory dist/client',url:'http://127.0.0.1:4181',reuseExistingServer:true},reporter:'list'});
