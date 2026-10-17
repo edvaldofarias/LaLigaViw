@@ -1,3 +1,4 @@
+import {mountScoreboard} from './live-scoreboard.mjs';
 const courtStreams={1:['https://video16-673f46ea4679387411a7.click190.com.br/click190-cloud/a36fce17fd0140dfaaeb.stream/main_stream.m3u8','https://video16-673f46ea4679387411a7.click190.com.br/click190-cloud/1b53860099924e73880b.stream/main_stream.m3u8'],2:['https://video16-673f46ea4679387411a7.click190.com.br/click190-cloud/1439d235b3fa460c985d.stream/main_stream.m3u8','https://video16-673f46ea4679387411a7.click190.com.br/click190-cloud/d31bd5eb870c4824bade.stream/main_stream.m3u8']};
 let loader;
 function loadHls(){return loader??=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='vendor/hls-1.6.13.min.js';s.onload=()=>resolve(window.Hls);s.onerror=()=>{loader=null;reject(Error('Não foi possível carregar o player.'))};document.head.append(s)})}
@@ -7,6 +8,7 @@ async function openLive(court=1){
  document.body.append(dialog);dialog.showModal();const videos=[...dialog.querySelectorAll('video')],players=[];let closed=false,wantsPlay=true;
  const playButton=dialog.querySelector('[data-play]');
  const stage=dialog.querySelector('.live-stage');
+ const unmountScoreboard=mountScoreboard(stage,court);
  async function fullscreen(immersive=true){
   if(immersive){dialog.classList.add('live-immersive');dialog.querySelector('[data-full]').textContent='Sair da tela cheia';}
   try{const request=stage.requestFullscreen||stage.webkitRequestFullscreen;if(!request)throw Error('unsupported');if(document.fullscreenElement!==stage&&document.webkitFullscreenElement!==stage)await request.call(stage);}catch{dialog.classList.add('live-expanded');}
@@ -16,7 +18,7 @@ async function openLive(court=1){
  if(window.matchMedia('(max-width:900px), (pointer:coarse)').matches){dialog.classList.add('live-expanded');fullscreen(false);}
  const status=(i,text)=>{if(!closed)dialog.querySelectorAll('[role=status]')[i].textContent=`Câmera ${i+1} · ${text}`};
  const play=async()=>{if(closed||!wantsPlay)return;const results=await Promise.allSettled(videos.map(v=>v.play()));if(closed)return;results.forEach((r,i)=>{if(r.status==='rejected'&&wantsPlay)status(i,'aguardando transmissão ou toque para reproduzir')});playButton.textContent=videos.some(v=>!v.paused)?'Pausar':'Reproduzir';};
- const cleanup=()=>{if(closed)return;closed=true;if(document.fullscreenElement===stage)document.exitFullscreen().catch(()=>{});else if(document.webkitFullscreenElement===stage)document.webkitExitFullscreen();players.forEach(p=>p.destroy());videos.forEach(v=>{v.pause();v.removeAttribute('src');v.load()});dialog.remove()};
+ const cleanup=()=>{if(closed)return;closed=true;unmountScoreboard();if(document.fullscreenElement===stage)document.exitFullscreen().catch(()=>{});else if(document.webkitFullscreenElement===stage)document.webkitExitFullscreen();players.forEach(p=>p.destroy());videos.forEach(v=>{v.pause();v.removeAttribute('src');v.load()});dialog.remove()};
  dialog.addEventListener('close',cleanup);dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.querySelector('[data-retry]').onclick=()=>{dialog.close();openLive(court)};
  playButton.onclick=()=>{if(videos.some(v=>!v.paused)){wantsPlay=false;videos.forEach(v=>v.pause());playButton.textContent='Reproduzir'}else{wantsPlay=true;play()}};
  dialog.querySelector('[data-sound]').onclick=e=>{videos[0].muted=!videos[0].muted;e.target.textContent=videos[0].muted?'Ativar áudio da câmera 1':'Silenciar áudio'};

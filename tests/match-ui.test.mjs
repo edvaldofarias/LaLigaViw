@@ -1,3 +1,4 @@
+import * as liveMatch from '../dist/live-match.mjs';
 import {brasiliaDate,brasiliaTime} from '../dist/date-utils.mjs';
 import * as evolution from '../dist/evolution.mjs';
 import {roundCartola,suggestCartola} from '../dist/cartola.mjs';
@@ -29,7 +30,7 @@ function harness(fetch){
     });
     return elements.get(selector);
   };
-  const context=vm.createContext({brasiliaDate,brasiliaTime,...evolution,roundCartola,suggestCartola,...forecast,...schedule,predictMatchCoaches,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
+  const context=vm.createContext({...liveMatch,updateLiveData(){},markLiveUnavailable(){},brasiliaDate,brasiliaTime,...evolution,roundCartola,suggestCartola,...forecast,...schedule,predictMatchCoaches,normalizeCompetition,summarizeMatch,championshipSelections,selectionsForPlayer,matchPreview,nextRoundMatches,VENUE,matchAwards,calculateScores,SCORE_RULES,scoreDataStatus,playerAppearances,matchRecap,isGoalkeeper,coaches,coachFor,coachStatistics,updateVisitors(){},fetch,AbortSignal,URL,
     document:{querySelector:element,querySelectorAll:()=>[],addEventListener(){}},window:{addEventListener(){}},
   });
   const run=code=>vm.runInContext(code,context);
