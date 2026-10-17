@@ -21,4 +21,8 @@ export const matchAwards=[
   {matchId:'1786245750160',playerId:'1789257979705',teamId:'-OuCEPqc-2Ju1pdvU4j1',name:'Melchiades',round:4},
   {matchId:'1780480365913',playerId:'1789193330189',teamId:'-OuCE1lbs7UFbj9mOJgT',name:'Léo Dantas',round:4},
   {matchId:'1786246792897',playerId:'1789220340061',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Welton',round:5},
+  {matchId:'1786246794080',playerId:'1789220936288',teamId:'-OuCE5UUPYmEL7Mnf4-D',name:'Efraim',round:5},
+  {matchId:'1780480367054',playerId:'1789199579917',teamId:'-OuCEBQOxXueVsu4_Pbt',name:'Alan',round:5},
+  {matchId:'1786246793447',playerId:'1789257901399',teamId:'-OuCEIPXbahnsYG98j_K',name:'Pimenta',round:5},
+  {matchId:'1786246792371',playerId:'1789257958344',teamId:'-OuCEPqc-2Ju1pdvU4j1',name:'Júnior',round:5},
 ];
