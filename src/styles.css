@@ -967,4 +967,52 @@ footer {
   padding: 0;
   color: #947122;
 }
-.coach-history button>.mdc-button__label{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;text-align:left}.coach-history button>.mdc-button__label>strong{white-space:nowrap}.coach-history button>.mdc-button__label>span:nth-child(2){min-width:0}.competition-dialog .dialog-top button{flex-shrink:0}
+.coach-history button > .mdc-button__label {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+.coach-history button > .mdc-button__label > strong {
+  white-space: nowrap;
+}
+.coach-history button > .mdc-button__label > span:nth-child(2) {
+  min-width: 0;
+}
+.competition-dialog .dialog-top button {
+  flex-shrink: 0;
+}
+
+/* Stable content wrappers, independent of Material button internals. */
+app-entity .entity-content {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+app-entity .entity-content > img {
+  display: block;
+  flex-shrink: 0;
+}
+app-entity .entity-content > span {
+  display: block;
+  min-width: 0;
+  line-height: 1.45;
+}
+.cartola-team app-entity .entity-content {
+  gap: 6px;
+}
+.match-event-counts {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.match-event-player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

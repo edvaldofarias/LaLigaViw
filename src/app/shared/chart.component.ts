@@ -10,6 +10,82 @@ import {
 @Component({
   selector: "app-chart",
   standalone: true,
+  styles: [
+    `
+      :host {
+        display: block;
+        min-width: 0;
+      }
+      figure {
+        margin: 0;
+        padding: 0;
+      }
+      .chart-canvas-wrap {
+        height: 330px;
+        position: relative;
+        width: 100%;
+      }
+      .chart-legend {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .chart-legend button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        min-height: 44px;
+        padding: 8px;
+        border: 1px solid #e1e7ed;
+        border-radius: 8px;
+        background: #fff;
+        text-align: left;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      .chart-legend button[aria-pressed="false"] {
+        opacity: 0.45;
+      }
+      .chart-legend img {
+        display: block;
+        width: 22px;
+        height: 24px;
+        max-width: 22px;
+        max-height: 24px;
+        object-fit: contain;
+        flex: 0 0 22px;
+      }
+      .chart-legend i {
+        display: block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex: 0 0 7px;
+      }
+      .chart-legend span {
+        min-width: 0;
+      }
+      .chart-values {
+        margin-top: 16px;
+        font-size: 12px;
+      }
+      figcaption {
+        margin-bottom: 14px;
+        font-size: 14px;
+      }
+      @media (max-width: 600px) {
+        .chart-canvas-wrap {
+          height: 280px;
+        }
+        .chart-legend {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 6px;
+        }
+      }
+    `,
+  ],
   template: `<figure class="evolution-chart">
     <figcaption>{{ title() }}</figcaption>
     <div class="chart-canvas-wrap">
@@ -26,7 +102,7 @@ import {
           @if (s.logo) {
             <img [src]="s.logo" alt="" loading="lazy" />
           }
-          {{ s.name }}
+          <span>{{ s.name }}</span>
         </button>
       }
     </div>

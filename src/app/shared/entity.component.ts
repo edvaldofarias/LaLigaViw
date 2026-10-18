@@ -5,6 +5,42 @@ import { CompetitionService } from "../core/competition.service";
   selector: "app-entity",
   standalone: true,
   imports: [...MATERIAL],
+  styles: [
+    `
+      :host {
+        display: inline-block;
+        max-width: 100%;
+        vertical-align: middle;
+      }
+      .entity-content {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+        text-align: left;
+      }
+      .entity-content > img {
+        flex: 0 0 auto;
+        display: block;
+        object-fit: contain;
+      }
+      .entity-content > .avatar {
+        object-fit: cover;
+      }
+      .entity-content > span {
+        display: block;
+        min-width: 0;
+        line-height: 1.45;
+        overflow-wrap: normal;
+      }
+      button {
+        max-width: 100%;
+        height: auto;
+        min-height: 48px;
+      }
+    `,
+  ],
   template: `<button
     mat-button
     [attr.data-player]="kind() === 'player' ? entity().id : null"
@@ -14,21 +50,23 @@ import { CompetitionService } from "../core/competition.service";
     [class]="kind() === 'team' ? 'team-button' : 'player-name'"
     (click)="store.open(kind(), entity().id)"
   >
-    <img
-      [class]="kind() === 'team' ? 'crest' : 'avatar'"
-      [src]="image()"
-      (error)="fallback($event)"
-      alt=""
-      loading="lazy"
-      referrerpolicy="no-referrer"
-    /><span
-      >{{ store.name(entity().name) }}
-      @if (
-        kind() === "player" && store.goalkeeper(entity().id, entity().team)
-      ) {
-        <small class="goalkeeper-badge">Goleiro · Camisa 1</small>
-      }
-    </span>
+    <span class="entity-content"
+      ><img
+        [class]="kind() === 'team' ? 'crest' : 'avatar'"
+        [src]="image()"
+        (error)="fallback($event)"
+        alt=""
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      /><span
+        >{{ store.name(entity().name) }}
+        @if (
+          kind() === "player" && store.goalkeeper(entity().id, entity().team)
+        ) {
+          <small class="goalkeeper-badge">Goleiro · Camisa 1</small>
+        }
+      </span></span
+    >
   </button>`,
 })
 export class EntityComponent {

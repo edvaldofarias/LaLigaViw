@@ -448,20 +448,6 @@
         </mat-select></mat-form-field
       >
     </div>
-    <mat-expansion-panel
-      ><mat-expansion-panel-header
-        ><mat-panel-title
-          >Como são feitas as sugestões?</mat-panel-title
-        ></mat-expansion-panel-header
-      >
-      <p>
-        Consideramos atletas de equipes com jogo na rodada e histórico de
-        presença confirmada. Combinamos média de pontos MVP, gols anteriores e
-        dificuldade do confronto. Para goleiros, pesa a chance de não sofrer
-        gols. Um goleiro e seis de linha. A média é histórica, não pontuação
-        garantida; presença futura depende de confirmação.
-      </p></mat-expansion-panel
-    >
     @if (future()) {
       <mat-card class="panel cartola-team" appearance="outlined"
         ><h3>★ Time ideal sugerido</h3>
@@ -496,6 +482,20 @@
         Empates são exibidos em ordem alfabética.
       </p>
     }
+    <mat-expansion-panel
+      ><mat-expansion-panel-header
+        ><mat-panel-title
+          >Como são feitas as sugestões?</mat-panel-title
+        ></mat-expansion-panel-header
+      >
+      <p>
+        Consideramos atletas de equipes com jogo na rodada e histórico de
+        presença confirmada. Combinamos média de pontos MVP, gols anteriores e
+        dificuldade do confronto. Para goleiros, pesa a chance de não sofrer
+        gols. Um goleiro e seis de linha. A média é histórica, não pontuação
+        garantida; presença futura depende de confirmação.
+      </p></mat-expansion-panel
+    >
   }
 }
 <ng-template #teamFilter

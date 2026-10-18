@@ -26,7 +26,7 @@ import { CompetitionService } from "../core/competition.service";
             }
             <img
               class="crest"
-              [src]="s.team(m().team1)?.url"
+              [src]="crestSource(m().team1)"
               referrerpolicy="no-referrer"
               (error)="crestFallback($event, m().team1)"
               alt="" /></span
@@ -36,7 +36,7 @@ import { CompetitionService } from "../core/competition.service";
           ><span class="fixture-crest-position"
             ><img
               class="crest"
-              [src]="s.team(m().team2)?.url"
+              [src]="crestSource(m().team2)"
               referrerpolicy="no-referrer"
               (error)="crestFallback($event, m().team2)"
               alt=""
@@ -94,20 +94,30 @@ import { CompetitionService } from "../core/competition.service";
   </mat-card>`,
 })
 export class MatchCardComponent {
+  crestPlaceholder(id: string) {
+    const team = this.s.team(id);
+    const initials = team?.name
+      ? this.s
+          .name(team.name)
+          .split(" ")
+          .slice(0, 2)
+          .map((s) => s[0])
+          .join("")
+      : "?";
+    return (
+      "https://placehold.co/80x80/e9edf2/647186/png?text=" +
+      encodeURIComponent(initials)
+    );
+  }
+  crestSource(id: string) {
+    const url = this.s.team(id)?.url;
+    return /^https:\/\//.test(url || "") ? url : this.crestPlaceholder(id);
+  }
   crestFallback(e: Event, id: string) {
     const img = e.target as HTMLImageElement;
     if (img.dataset["fallback"]) return;
     img.dataset["fallback"] = "1";
-    img.src =
-      "https://placehold.co/80x80/e9edf2/647186/png?text=" +
-      encodeURIComponent(
-        this.s
-          .name(this.s.team(id)?.name)
-          .split(" ")
-          .slice(0, 2)
-          .map((s) => s[0])
-          .join(""),
-      );
+    img.src = this.crestPlaceholder(id);
   }
   s = inject(CompetitionService);
   m = input.required<any>();

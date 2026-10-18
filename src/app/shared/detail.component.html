@@ -354,10 +354,21 @@
                             (click)="s.open('player', p.playerId)"
                           >
                             {{ s.name(p.name) }}</button
-                          ><span
-                            >⚽ {{ p.goals }} · 🟨 {{ p.yellow }} · 🟥
-                            {{ p.red }}</span
-                          >
+                          ><span class="match-event-counts">
+                            @if (p.goals > 0) {
+                              <span aria-label="Gols">⚽ {{ p.goals }}</span>
+                            }
+                            @if (p.yellow > 0) {
+                              <span aria-label="Cartões amarelos"
+                                >🟨 {{ p.yellow }}</span
+                              >
+                            }
+                            @if (p.red > 0) {
+                              <span aria-label="Cartões vermelhos"
+                                >🟥 {{ p.red }}</span
+                              >
+                            }
+                          </span>
                         </div>
                       }
                     }
