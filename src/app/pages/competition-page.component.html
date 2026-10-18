@@ -399,23 +399,40 @@
     <div class="cards-grid">
       @for (p of s.forecast().predictions; track p.matchId) {
         @if (s.match(p.matchId); as m) {
-          <mat-card class="panel" appearance="outlined"
-            ><p class="subtle px-3 pt-3">{{ s.date(m) }} · {{ s.round(m) }}</p>
-            <app-match-card [m]="m" />
-            @if (p.status === "ready") {
-              <div class="forecast-evidence">
-                <h4>Placar mais frequente: {{ p.topScores[0].score }}</h4>
-                <p>
-                  Gols esperados: {{ p.expectedGoals[0] | number: "1.1-1" }} ×
-                  {{ p.expectedGoals[1] | number: "1.1-1" }}
-                </p>
-                <p class="subtle">
-                  Amostra {{ p.limitedHistory ? "limitada" : "histórica" }} ·
-                  {{ p.teamGames[0] }} e {{ p.teamGames[1] }} jogos por equipe.
-                </p>
-              </div>
-            }
-          </mat-card>
+          <div class="odds-match">
+            <p class="subtle odds-match-date">
+              {{ s.date(m) }} · {{ s.phase(m.fs) }} · {{ s.round(m) }}
+            </p>
+            <app-match-card [m]="m">
+              @if (p.status === "ready") {
+                <section
+                  match-summary
+                  class="forecast-evidence"
+                  aria-label="Detalhes da simulação"
+                >
+                  <div class="prediction-facts">
+                    <div>
+                      <span>Placar mais frequente</span
+                      ><b>{{ p.topScores[0].score.replace("-", " x ") }}</b>
+                    </div>
+                    <div>
+                      <span>Gols esperados</span
+                      ><b
+                        >{{ p.expectedGoals[0] | number: "1.1-1" }}
+                        <small>×</small>
+                        {{ p.expectedGoals[1] | number: "1.1-1" }}</b
+                      >
+                    </div>
+                  </div>
+                  <p class="subtle">
+                    Amostra {{ p.limitedHistory ? "limitada" : "histórica" }} ·
+                    {{ p.teamGames[0] }} e {{ p.teamGames[1] }} jogos por
+                    equipe.
+                  </p>
+                </section>
+              }
+            </app-match-card>
+          </div>
         }
       }
     </div>

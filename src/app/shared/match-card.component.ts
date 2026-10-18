@@ -91,6 +91,7 @@ import { CompetitionService } from "../core/competition.service";
         >
       </div>
     }
+    <ng-content select="[match-summary]" />
   </mat-card>`,
 })
 export class MatchCardComponent {

@@ -1,9 +1,12 @@
+import { registerLocaleData } from "@angular/common";
+import localePt from "@angular/common/locales/pt";
 import { bootstrapApplication } from "@angular/platform-browser";
-import { provideZonelessChangeDetection } from "@angular/core";
+import { LOCALE_ID, provideZonelessChangeDetection } from "@angular/core";
 import { provideRouter, withHashLocation } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
 import { AppComponent } from "./app/app.component";
 import { SECTIONS } from "./app/core/models";
+registerLocaleData(localePt, "pt-BR");
 // Preserve all existing shared URLs, e.g. #matches -> #/matches.
 if (/^#[a-z]/i.test(location.hash))
   history.replaceState(
@@ -13,6 +16,7 @@ if (/^#[a-z]/i.test(location.hash))
   );
 bootstrapApplication(AppComponent, {
   providers: [
+    { provide: LOCALE_ID, useValue: "pt-BR" },
     provideZonelessChangeDetection(),
     provideHttpClient(),
     provideRouter(

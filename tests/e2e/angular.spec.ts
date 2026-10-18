@@ -161,18 +161,106 @@ test("Material controls sort, filter, paginate and open accessible navigation", 
   ).toHaveCount(0);
 });
 
-test('entity alignment, compact chart logos, placeholders and nonzero match events', async ({page}) => {
-  await page.route(/firebasestorage.googleapis.com|placehold.co/, r=>r.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200"><rect width="800" height="1200" fill="#55aacc"/></svg>'}));
-  for (const route of ['ballon','standings','players']) {
-    await page.goto('/#/'+route);
-    const entity=page.locator('tbody app-entity .entity-content').first();
+test("entity alignment, compact chart logos, placeholders and nonzero match events", async ({
+  page,
+}) => {
+  await page.route(/firebasestorage.googleapis.com|placehold.co/, (r) =>
+    r.fulfill({
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200"><rect width="800" height="1200" fill="#55aacc"/></svg>',
+    }),
+  );
+  for (const route of ["ballon", "standings", "players"]) {
+    await page.goto("/#/" + route);
+    const entity = page.locator("tbody app-entity .entity-content").first();
     await expect(entity).toBeVisible();
-    await expect.poll(()=>entity.evaluate(el=>{const image=el.querySelector('img')!.getBoundingClientRect(), text=el.querySelector('span')!.getBoundingClientRect();return text.left>=image.right && Math.abs(image.y+image.height/2-text.y-text.height/2)<2;})).toBe(true);
+    await expect
+      .poll(() =>
+        entity.evaluate((el) => {
+          const image = el.querySelector("img")!.getBoundingClientRect(),
+            text = el.querySelector("span")!.getBoundingClientRect();
+          return (
+            text.left >= image.right &&
+            Math.abs(image.y + image.height / 2 - text.y - text.height / 2) < 2
+          );
+        }),
+      )
+      .toBe(true);
   }
-  await page.goto('/#/standings');await expect(page.locator('.chart-legend img')).toHaveCount(12);
-  expect(await page.locator('.chart-legend img').evaluateAll(imgs=>imgs.every(img=>{const r=img.getBoundingClientRect();return r.width<=24&&r.height<=24;}))).toBe(true);
-  await page.goto('/#/cartola');expect(await page.locator('mat-expansion-panel').evaluate(el=>el.getBoundingClientRect().top>document.querySelector('.cartola-grid')!.getBoundingClientRect().bottom)).toBe(true);
-  await page.goto('/#/matches');await page.locator('.fixture').filter({hasText:'A Definir'}).first().click();await expect(page.locator('#detail .fixture img').first()).toHaveAttribute('src',/placehold.co/);await page.locator('#close-detail').click();
-  await page.locator('.fixture').filter({hasText:'Barcelona'}).filter({hasText:'Real Madrid'}).first().click();await expect(page.locator('.match-event-counts')).not.toHaveCount(0);
-  const events=await page.locator('.match-event-counts > span').allTextContents();expect(events.every(s=>!s.trim().endsWith(' 0'))).toBe(true);await expect(page.locator('.match-event-counts [aria-label="Cartões amarelos"]')).toContainText('1');
+  await page.goto("/#/standings");
+  await expect(page.locator(".chart-legend img")).toHaveCount(12);
+  expect(
+    await page.locator(".chart-legend img").evaluateAll((imgs) =>
+      imgs.every((img) => {
+        const r = img.getBoundingClientRect();
+        return r.width <= 24 && r.height <= 24;
+      }),
+    ),
+  ).toBe(true);
+  await page.goto("/#/cartola");
+  expect(
+    await page
+      .locator("mat-expansion-panel")
+      .evaluate(
+        (el) =>
+          el.getBoundingClientRect().top >
+          document.querySelector(".cartola-grid")!.getBoundingClientRect()
+            .bottom,
+      ),
+  ).toBe(true);
+  await page.goto("/#/matches");
+  await page
+    .locator(".fixture")
+    .filter({ hasText: "A Definir" })
+    .first()
+    .click();
+  await expect(page.locator("#detail .fixture img").first()).toHaveAttribute(
+    "src",
+    /placehold.co/,
+  );
+  await page.locator("#close-detail").click();
+  await page
+    .locator(".fixture")
+    .filter({ hasText: "Barcelona" })
+    .filter({ hasText: "Real Madrid" })
+    .first()
+    .click();
+  await expect(page.locator(".match-event-counts")).not.toHaveCount(0);
+  const events = await page
+    .locator(".match-event-counts > span")
+    .allTextContents();
+  expect(events.every((s) => !s.trim().endsWith(" 0"))).toBe(true);
+  await expect(
+    page.locator('.match-event-counts [aria-label="Cartões amarelos"]'),
+  ).toContainText("1");
+});
+
+test("odds use the shared match card and Portuguese number formatting", async ({
+  page,
+}) => {
+  await page.goto("/#/overview");
+  await expect(page.locator(".odd-cell b").first()).toBeVisible();
+  const odds = await page
+    .locator("app-match-card")
+    .first()
+    .locator(".odd-cell b")
+    .allTextContents();
+  await page.goto("/#/odds");
+  await expect(page.locator(".odds-match").first()).toBeVisible();
+  await expect(page.locator(".odds-match > mat-card")).toHaveCount(0);
+  await expect(
+    page.locator(".odds-match app-match-card").first().locator("mat-card"),
+  ).toHaveCount(1);
+  expect(
+    await page
+      .locator(".odds-match app-match-card")
+      .first()
+      .locator(".odd-cell b")
+      .allTextContents(),
+  ).toEqual(odds);
+  expect(odds.every((v) => /^\d+,\d{2}$/.test(v.trim()))).toBe(true);
+  await expect(page.locator(".forecast-evidence").first()).toContainText(
+    "Placar mais frequente",
+  );
+  await expect(page.locator(".prediction-facts").first()).toContainText(" x ");
 });
