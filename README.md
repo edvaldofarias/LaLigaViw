@@ -2,6 +2,8 @@
 
 Aplicação de acompanhamento da La Liga VIW em **Angular 22.2.3**, TypeScript 6.0.3, componentes standalone, Signals e Angular Router. Mantém os resultados, estatísticas, MVP, CARTOLA, seleções, técnicos, artes e câmeras ao vivo.
 
+A interface utiliza **Angular Material + CDK 22**: toolbar, navegação lateral, cartões, filtros, botões, tabelas com MatSort/MatPaginator, painéis e MatDialog. Bootstrap, DataTables e jQuery foram removidos da interface.
+
 ## Executar
 
 ```sh
@@ -30,7 +32,7 @@ Os testes de navegador usam Playwright com Google Chrome instalado, nos tamanhos
 - `src/app/core/competition.service.ts`: estado com Signals, consultas com HttpClient/RxJS, atualização e seleção dos detalhes.
 - `src/app/core/models.ts`: contratos de dados e nomes oficiais das fases.
 - `src/app/pages/`: templates Angular das 11 áreas; carregamento por rota.
-- `src/app/shared/`: componentes de entidades, partidas, DataTables, Chart.js e detalhes.
+- `src/app/shared/`: componentes de entidades, partidas, Angular Material, Chart.js e detalhes.
 - `src/main.ts`: inicialização standalone, modo zoneless e Router.
 - `dist/*.mjs`: módulos de domínio reutilizados e testados: pontuação, simulações, histórico, técnicos, seleções, artes e reprodução HLS.
 - `dist/vendor/`: bibliotecas com versões fixadas e licenças; não editar seus arquivos.

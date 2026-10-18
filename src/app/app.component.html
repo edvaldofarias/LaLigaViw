@@ -1,13 +1,93 @@
-<aside class="rail"><a class="monogram" href="#overview" aria-label="La Liga Viw, início"><img class="rail-logo" src="images/viw-logo-transparent.png" width="52" height="52" alt="VIW"></a><div class="rail-word">LA LIGA VIW</div><span class="rail-year">2026</span></aside>
-<div class="workspace">
-<header class="topbar"><a href="#overview" class="brand"><img class="site-logo" src="images/viw-logo-transparent.png" width="48" height="48" alt="VIW">LA LIGA <strong>VIW</strong><span class="edition">2026</span></a><div class="top-actions"><span class="source-label">CENTRAL DA COMPETIÇÃO</span><button class="install-button" id="install-app" hidden aria-haspopup="dialog">Instalar app</button><button class="icon-button" id="refresh" (click)="s.refresh()" [disabled]="s.busy()" aria-label="Atualizar dados" title="Atualizar dados">↻</button></div></header>
-<main class="container-fluid">
-<section class="page-heading"><div><div class="eyebrow">TEMPORADA 2026 <span>/</span> FUTEBOL</div><h1>Cada jogo conta<span>.</span></h1></div><div class="sync"><span id="sync-state">{{s.sync()}}</span><small id="refresh-policy">{{s.policy()}}</small></div></section>
-<nav class="competition-navigation navbar navbar-expand-xxl bg-white" aria-label="Áreas da competição" (keydown.escape)="closeNav()"><div class="container-fluid"><span class="navbar-brand">{{current()}}</span><button type="button" class="navbar-toggler" id="navigation-toggle" data-bs-toggle="collapse" data-bs-target="#competition-tabs" aria-expanded="false" aria-controls="competition-tabs" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button><div id="competition-tabs" class="collapse navbar-collapse"><div class="navbar-nav">@for(section of sections;track section[0]){<a class="nav-link" [routerLink]="'/'+section[0]" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="closeNav()">{{section[1]}}</a>}</div></div></div></nav>
-@if(s.notice()){<div id="notice" role="status">{{s.notice()}}</div>}<div id="content" aria-live="polite"><router-outlet/></div><footer><span><b>LA LIGA VIW</b> · A competição em detalhes.</span><span id="visitor-count" role="status">{{s.visitors()}}</span><span>Dados: <a href="https://copafacil-web.firebaseio.com/events/-ciddy/matchs.json" target="_blank" rel="noreferrer">Copa Fácil ↗</a></span></footer>
-</main>
-</div>
+<mat-toolbar class="material-toolbar"
+  ><button
+    mat-icon-button
+    id="navigation-toggle"
+    aria-label="Abrir menu"
+    (click)="navOpen.set(!navOpen())"
+  >
+    <span aria-hidden="true">☰</span></button
+  ><a routerLink="/overview" class="brand"
+    ><img
+      src="images/viw-logo-transparent.png"
+      width="44"
+      height="44"
+      alt="VIW"
+    />LA LIGA <strong>VIW</strong></a
+  ><span class="toolbar-spacer"></span
+  ><button mat-button id="install-app" hidden>Instalar app</button
+  ><button
+    mat-icon-button
+    id="refresh"
+    (click)="s.refresh()"
+    [disabled]="s.busy()"
+    aria-label="Atualizar dados"
+  >
+    ↻
+  </button></mat-toolbar
+>
+<mat-sidenav-container class="app-shell"
+  ><mat-sidenav
+    [opened]="navOpen()"
+    (closedStart)="closeNav()"
+    mode="over"
+    fixedInViewport
+    [fixedTopGap]="72"
+    ><div class="drawer-heading">Central da competição</div>
+    <mat-nav-list>
+      @for (section of sections; track section[0]) {
+        <a
+          mat-list-item
+          [routerLink]="'/' + section[0]"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          (click)="closeNav()"
+          >{{ section[1] }}</a
+        >
+      }
+    </mat-nav-list></mat-sidenav
+  ><mat-sidenav-content>
+    <main class="container-fluid">
+      <section class="page-heading">
+        <div>
+          <div class="eyebrow">TEMPORADA 2026 <span>/</span> FUTEBOL</div>
+          <h1>Cada jogo conta<span>.</span></h1>
+        </div>
+        <div class="sync">
+          <span id="sync-state">{{ s.sync() }}</span
+          ><small id="refresh-policy">{{ s.policy() }}</small>
+        </div>
+      </section>
+      <nav class="desktop-navigation" aria-label="Áreas da competição">
+        @for (section of sections; track section[0]) {
+          <a
+            mat-button
+            [routerLink]="'/' + section[0]"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >{{ section[1] }}</a
+          >
+        }
+      </nav>
+      @if (s.notice()) {
+        <div id="notice" role="status">{{ s.notice() }}</div>
+      }
+      <div id="content" aria-live="polite"><router-outlet /></div>
+      <footer>
+        <span><b>LA LIGA VIW</b> · A competição em detalhes.</span
+        ><span id="visitor-count" role="status">{{ s.visitors() }}</span
+        ><span
+          >Dados:
+          <a
+            href="https://copafacil-web.firebaseio.com/events/-ciddy/matchs.json"
+            target="_blank"
+            rel="noreferrer"
+            >Copa Fácil ↗</a
+          ></span
+        >
+      </footer>
+    </main>
+  </mat-sidenav-content></mat-sidenav-container
+>
 
-<app-detail/>
-<dialog id="version-dialog" aria-labelledby="version-title"><div class="version-body"><span class="eyebrow">LA LIGA VIW</span><h2 id="version-title">Uma nova versão está disponível</h2><p>Recarregue a página para ver as novidades. Você continuará na mesma aba do site.</p><div class="version-actions"><button id="reload-version" class="button selection-download">Recarregar agora</button><button id="later-version" class="button">Depois</button></div></div></dialog>
-<dialog id="install-dialog" aria-labelledby="install-title"><div class="dialog-top"><span>LA LIGA VIW / NO SEU CELULAR</span><button class="icon-button" id="close-install" aria-label="Fechar instruções de instalação">×</button></div><div class="install-body"><img src="images/app-icon-192.png" width="72" height="72" alt="VIW"><h2 id="install-title">O campeonato na sua tela inicial</h2><p>Abra a La Liga Viw pelo ícone do celular e acompanhe jogos, classificação e jogadores.</p><button class="install-button" id="install-native" hidden>Instalar agora</button><p id="install-status" role="status" hidden></p><div class="install-guides"><section><h3>iPhone ou iPad</h3><ol><li>Abra este site no <b>Safari</b>.</li><li>Toque em <b>Compartilhar</b> e em <b>Adicionar à Tela de Início</b>.</li><li>Se aparecer <b>Abrir como App da Web</b>, deixe ativado. Confirme em <b>Adicionar</b>.</li></ol></section><section><h3>Android</h3><ol><li>Abra este site no <b>Chrome</b>.</li><li>Toque em <b>Instalar agora</b>, quando disponível, ou abra o menu <b>⋮</b>.</li><li>Escolha <b>Instalar app</b> ou <b>Adicionar à tela inicial</b> e confirme.</li></ol></section></div><p class="install-note">Precisa de internet para carregar o campeonato e atualizar os resultados. Se abriu pelo Instagram ou WhatsApp, abra o link no navegador do celular para instalar.</p></div></dialog>
+<app-detail />
+<app-system-dialogs />

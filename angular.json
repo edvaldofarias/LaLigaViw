@@ -1,1 +1,77 @@
-{"version":1,"newProjectRoot":"projects","projects":{"la-liga-viw":{"projectType":"application","root":"","sourceRoot":"src","architect":{"build":{"builder":"@angular/build:application","options":{"outputPath":".angular-output","index":"src/index.html","browser":"src/main.ts","tsConfig":"tsconfig.app.json","assets":[{"glob":"**/*","input":"dist","output":"/","ignore":["client/**","server/**",".openai/**","index.html","app.js","navigation.mjs","table-ui.mjs","charts-ui.mjs"]}],"styles":["dist/vendor/bootstrap-5.3.8.min.css","dist/vendor/datatables-2.3.4.min.css","dist/vendor/photoswipe-5.4.4.css","dist/style.css","dist/bootstrap-theme.css","src/styles.css"]},"configurations":{"production":{"outputHashing":"all","budgets":[{"type":"initial","maximumWarning":"2mb","maximumError":"4mb"}]},"development":{"optimization":false,"sourceMap":true}},"defaultConfiguration":"production"},"serve":{"builder":"@angular/build:dev-server","configurations":{"production":{"buildTarget":"la-liga-viw:build:production"},"development":{"buildTarget":"la-liga-viw:build:development"}},"defaultConfiguration":"development"}}}},"cli":{"analytics":false}}
+{
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "la-liga-viw": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": ".angular-output",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "dist",
+                "output": "/",
+                "ignore": [
+                  "client/**",
+                  "server/**",
+                  ".openai/**",
+                  "index.html",
+                  "app.js",
+                  "navigation.mjs",
+                  "table-ui.mjs",
+                  "charts-ui.mjs"
+                ]
+              }
+            ],
+            "styles": [
+              "src/theme.scss",
+              "dist/vendor/photoswipe-5.4.4.css",
+              "dist/style.css",
+              "src/styles.css"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "all",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "la-liga-viw:build:production"
+            },
+            "development": {
+              "buildTarget": "la-liga-viw:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

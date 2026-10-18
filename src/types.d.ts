@@ -1,2 +1,6 @@
-declare module '*.mjs';
-interface Window { Chart:any; DataTable:any; Fuse:any; bootstrap:any; dayjs:any; }
+declare module "*.mjs";
+interface Window {
+  Chart: any;
+  Fuse: any;
+  dayjs: any;
+}
