@@ -1066,3 +1066,27 @@ app-entity .entity-content > span {
     font-size: 18px;
   }
 }
+
+/* Give floating labels room below headings across all filter groups. */
+.filters {
+  padding-top: 12px;
+}
+.panel > h3 + .filters {
+  margin-top: 16px;
+}
+.panel.evolution-section {
+  margin-top: 24px;
+}
+.forecast-evidence .prediction-facts > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  text-align: center;
+}
+.forecast-evidence .prediction-facts > div > span,
+.forecast-evidence .prediction-facts > div > b {
+  width: 100%;
+  text-align: center;
+}
