@@ -92,6 +92,50 @@ test("matches opens the current round and reuses compact cards", async ({
     );
   }
 });
+test("statistics combines rankings, team duos and historical awards", async ({
+  page,
+}) => {
+  await page.goto("/#/statistics");
+  await expect(
+    page.getByRole("heading", { name: "Estatísticas", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".statistics-summary article")).toHaveCount(5);
+  for (const heading of [
+    "Melhores jogadores",
+    "Maiores goleadores",
+    "Melhores ataques",
+    "Melhores defesas",
+    "Piores defesas",
+    "Goleiros menos vazados",
+    "Melhores técnicos",
+    "Mais indisciplinados",
+    "Mais vezes na Seleção da Rodada",
+    "Mais vezes no time ideal",
+    "Mais vezes no time ruim",
+    "Equipes com mais premiados",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+  }
+  await expect(page.locator(".statistics-duo-card")).toHaveCount(
+    Object.keys(data.teams).length,
+  );
+  await expect(page.locator(".statistics-match-list button").first()).toBeVisible();
+  await page.locator(".statistics-ranking-list [data-player]").first().click();
+  await expect(page.locator(".player-profile-hero")).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
+test("round five official selection lists all seven supplied players", async ({
+  page,
+}) => {
+  await page.goto("/#/selection");
+  await expect(page.locator("#selection-round")).toContainText("Rodada 5");
+  await expect(page.locator(".selection-grid .selection-card")).toHaveCount(7);
+  await expect(page.locator(".selection-source-note")).toBeVisible();
+});
 test("selects and search fields share the global form style", async ({
   page,
 }) => {
@@ -426,6 +470,69 @@ test("live scoreboard and provisional points update from source without reloadin
   await page.goto("/#/overview");
   await expect(page.locator(".live-table-notice")).toBeVisible();
   await expect(page.locator(".live-points-label")).toHaveCount(2);
+});
+test("live cameras fill the stage and waiting status stays centered", async ({
+  page,
+}) => {
+  await page.route("**/click190.com.br/**", (route) => route.abort());
+  await page.goto("/#/matches");
+  await page.locator('[data-live-court]').first().click();
+  const stage = page.locator(".live-stage");
+  await expect(stage.locator(".live-half")).toHaveCount(2);
+  await expect(stage.locator(".live-scoreboard.waiting")).toContainText(
+    "Aguardando o início da partida",
+  );
+  const wideViewport = page.viewportSize()!.width > 900;
+  if (wideViewport) {
+    await expect
+      .poll(() =>
+        stage.locator("video").first().evaluate((video) => ({
+          fit: getComputedStyle(video).objectFit,
+          fullscreen: Boolean(document.fullscreenElement),
+        })),
+      )
+      .toEqual({ fit: "cover", fullscreen: false });
+    await page.locator(".live-dialog [data-full]").click();
+  }
+  await expect
+    .poll(() =>
+      stage
+        .locator("video")
+        .first()
+        .evaluate((video) => getComputedStyle(video).objectFit),
+    )
+    .toBe("contain");
+  await expect
+    .poll(() =>
+      stage.evaluate((element) => {
+        const stageBox = element.getBoundingClientRect();
+        const cameras = [...element.querySelectorAll(".live-half")];
+        const cameraWidth = cameras.reduce(
+          (total, camera) => total + camera.getBoundingClientRect().width,
+          0,
+        );
+        const scoreboard = element
+          .querySelector(".live-scoreboard")!
+          .getBoundingClientRect();
+        return {
+          fillsStage: Math.abs(cameraWidth - stageBox.width) <= 1,
+          centered:
+            Math.abs(
+              scoreboard.left +
+                scoreboard.width / 2 -
+                (stageBox.left + stageBox.width / 2),
+            ) <= 1,
+          overlay:
+            getComputedStyle(
+              element.querySelector(".live-scoreboard")!,
+            ).position === "absolute",
+        };
+      }),
+    )
+    .toEqual({ fillsStage: true, centered: true, overlay: true });
+  await page.evaluate(() =>
+    document.querySelector<HTMLDialogElement>(".live-dialog")!.close(),
+  );
 });
 test("Material controls sort, filter, paginate and open accessible navigation", async ({
   page,

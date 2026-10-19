@@ -23,6 +23,7 @@ export const SECTIONS = [
   ["matches", "Partidas"],
   ["teams", "Equipes"],
   ["players", "Jogadores"],
+  ["statistics", "Estatísticas"],
   ["selection", "Seleção da rodada"],
   ["motm", "Melhor em campo"],
   ["coaches", "Técnicos"],

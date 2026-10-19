@@ -5,6 +5,8 @@
       {{
         view() === "cartola"
           ? "Exemplo para um futuro Cartola: time ideal e menores pontuações por rodada."
+          : view() === "statistics"
+            ? "Rankings e marcas da temporada, atualizados com as partidas encerradas."
           : view() === "ballon"
             ? "A corrida pelo melhor jogador do campeonato."
             : "A competição em detalhes · Horário de Brasília"
@@ -251,6 +253,301 @@
       contam. — indica estatística indisponível na fonte.
     </p>
   }
+  @case ("statistics") {
+    <section class="statistics-dashboard">
+      <div class="statistics-summary" aria-label="Resumo da competição">
+        <article>
+          <span>Partidas encerradas</span>
+          <strong>{{ s.statistics().summary.matches }}</strong>
+        </article>
+        <article>
+          <span>Gols marcados</span>
+          <strong>{{ s.statistics().summary.goals }}</strong>
+          <small>{{ decimal(s.statistics().summary.average) }} por jogo</small>
+        </article>
+        <article>
+          <span>Autores de gols</span>
+          <strong>{{ s.statistics().summary.scorers }}</strong>
+        </article>
+        <article>
+          <span>Jogos sem sofrer gol</span>
+          <strong>{{ s.statistics().summary.cleanSheets }}</strong>
+        </article>
+        <article>
+          <span>Cartões registrados</span>
+          <strong>{{ s.statistics().summary.cards }}</strong>
+        </article>
+      </div>
+
+      <div class="statistics-ranking-grid">
+        <article class="statistics-panel">
+          <header><span>Destaques</span><h3>Melhores jogadores</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().players; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ player.total }} pts</strong>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Aguardando dados do MVP.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Artilharia</span><h3>Maiores goleadores</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().scorers; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ player.goals }} gols</strong>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Nenhum gol registrado.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Produção ofensiva</span><h3>Melhores ataques</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (team of s.statistics().attacks; track team.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="team" kind="team" />
+                <strong>{{ team.gf }} gols</strong>
+                <small>{{ decimal(team.gfAverage) }} por jogo</small>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Consistência</span><h3>Melhores defesas</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (team of s.statistics().defenses; track team.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="team" kind="team" />
+                <strong>{{ team.ga }} sofridos</strong>
+                <small>{{ decimal(team.gaAverage) }} por jogo</small>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel statistics-panel-danger">
+          <header><span>Ponto de atenção</span><h3>Piores defesas</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (team of s.statistics().worstDefenses; track team.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="team" kind="team" />
+                <strong>{{ team.ga }} sofridos</strong>
+                <small>{{ decimal(team.gaAverage) }} por jogo</small>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Camisa 1</span><h3>Goleiros menos vazados</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().goalkeepers; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ decimal(player.average) }} por jogo</strong>
+                <small>{{ player.cleanSheets }} jogos sem sofrer</small>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Aguardando súmulas dos goleiros.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Comissão técnica</span><h3>Melhores técnicos</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (coach of s.statistics().coaches; track coach.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="coach" kind="coach" />
+                <strong>{{ coach.percent }}%</strong>
+                <small>{{ coach.wins }} vitórias em {{ coach.played }}</small>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Aguardando histórico dos técnicos.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel statistics-panel-warning">
+          <header><span>Disciplina</span><h3>Mais indisciplinados</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().indiscipline; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ player.yellow }} CA · {{ player.red }} CV</strong>
+                <small>{{ decimal(player.discipline) }} pontos</small>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Nenhum cartão registrado.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Reconhecimento</span><h3>Mais vezes na Seleção da Rodada</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().selectionAppearances; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ player.count }} aparições</strong>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Cartola</span><h3>Mais vezes no time ideal</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().cartolaIdealAppearances; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ player.count }} aparições</strong>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Aguardando rodadas completas.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel statistics-panel-danger">
+          <header><span>Cartola</span><h3>Mais vezes no time ruim</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (player of s.statistics().cartolaWorstAppearances; track player.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="player" />
+                <strong>{{ player.count }} aparições</strong>
+              </li>
+            } @empty {
+              <li class="statistics-empty">Aguardando rodadas completas.</li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Força coletiva</span><h3>Equipes com mais premiados</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (team of s.statistics().teamHonors; track team.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="team" kind="team" />
+                <strong>{{ team.players }} jogadores</strong>
+                <small>{{ team.appearances }} premiações · {{ team.awards }} melhores em campo</small>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Proteção da meta</span><h3>Mais jogos sem sofrer gol</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (team of s.statistics().cleanSheets; track team.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="team" kind="team" />
+                <strong>{{ team.cleanSheets }} jogos</strong>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="statistics-panel">
+          <header><span>Regularidade</span><h3>Maiores sequências invictas</h3></header>
+          <ol class="statistics-ranking-list">
+            @for (team of s.statistics().unbeaten; track team.id) {
+              <li>
+                <b>{{ $index + 1 }}</b>
+                <app-entity [entity]="team" kind="team" />
+                <strong>{{ team.unbeaten }} jogos</strong>
+              </li>
+            }
+          </ol>
+        </article>
+      </div>
+
+      <section class="statistics-duos" aria-labelledby="statistics-duos-title">
+        <header class="statistics-section-heading">
+          <div>
+            <span>Parcerias decisivas</span>
+            <h3 id="statistics-duos-title">Melhor dupla de cada equipe</h3>
+          </div>
+          <p>Os dois maiores goleadores de cada elenco.</p>
+        </header>
+        <div class="statistics-duo-grid">
+          @for (duo of s.statistics().duos; track duo.teamId) {
+            <article class="statistics-duo-card">
+              <header>
+                <app-entity [entity]="duo.team" kind="team" />
+                <strong>{{ duo.goals }} gols</strong>
+              </header>
+              <div>
+                @for (player of duo.members; track player.id) {
+                  <span>
+                    <app-entity [entity]="player" />
+                    <b>{{ player.goals }}</b>
+                  </span>
+                } @empty {
+                  <small>Elenco ainda sem jogadores cadastrados.</small>
+                }
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <div class="statistics-match-grid">
+        <section class="statistics-panel">
+          <header><span>Recordes</span><h3>Maiores goleadas</h3></header>
+          <div class="statistics-match-list">
+            @for (match of s.statistics().biggestWins; track match.id) {
+              <button type="button" (click)="s.open('match', match.id)">
+                <span>{{ s.name(match.home?.name) }}</span>
+                <strong>{{ match.homeGoals }} × {{ match.awayGoals }}</strong>
+                <span>{{ s.name(match.away?.name) }}</span>
+                <small>Diferença de {{ match.margin }} gols</small>
+              </button>
+            } @empty {
+              <p class="statistics-empty">Nenhuma goleada registrada.</p>
+            }
+          </div>
+        </section>
+        <section class="statistics-panel">
+          <header><span>Placar movimentado</span><h3>Jogos com mais gols</h3></header>
+          <div class="statistics-match-list">
+            @for (match of s.statistics().highestScoring; track match.id) {
+              <button type="button" (click)="s.open('match', match.id)">
+                <span>{{ s.name(match.home?.name) }}</span>
+                <strong>{{ match.homeGoals }} × {{ match.awayGoals }}</strong>
+                <span>{{ s.name(match.away?.name) }}</span>
+                <small>{{ match.totalGoals }} gols na partida</small>
+              </button>
+            } @empty {
+              <p class="statistics-empty">Nenhum placar disponível.</p>
+            }
+          </div>
+        </section>
+      </div>
+    </section>
+  }
   @case ("ballon") {
     @if (s.scoreStatus().pending) {
       <p class="sheet-warning">
@@ -344,30 +641,36 @@
       >
     </div>
     @if (selectedSelection(); as r) {
-      <mat-card class="selection-art panel feature-panel" appearance="outlined"
-        ><a
-          class="selection-art-preview"
-          [href]="r.poster"
-          target="_blank"
-          rel="noopener"
-          ><img
-            [src]="r.poster"
-            width="1080"
-            height="1350"
-            [alt]="'Seleção da rodada ' + r.roundNumber"
-        /></a>
-        <div class="selection-art-info">
-          <h3>A seleção em uma imagem.</h3>
-          <p>Escolha da organização. Fotos originais dos jogadores.</p>
-          <a
-            mat-flat-button
-            class="button selection-download"
+      @if (r.poster) {
+        <mat-card class="selection-art panel feature-panel" appearance="outlined"
+          ><a
+            class="selection-art-preview"
             [href]="r.poster"
-            [download]="'viw-selecao-rodada-' + r.roundNumber + '.png'"
-            >Baixar PNG ↓</a
-          >
-        </div></mat-card
-      >
+            target="_blank"
+            rel="noopener"
+            ><img
+              [src]="r.poster"
+              width="1080"
+              height="1350"
+              [alt]="'Seleção da rodada ' + r.roundNumber"
+          /></a>
+          <div class="selection-art-info">
+            <h3>A seleção em uma imagem.</h3>
+            <p>Escolha da organização. Fotos originais dos jogadores.</p>
+            <a
+              mat-flat-button
+              class="button selection-download"
+              [href]="r.poster"
+              [download]="'viw-selecao-rodada-' + r.roundNumber + '.png'"
+              >Baixar PNG ↓</a
+            >
+          </div></mat-card
+        >
+      } @else {
+        <p class="selection-source-note">
+          Seleção oficial informada pela organização.
+        </p>
+      }
       <div class="selection-grid">
         @for (p of r.players; track p.playerId) {
           <article class="selection-card modern-card">

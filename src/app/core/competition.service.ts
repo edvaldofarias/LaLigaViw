@@ -37,6 +37,7 @@ import {
 import { matchAwards } from "../../../dist/awards.mjs";
 import { championshipSelections } from "../../../dist/selections.mjs";
 import { coaches, coachFor, coachStatistics } from "../../../dist/coaches.mjs";
+import { buildStatistics } from "../../../dist/statistics.mjs";
 import { predictMatchCoaches } from "../../../dist/coach-predictions.mjs";
 import { isGoalkeeper } from "../../../dist/goalkeepers.mjs";
 import {
@@ -130,6 +131,15 @@ export class CompetitionService {
   readonly staff = computed<any[]>(() =>
     coachStatistics(this.data()).sort(
       (a, b) => b.percent - a.percent || b.gd - a.gd || b.gf - a.gf,
+    ),
+  );
+  readonly statistics = computed<any>(() =>
+    buildStatistics(
+      this.data(),
+      this.ranking(),
+      this.staff(),
+      this.awards,
+      this.selections,
     ),
   );
   readonly upcoming = computed<any[]>(() => nextRoundMatches(this.data()));

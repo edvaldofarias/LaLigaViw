@@ -175,6 +175,21 @@ export const championshipSelections = [
     }
   ]
 },
+{
+  id:'2026-round-5', season:2026, roundNumber:5,
+  poster:null,
+  phaseId:'1780479913323', roundId:'1780480353037',
+  source:'Seleção informada pela organização',
+  players:[
+    {playerId:'1789257941190',name:'Kaique',teamId:'-OuCEPqc-2Ju1pdvU4j1',teamName:'Atlético de Madrid'},
+    {playerId:'1789257958344',name:'Júnior',teamId:'-OuCEPqc-2Ju1pdvU4j1',teamName:'Atlético de Madrid'},
+    {playerId:'1789220352095',name:'Felipe',teamId:'-OuCE8ygQVY-3BXzP80H',teamName:'Rayo Vallecano'},
+    {playerId:'1789220936288',name:'Efraim',teamId:'-OuCE5UUPYmEL7Mnf4-D',teamName:'Sevilla'},
+    {playerId:'1789257892581',name:'Yurick',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+    {playerId:'1789257901399',name:'Pimenta',teamId:'-OuCEPqc-2Ju1pdvU4j1',teamName:'Atlético de Madrid'},
+    {playerId:'1789199579917',name:'Alan',teamId:'-OuCEBQOxXueVsu4_Pbt',teamName:'Real Sociedad'},
+  ],
+},
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){

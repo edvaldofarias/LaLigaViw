@@ -257,6 +257,12 @@ export class CompetitionPageComponent {
     const m = this.s.matches().find((m) => m.m_set === id);
     return m ? this.s.phase(m.fs) + " · " + this.s.round(m) : "Rodada";
   }
+  decimal(value: number) {
+    return value.toLocaleString("pt-BR", {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
+  }
   teamCrest(id: string) {
     return teamCrestSource(this.s, id);
   }
