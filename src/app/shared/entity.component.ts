@@ -1,6 +1,41 @@
 import { MATERIAL } from "./material";
 import { Component, input, inject } from "@angular/core";
 import { CompetitionService } from "../core/competition.service";
+
+export function entityPlaceholder(
+  service: CompetitionService,
+  entity: any,
+) {
+  const initials = service
+    .name(entity.name)
+    .split(" ")
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" fill="#e9edf2"/><text x="80" y="86" text-anchor="middle" dominant-baseline="middle" fill="#647186" font-family="Arial,sans-serif" font-size="48" font-weight="700">${initials}</text></svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+export function entityImageSource(service: CompetitionService, entity: any) {
+  const source = entity.url || entity.photo;
+  return /^https:\/\//.test(source || "")
+    ? source
+    : entityPlaceholder(service, entity);
+}
+
+export function entityImageFallback(
+  service: CompetitionService,
+  entity: any,
+  event: Event,
+) {
+  const image = event.target as HTMLImageElement;
+  if (!image.dataset["fallback"]) {
+    image.dataset["fallback"] = "1";
+    image.src = entityPlaceholder(service, entity);
+  }
+}
+
 @Component({
   selector: "app-entity",
   standalone: true,
@@ -74,25 +109,12 @@ export class EntityComponent {
   entity = input.required<any>();
   kind = input<"team" | "player" | "coach">("player");
   image() {
-    const u = this.entity().url || this.entity().photo;
-    return /^https:\/\//.test(u || "") ? u : this.placeholder();
+    return entityImageSource(this.store, this.entity());
   }
   placeholder() {
-    const initials = this.store
-      .name(this.entity().name)
-      .split(" ")
-      .slice(0, 2)
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase();
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" fill="#e9edf2"/><text x="80" y="86" text-anchor="middle" dominant-baseline="middle" fill="#647186" font-family="Arial,sans-serif" font-size="48" font-weight="700">${initials}</text></svg>`;
-    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    return entityPlaceholder(this.store, this.entity());
   }
   fallback(e: Event) {
-    const img = e.target as HTMLImageElement;
-    if (!img.dataset["fallback"]) {
-      img.dataset["fallback"] = "1";
-      img.src = this.placeholder();
-    }
+    entityImageFallback(this.store, this.entity(), e);
   }
 }

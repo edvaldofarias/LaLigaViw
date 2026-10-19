@@ -1,0 +1,305 @@
+<div class="section-title">
+  <div>
+    <h2>Votação secreta</h2>
+    <p>Opine sobre cada partida sem exibir seu nome, e-mail ou foto.</p>
+  </div>
+</div>
+
+<section class="voting-layout">
+  <mat-card class="voting-card" appearance="outlined">
+    <span class="profile-eyebrow">Acesso protegido</span>
+    <h3>Entre com sua conta Google</h3>
+    <p>
+      O login garante um voto por etapa. Nome e e-mail ficam disponíveis apenas
+      para a administração; os resultados públicos não identificam quem votou.
+    </p>
+    @if (!voting.signedIn()) {
+      <button
+        mat-flat-button
+        class="google-signin"
+        [disabled]="!voting.ready()"
+        (click)="voting.signIn()"
+      >
+        Entrar com Google
+      </button>
+    } @else {
+      <button mat-button class="google-signin" (click)="voting.signOut()">
+        Sair da conta Google
+      </button>
+    }
+    @if (voting.message()) {
+      <p class="voting-message" role="status">{{ voting.message() }}</p>
+    }
+  </mat-card>
+
+  <mat-card class="voting-card voting-form" appearance="outlined">
+    <span class="profile-eyebrow">Seu voto é definitivo</span>
+    <h3>Escolha a rodada e a partida</h3>
+    <mat-form-field appearance="outline">
+      <mat-label>Rodada</mat-label>
+      <mat-select
+        [ngModel]="selectedRound()"
+        (ngModelChange)="roundId.set($event)"
+      >
+        @for (round of availableRounds(); track round.id) {
+          <mat-option [value]="round.id">{{ roundLabel(round) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Partida</mat-label>
+      <mat-select
+        [ngModel]="matchId()"
+        (ngModelChange)="matchId.set($event)"
+      >
+        <mat-select-trigger>
+          @if (match(); as selected) {
+            <span class="voting-match-option selected">
+              <img
+                [src]="teamCrest(selected.team1)"
+                referrerpolicy="no-referrer"
+                (error)="crestFallback($event, selected.team1)"
+                alt=""
+              />
+              <span>{{ s.name(s.team(selected.team1)?.name) }}</span>
+              <b>{{ s.score(selected) }}</b>
+              <span>{{ s.name(s.team(selected.team2)?.name) }}</span>
+              <img
+                [src]="teamCrest(selected.team2)"
+                referrerpolicy="no-referrer"
+                (error)="crestFallback($event, selected.team2)"
+                alt=""
+              />
+            </span>
+          }
+        </mat-select-trigger>
+        @for (item of roundMatches(); track item.id) {
+          <mat-option [value]="item.id">
+            <span class="voting-match-option">
+              <img
+                [src]="teamCrest(item.team1)"
+                referrerpolicy="no-referrer"
+                (error)="crestFallback($event, item.team1)"
+                alt=""
+              />
+              <span>{{ s.name(s.team(item.team1)?.name) }}</span>
+              <b>{{ s.score(item) }}</b>
+              <span>{{ s.name(s.team(item.team2)?.name) }}</span>
+              <img
+                [src]="teamCrest(item.team2)"
+                referrerpolicy="no-referrer"
+                (error)="crestFallback($event, item.team2)"
+                alt=""
+              />
+              <small>{{ s.date(item) }}</small>
+            </span>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (match(); as selectedMatch) {
+      <div class="voting-match-score">
+        <div>
+          <img
+            [src]="teamCrest(selectedMatch.team1)"
+            referrerpolicy="no-referrer"
+            (error)="crestFallback($event, selectedMatch.team1)"
+            alt=""
+          />
+          <strong>{{ s.name(s.team(selectedMatch.team1)?.name) }}</strong>
+        </div>
+        <span>
+          <small>Resultado final</small>
+          <b>{{ s.score(selectedMatch) }}</b>
+        </span>
+        <div class="away">
+          <strong>{{ s.name(s.team(selectedMatch.team2)?.name) }}</strong>
+          <img
+            [src]="teamCrest(selectedMatch.team2)"
+            referrerpolicy="no-referrer"
+            (error)="crestFallback($event, selectedMatch.team2)"
+            alt=""
+          />
+        </div>
+      </div>
+      <p class="subtle">
+        Vitória: melhor 10, pior 4 · Derrota: melhor 6, pior 1 · Empate:
+        melhor 8, pior 2.
+      </p>
+      <div class="voting-team-highlights">
+        <section>
+          <h3>
+            <img
+              [src]="teamCrest(selectedMatch.team1)"
+              referrerpolicy="no-referrer"
+              (error)="crestFallback($event, selectedMatch.team1)"
+              alt=""
+            />
+            {{ s.name(s.team(selectedMatch.team1)?.name) }}
+          </h3>
+          <mat-form-field appearance="outline">
+            <mat-label
+              >Melhor do time ·
+              {{ teamPoints(selectedMatch, 1).best }} pts</mat-label
+            >
+            <mat-select
+              [ngModel]="team1BestPlayerId()"
+              (ngModelChange)="team1BestPlayerId.set($event)"
+            >
+              @for (player of team1Players(); track player.id) {
+                <mat-option [value]="player.id">
+                  <span class="voting-player-option">
+                    <img
+                      [src]="playerPhoto(player)"
+                      referrerpolicy="no-referrer"
+                      (error)="playerPhotoFallback($event, player)"
+                      alt=""
+                    />
+                    {{ s.name(player.name) }}
+                  </span>
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label
+              >Pior do time ·
+              {{ teamPoints(selectedMatch, 1).worst }} pts</mat-label
+            >
+            <mat-select
+              [ngModel]="team1WorstPlayerId()"
+              (ngModelChange)="team1WorstPlayerId.set($event)"
+            >
+              @for (player of team1Players(); track player.id) {
+                <mat-option [value]="player.id">
+                  <span class="voting-player-option">
+                    <img
+                      [src]="playerPhoto(player)"
+                      referrerpolicy="no-referrer"
+                      (error)="playerPhotoFallback($event, player)"
+                      alt=""
+                    />
+                    {{ s.name(player.name) }}
+                  </span>
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section>
+          <h3>
+            <img
+              [src]="teamCrest(selectedMatch.team2)"
+              referrerpolicy="no-referrer"
+              (error)="crestFallback($event, selectedMatch.team2)"
+              alt=""
+            />
+            {{ s.name(s.team(selectedMatch.team2)?.name) }}
+          </h3>
+          <mat-form-field appearance="outline">
+            <mat-label
+              >Melhor do time ·
+              {{ teamPoints(selectedMatch, 2).best }} pts</mat-label
+            >
+            <mat-select
+              [ngModel]="team2BestPlayerId()"
+              (ngModelChange)="team2BestPlayerId.set($event)"
+            >
+              @for (player of team2Players(); track player.id) {
+                <mat-option [value]="player.id">
+                  <span class="voting-player-option">
+                    <img
+                      [src]="playerPhoto(player)"
+                      referrerpolicy="no-referrer"
+                      (error)="playerPhotoFallback($event, player)"
+                      alt=""
+                    />
+                    {{ s.name(player.name) }}
+                  </span>
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label
+              >Pior do time ·
+              {{ teamPoints(selectedMatch, 2).worst }} pts</mat-label
+            >
+            <mat-select
+              [ngModel]="team2WorstPlayerId()"
+              (ngModelChange)="team2WorstPlayerId.set($event)"
+            >
+              @for (player of team2Players(); track player.id) {
+                <mat-option [value]="player.id">
+                  <span class="voting-player-option">
+                    <img
+                      [src]="playerPhoto(player)"
+                      referrerpolicy="no-referrer"
+                      (error)="playerPhotoFallback($event, player)"
+                      alt=""
+                    />
+                    {{ s.name(player.name) }}
+                  </span>
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </section>
+      </div>
+      <button
+        mat-flat-button
+        class="voting-submit"
+        [disabled]="busy() || !voting.credential() || !!result()"
+        (click)="submit()"
+      >
+        {{ busy() ? "Enviando…" : "Confirmar voto definitivo" }}
+      </button>
+    }
+    @if (feedback()) {
+      <p class="voting-message" role="status">{{ feedback() }}</p>
+    }
+  </mat-card>
+
+  @if (result(); as data) {
+    <mat-card class="voting-card voting-results" appearance="outlined">
+      <span class="profile-eyebrow">Resultado anônimo</span>
+      <h3>{{ data.total }} voto(s) nesta etapa</h3>
+      <h4>Melhor de {{ s.name(s.team(match()?.team1)?.name) }}</h4>
+      @for (item of data.team1Best; track item.id) {
+        <p>
+          <strong>{{ playerName(item.id) }}</strong>
+          <span>{{ item.votes }} voto(s)</span>
+        </p>
+      }
+      <h4>Pior de {{ s.name(s.team(match()?.team1)?.name) }}</h4>
+      @for (item of data.team1Worst; track item.id) {
+        <p>
+          <strong>{{ playerName(item.id) }}</strong>
+          <span>{{ item.votes }} voto(s)</span>
+        </p>
+      }
+      <h4>Melhor de {{ s.name(s.team(match()?.team2)?.name) }}</h4>
+      @for (item of data.team2Best; track item.id) {
+        <p>
+          <strong>{{ playerName(item.id) }}</strong>
+          <span>{{ item.votes }} voto(s)</span>
+        </p>
+      }
+      <h4>Pior de {{ s.name(s.team(match()?.team2)?.name) }}</h4>
+      @for (item of data.team2Worst; track item.id) {
+        <p>
+          <strong>{{ playerName(item.id) }}</strong>
+          <span>{{ item.votes }} voto(s)</span>
+        </p>
+      }
+      <h4>Pontuação</h4>
+      @for (item of data.playerPoints; track item.id) {
+        <p>
+          <strong>{{ playerName(item.id) }}</strong>
+          <span>{{ item.points }} ponto(s)</span>
+        </p>
+      }
+    </mat-card>
+  }
+</section>

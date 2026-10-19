@@ -1,0 +1,66 @@
+<div class="section-title">
+  <div>
+    <h2>Usuário</h2>
+    <p>Gerencie seu perfil e seus dados no LA LIGA VIW.</p>
+  </div>
+</div>
+
+<section class="user-profile-layout">
+  @if (!voting.signedIn()) {
+    <mat-card class="voting-card" appearance="outlined">
+      <span class="profile-eyebrow">Conta</span>
+      <h3>Entre com sua conta Google</h3>
+      <button
+        mat-flat-button
+        [disabled]="!voting.ready()"
+        (click)="voting.signIn()"
+      >
+        Entrar com Google
+      </button>
+    </mat-card>
+  } @else if (profile(); as user) {
+    <mat-card class="voting-card user-profile-card" appearance="outlined">
+      <span class="profile-eyebrow">Conta Google</span>
+      <h3>{{ user.name }}</h3>
+      <p>{{ user.email }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Apelido público do bolão</mat-label>
+        <input
+          matInput
+          maxlength="24"
+          [ngModel]="nickname()"
+          (ngModelChange)="nickname.set($event)"
+        />
+        <mat-hint>Entre 3 e 24 caracteres</mat-hint>
+      </mat-form-field>
+      <div class="user-profile-actions">
+        <button mat-flat-button [disabled]="busy()" (click)="saveNickname()">
+          Salvar apelido
+        </button>
+        <button mat-button [disabled]="busy()" (click)="voting.signOut()">
+          Sair
+        </button>
+      </div>
+    </mat-card>
+
+    <mat-card class="voting-card user-danger-card" appearance="outlined">
+      <span class="profile-eyebrow">Privacidade</span>
+      <h3>Excluir todos os meus dados</h3>
+      <p>
+        Remove permanentemente votos, avaliações, palpites, posição no ranking,
+        apelido, nome e e-mail armazenados neste aplicativo.
+      </p>
+      <button
+        mat-stroked-button
+        color="warn"
+        [disabled]="busy()"
+        (click)="deleteEverything()"
+      >
+        Excluir tudo
+      </button>
+    </mat-card>
+  }
+  @if (feedback()) {
+    <p class="voting-message" role="status">{{ feedback() }}</p>
+  }
+</section>

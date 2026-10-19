@@ -21,6 +21,8 @@ export const PHASE_NAMES: Record<string, string> = {
 export const SECTIONS = [
   ["overview", "Visão geral"],
   ["matches", "Partidas"],
+  ["voting", "Votação secreta"],
+  ["pool", "Bolão"],
   ["teams", "Equipes"],
   ["players", "Jogadores"],
   ["statistics", "Estatísticas"],
@@ -29,6 +31,7 @@ export const SECTIONS = [
   ["coaches", "Técnicos"],
   ["ballon", "MVP"],
   ["cartola", "CARTOLA"],
+  ["user", "Usuário"],
 ];
 export const displayName = (s: any) =>
   String(s ?? "A definir")

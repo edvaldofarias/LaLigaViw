@@ -35,6 +35,7 @@
     ><div class="drawer-heading">Central da competição</div>
     <mat-nav-list>
       @for (section of sections; track section[0]) {
+        @if (section[0] !== "user" || voting.signedIn()) {
         <a
           mat-list-item
           [routerLink]="'/' + section[0]"
@@ -43,6 +44,7 @@
           (click)="closeNav()"
           >{{ section[1] }}</a
         >
+        }
       }
     </mat-nav-list></mat-sidenav
   ><mat-sidenav-content>
@@ -59,6 +61,7 @@
       </section>
       <nav class="desktop-navigation" aria-label="Áreas da competição">
         @for (section of sections; track section[0]) {
+          @if (section[0] !== "user" || voting.signedIn()) {
           <a
             mat-button
             [routerLink]="'/' + section[0]"
@@ -66,6 +69,7 @@
             ariaCurrentWhenActive="page"
             >{{ section[1] }}</a
           >
+          }
         }
       </nav>
       @if (s.notice()) {

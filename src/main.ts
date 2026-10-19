@@ -24,9 +24,21 @@ bootstrapApplication(AppComponent, {
         ...SECTIONS.map(([view]) => ({
           path: view,
           loadComponent: () =>
-            import("./app/pages/competition-page.component").then(
-              (m) => m.CompetitionPageComponent,
-            ),
+            view === "voting"
+              ? import("./app/pages/voting-page.component").then(
+                  (m) => m.VotingPageComponent,
+                )
+              : view === "pool"
+                ? import("./app/pages/pool-page.component").then(
+                    (m) => m.PoolPageComponent,
+                  )
+                : view === "user"
+                  ? import("./app/pages/user-page.component").then(
+                      (m) => m.UserPageComponent,
+                    )
+              : import("./app/pages/competition-page.component").then(
+                  (m) => m.CompetitionPageComponent,
+                ),
           data: { view },
         })),
         { path: "", pathMatch: "full", redirectTo: "overview" },

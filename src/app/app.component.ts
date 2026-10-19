@@ -18,6 +18,7 @@ import {
   NavigationEnd,
 } from "@angular/router";
 import { CompetitionService } from "./core/competition.service";
+import { VotingService } from "./core/voting.service";
 import { DetailComponent } from "./shared/detail.component";
 import { SECTIONS } from "./core/models";
 @Component({
@@ -39,6 +40,7 @@ import { SECTIONS } from "./core/models";
 export class AppComponent {
   navOpen = signal(false);
   s = inject(CompetitionService);
+  voting = inject(VotingService);
   sections = SECTIONS;
   private router = inject(Router);
   url = signal(this.router.url);
@@ -56,6 +58,7 @@ export class AppComponent {
       }
     });
     afterNextRender(async () => {
+      await this.voting.initialize();
       await import("../../dist/live-court.mjs");
       await import("../../dist/gallery-ui.mjs");
       void this.s.start();
