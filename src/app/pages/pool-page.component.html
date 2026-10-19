@@ -35,8 +35,8 @@
     <span class="profile-eyebrow">Próxima rodada</span>
     @if (upcomingMatches().length) {
       <p class="subtle">
-        Seu apelido do ranking é configurado na
-        <a routerLink="/user">aba Usuário</a>.
+        O ranking usa seu nome Google como apelido padrão. Você pode alterá-lo
+        na <a routerLink="/user">aba Usuário</a>.
       </p>
       <div class="pool-match-list">
         @for (match of upcomingMatches(); track match.id) {

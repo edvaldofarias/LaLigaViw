@@ -31,7 +31,10 @@
           [ngModel]="nickname()"
           (ngModelChange)="nickname.set($event)"
         />
-        <mat-hint>Entre 3 e 24 caracteres</mat-hint>
+        <mat-hint
+          >Seu nome Google é usado inicialmente. Entre 3 e 24
+          caracteres.</mat-hint
+        >
       </mat-form-field>
       <div class="user-profile-actions">
         <button mat-flat-button [disabled]="busy()" (click)="saveNickname()">

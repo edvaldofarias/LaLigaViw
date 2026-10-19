@@ -106,6 +106,21 @@ export class VotingService {
     );
   }
 
+  async status() {
+    const headers = await this.authorizationHeader();
+    return firstValueFrom(
+      this.http.get<{
+        votes: Array<{
+          matchId: string;
+          team1BestPlayerId: string;
+          team1WorstPlayerId: string;
+          team2BestPlayerId: string;
+          team2WorstPlayerId: string;
+        }>;
+      }>("/api/votes/status", { headers }),
+    );
+  }
+
   errorMessage(error: unknown) {
     if (error instanceof HttpErrorResponse)
       return error.error?.error || "Não foi possível acessar a votação";

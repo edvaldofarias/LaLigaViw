@@ -54,7 +54,10 @@
       >
         <mat-select-trigger>
           @if (match(); as selected) {
-            <span class="voting-match-option selected">
+            <span
+              class="voting-match-option selected"
+              [class.voted]="hasVoted(selected.id)"
+            >
               <img
                 [src]="teamCrest(selected.team1)"
                 referrerpolicy="no-referrer"
@@ -74,7 +77,10 @@
           }
         </mat-select-trigger>
         @for (item of roundMatches(); track item.id) {
-          <mat-option [value]="item.id">
+          <mat-option
+            [value]="item.id"
+            [class.voted-match-option]="hasVoted(item.id)"
+          >
             <span class="voting-match-option">
               <img
                 [src]="teamCrest(item.team1)"
@@ -91,7 +97,9 @@
                 (error)="crestFallback($event, item.team2)"
                 alt=""
               />
-              <small>{{ s.date(item) }}</small>
+              <small>{{
+                hasVoted(item.id) ? "✓ Votado" : s.date(item)
+              }}</small>
             </span>
           </mat-option>
         }
@@ -123,6 +131,29 @@
           />
         </div>
       </div>
+      @if (personalVote(); as vote) {
+        <div class="personal-vote">
+          <span class="profile-eyebrow">Seu voto nesta partida</span>
+          <div>
+            <p>
+              <small>Melhor de {{ s.name(s.team(selectedMatch.team1)?.name) }}</small>
+              <strong>{{ playerName(vote.team1BestPlayerId) }}</strong>
+            </p>
+            <p>
+              <small>Pior de {{ s.name(s.team(selectedMatch.team1)?.name) }}</small>
+              <strong>{{ playerName(vote.team1WorstPlayerId) }}</strong>
+            </p>
+            <p>
+              <small>Melhor de {{ s.name(s.team(selectedMatch.team2)?.name) }}</small>
+              <strong>{{ playerName(vote.team2BestPlayerId) }}</strong>
+            </p>
+            <p>
+              <small>Pior de {{ s.name(s.team(selectedMatch.team2)?.name) }}</small>
+              <strong>{{ playerName(vote.team2WorstPlayerId) }}</strong>
+            </p>
+          </div>
+        </div>
+      }
       <p class="subtle">
         Vitória: melhor 10, pior 4 · Derrota: melhor 6, pior 1 · Empate:
         melhor 8, pior 2.
@@ -146,6 +177,7 @@
             <mat-select
               [ngModel]="team1BestPlayerId()"
               (ngModelChange)="team1BestPlayerId.set($event)"
+              [disabled]="!!personalVote()"
             >
               @for (player of team1Players(); track player.id) {
                 <mat-option [value]="player.id">
@@ -170,6 +202,7 @@
             <mat-select
               [ngModel]="team1WorstPlayerId()"
               (ngModelChange)="team1WorstPlayerId.set($event)"
+              [disabled]="!!personalVote()"
             >
               @for (player of team1Players(); track player.id) {
                 <mat-option [value]="player.id">
@@ -205,6 +238,7 @@
             <mat-select
               [ngModel]="team2BestPlayerId()"
               (ngModelChange)="team2BestPlayerId.set($event)"
+              [disabled]="!!personalVote()"
             >
               @for (player of team2Players(); track player.id) {
                 <mat-option [value]="player.id">
@@ -229,6 +263,7 @@
             <mat-select
               [ngModel]="team2WorstPlayerId()"
               (ngModelChange)="team2WorstPlayerId.set($event)"
+              [disabled]="!!personalVote()"
             >
               @for (player of team2Players(); track player.id) {
                 <mat-option [value]="player.id">

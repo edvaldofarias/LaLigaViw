@@ -16,7 +16,7 @@ async function initialize(db) {
       db
         .batch([
           db.prepare(
-            "CREATE TABLE IF NOT EXISTS voter_profiles (uid TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT NOT NULL, nickname TEXT COLLATE NOCASE UNIQUE, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
+            "CREATE TABLE IF NOT EXISTS voter_profiles (uid TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT NOT NULL, nickname TEXT COLLATE NOCASE, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
           ),
           db.prepare(
             "CREATE TABLE IF NOT EXISTS pool_players (voter_uid TEXT PRIMARY KEY NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
@@ -97,14 +97,14 @@ function pointsFor(prediction, match) {
 async function ranking(db, matches) {
   const query = await db
     .prepare(
-      "SELECT v.nickname, r.match_id, r.home_score, r.away_score FROM pool_players p JOIN voter_profiles v ON v.uid = p.voter_uid LEFT JOIN pool_predictions r ON r.voter_uid = p.voter_uid WHERE v.nickname IS NOT NULL ORDER BY v.nickname",
+      "SELECT p.voter_uid AS uid, v.nickname, r.match_id, r.home_score, r.away_score FROM pool_players p JOIN voter_profiles v ON v.uid = p.voter_uid LEFT JOIN pool_predictions r ON r.voter_uid = p.voter_uid WHERE v.nickname IS NOT NULL ORDER BY v.nickname",
     )
     .all();
   const matchById = new Map(matches.map((match) => [match.id, match]));
   const players = new Map();
   for (const prediction of query.results) {
-    if (!players.has(prediction.nickname)) {
-      players.set(prediction.nickname, {
+    if (!players.has(prediction.uid)) {
+      players.set(prediction.uid, {
         nickname: prediction.nickname,
         points: 0,
         exact: 0,
@@ -116,7 +116,7 @@ async function ranking(db, matches) {
     const match = matchById.get(prediction.match_id);
     if (!match || (Number(match.st) !== 3 && !match.finished)) continue;
     const points = pointsFor(prediction, match);
-    const player = players.get(prediction.nickname);
+    const player = players.get(prediction.uid);
     player.points += points;
     player.exact += Number(points === 5);
     player.hits += Number(points > 0);
@@ -206,15 +206,6 @@ export async function poolResponse(
     )
       return response({ error: "Informe pelo menos um placar válido" }, 400);
     await saveVoterProfile(env.DB, identity);
-    const profile = await env.DB
-      .prepare("SELECT nickname FROM voter_profiles WHERE uid = ?")
-      .bind(identity.uid)
-      .first();
-    if (!profile?.nickname)
-      return response(
-        { error: "Adicione um apelido na aba Usuário antes de palpitar" },
-        400,
-      );
     await env.DB.batch([
       env.DB
         .prepare("INSERT OR IGNORE INTO pool_players (voter_uid) VALUES (?)")

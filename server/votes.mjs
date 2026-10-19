@@ -20,7 +20,7 @@ async function initialize(db) {
       db
         .batch([
           db.prepare(
-            "CREATE TABLE IF NOT EXISTS voter_profiles (uid TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT NOT NULL, nickname TEXT COLLATE NOCASE UNIQUE, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
+            "CREATE TABLE IF NOT EXISTS voter_profiles (uid TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT NOT NULL, nickname TEXT COLLATE NOCASE, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
           ),
           db.prepare(
             "CREATE TABLE IF NOT EXISTS vote_ballots (voter_uid TEXT NOT NULL, match_id TEXT NOT NULL, kind TEXT NOT NULL, favorite_team_id TEXT, best_player_id TEXT, worst_player_id TEXT, team1_best_player_id TEXT, team1_worst_player_id TEXT, team2_best_player_id TEXT, team2_worst_player_id TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (voter_uid, match_id, kind))",
@@ -157,9 +157,9 @@ export async function saveVoterProfile(db, identity) {
   await db.batch([
     db
       .prepare(
-        "INSERT INTO voter_profiles (uid, email, display_name) VALUES (?, ?, ?) ON CONFLICT(uid) DO UPDATE SET email = excluded.email, display_name = excluded.display_name, updated_at = CURRENT_TIMESTAMP",
+        "INSERT INTO voter_profiles (uid, email, display_name, nickname) VALUES (?, ?, ?, ?) ON CONFLICT(uid) DO UPDATE SET email = excluded.email, display_name = excluded.display_name, nickname = COALESCE(voter_profiles.nickname, excluded.nickname), updated_at = CURRENT_TIMESTAMP",
       )
-      .bind(identity.uid, identity.email, identity.name),
+      .bind(identity.uid, identity.email, identity.name, identity.name),
   ]);
 }
 
@@ -269,6 +269,27 @@ export async function votesResponse(
       { error: "A votação ainda não foi configurada pelo administrador" },
       503,
     );
+  }
+  if (url.pathname === "/api/votes/status") {
+    if (request.method !== "GET")
+      return response({ error: "Método não permitido" }, 405);
+    try {
+      await initialize(env.DB);
+      const identity = await authenticateVoter(request, verifier);
+      const votes = await env.DB
+        .prepare(
+          "SELECT match_id AS matchId, team1_best_player_id AS team1BestPlayerId, team1_worst_player_id AS team1WorstPlayerId, team2_best_player_id AS team2BestPlayerId, team2_worst_player_id AS team2WorstPlayerId FROM vote_ballots WHERE voter_uid = ? AND kind = 'evaluation'",
+        )
+        .bind(identity.uid)
+        .all();
+      return response({ votes: votes.results });
+    } catch (error) {
+      const message = String(error?.message || error);
+      if (/Google|Firebase|credencial|Entre com|Identidade/i.test(message))
+        return response({ error: message }, 401);
+      console.error("Falha ao consultar votos", error);
+      return response({ error: "Não foi possível consultar seus votos" }, 500);
+    }
   }
   const matchId = decodeURIComponent(
     url.pathname.match(/^\/api\/votes\/([^/]+)$/)?.[1] || "",

@@ -35,9 +35,11 @@ export class VotingPageComponent {
   readonly team2BestPlayerId = signal("");
   readonly team2WorstPlayerId = signal("");
   readonly result = signal<any>(null);
+  readonly votes = signal<Record<string, any>>({});
   readonly busy = signal(false);
   readonly feedback = signal("");
   readonly match = computed(() => this.s.match(this.matchId()));
+  readonly personalVote = computed(() => this.votes()[this.matchId()]);
   readonly availableRounds = computed(() =>
     this.s
       .rounds()
@@ -91,17 +93,29 @@ export class VotingPageComponent {
   constructor() {
     afterNextRender(() => this.voting.initialize());
     effect(() => {
-      this.matchId();
+      const matchId = this.matchId();
       this.team1BestPlayerId.set("");
       this.team1WorstPlayerId.set("");
       this.team2BestPlayerId.set("");
       this.team2WorstPlayerId.set("");
       this.result.set(null);
       this.feedback.set("");
+      const vote = this.votes()[matchId];
+      if (vote) {
+        this.team1BestPlayerId.set(vote.team1BestPlayerId);
+        this.team1WorstPlayerId.set(vote.team1WorstPlayerId);
+        this.team2BestPlayerId.set(vote.team2BestPlayerId);
+        this.team2WorstPlayerId.set(vote.team2WorstPlayerId);
+        void this.loadResults();
+      }
     });
     effect(() => {
       this.selectedRound();
       this.matchId.set("");
+    });
+    effect(() => {
+      if (this.voting.credential()) void this.loadVoteStatus();
+      else this.votes.set({});
     });
   }
 
@@ -168,6 +182,10 @@ export class VotingPageComponent {
     this.feedback.set("");
     try {
       this.result.set(await this.voting.submit(match.id, "evaluation", ballot));
+      this.votes.update((votes) => ({
+        ...votes,
+        [match.id]: { matchId: match.id, ...ballot },
+      }));
       this.feedback.set(
         "Voto registrado. Ele não poderá ser alterado e sua identidade não aparece nos resultados.",
       );
@@ -195,5 +213,20 @@ export class VotingPageComponent {
 
   playerName(id: string) {
     return this.s.name(this.s.player(id)?.name);
+  }
+
+  hasVoted(matchId: string) {
+    return !!this.votes()[matchId];
+  }
+
+  private async loadVoteStatus() {
+    try {
+      const response = await this.voting.status();
+      this.votes.set(
+        Object.fromEntries(response.votes.map((vote) => [vote.matchId, vote])),
+      );
+    } catch (error) {
+      this.feedback.set(this.voting.errorMessage(error));
+    }
   }
 }

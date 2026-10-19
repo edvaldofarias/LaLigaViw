@@ -52,14 +52,14 @@ const request = (token, method = "GET", body) =>
     body: body ? JSON.stringify(body) : undefined,
   });
 
-test("manages the public nickname in the private Google profile", async () => {
+test("defaults nickname to Google name and allows later updates", async () => {
   const env = { DB: database() };
   const created = await userResponse(request("person-1"), env, verifier);
   assert.deepEqual(await created.json(), {
     profile: {
       name: "User person-1",
       email: "person-1@example.com",
-      nickname: null,
+      nickname: "User person-1",
     },
   });
   const updated = await userResponse(
@@ -72,12 +72,13 @@ test("manages the public nickname in the private Google profile", async () => {
     email: "person-1@example.com",
     nickname: "Camisa 10",
   });
-  const duplicate = await userResponse(
+  const sameNickname = await userResponse(
     request("person-2", "PUT", { nickname: "camisa 10" }),
     env,
     verifier,
   );
-  assert.equal(duplicate.status, 409);
+  assert.equal(sameNickname.status, 200);
+  assert.equal((await sameNickname.json()).profile.nickname, "camisa 10");
 });
 
 test("deletes every application record owned by the user", async () => {

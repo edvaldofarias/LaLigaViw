@@ -106,6 +106,15 @@ test("keeps one locked post-match vote and reveals results only after voting", a
   );
   assert.equal(voter.status, 200);
   assert.equal((await voter.json()).total, 1);
+
+  const status = await votesResponse(
+    request("/api/votes/status", "person-1"),
+    environment,
+    verifier,
+  );
+  assert.deepEqual(await status.json(), {
+    votes: [{ matchId: "match-1", ...ballot }],
+  });
 });
 
 test("awards points according to winning and losing teams", async () => {

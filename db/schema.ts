@@ -5,7 +5,7 @@ export const voterProfiles=sqliteTable('voter_profiles',{
   uid:text('uid').primaryKey(),
   email:text('email').notNull(),
   displayName:text('display_name').notNull(),
-  nickname:text('nickname').unique(),
+  nickname:text('nickname'),
   updatedAt:text('updated_at').notNull().default('CURRENT_TIMESTAMP'),
 });
 export const voteBallots=sqliteTable('vote_ballots',{

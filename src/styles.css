@@ -146,6 +146,38 @@ app-detail {
   width: 24px;
   height: 24px;
 }
+.voted-match-option {
+  opacity: 0.58;
+  background: #e9edf1 !important;
+}
+.voting-match-option.selected.voted {
+  opacity: 0.62;
+  filter: grayscale(0.7);
+}
+.personal-vote {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #cbd4dd;
+  border-radius: 12px;
+  background: #eef1f4;
+}
+.personal-vote > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.personal-vote p {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 9px;
+  background: #fff;
+}
+.personal-vote small {
+  color: #748096;
+}
 .player-rating-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -211,6 +243,9 @@ app-detail {
   }
   .voting-match-option small {
     display: none;
+  }
+  .personal-vote > div {
+    grid-template-columns: 1fr;
   }
 }
 

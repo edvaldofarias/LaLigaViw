@@ -13,7 +13,7 @@ async function initialize(db) {
       db
         .batch([
           db.prepare(
-            "CREATE TABLE IF NOT EXISTS voter_profiles (uid TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT NOT NULL, nickname TEXT COLLATE NOCASE UNIQUE, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
+            "CREATE TABLE IF NOT EXISTS voter_profiles (uid TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT NOT NULL, nickname TEXT COLLATE NOCASE, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
           ),
           db.prepare(
             "CREATE TABLE IF NOT EXISTS vote_ballots (voter_uid TEXT NOT NULL, match_id TEXT NOT NULL, kind TEXT NOT NULL, favorite_team_id TEXT, best_player_id TEXT, worst_player_id TEXT, team1_best_player_id TEXT, team1_worst_player_id TEXT, team2_best_player_id TEXT, team2_worst_player_id TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (voter_uid, match_id, kind))",
@@ -125,8 +125,6 @@ export async function userResponse(
     return response({ profile });
   } catch (error) {
     const message = String(error?.message || error);
-    if (/UNIQUE.*nickname|voter_profiles.nickname/i.test(message))
-      return response({ error: "Este apelido já está sendo usado" }, 409);
     if (/Google|Firebase|credencial|Entre com|Identidade/i.test(message))
       return response({ error: message }, 401);
     console.error("Falha no perfil", error);

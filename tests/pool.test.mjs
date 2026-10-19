@@ -154,7 +154,7 @@ test("saves editable next-round predictions and ranks exact scores", async () =>
   ]);
 });
 
-test("locks the round and protects unique public nicknames", async () => {
+test("locks the round and allows shared display names", async () => {
   const env = environment();
   const matches = [
     { id: "match-1", m_set: "round-1", d_i: 2_000, st: 0, dt: {} },
@@ -177,7 +177,7 @@ test("locks the round and protects unique public nicknames", async () => {
     ).status,
     200,
   );
-  const duplicateNickname = await userResponse(
+  const sharedNickname = await userResponse(
     new Request("https://example.com/api/user/profile", {
       method: "PUT",
       headers: {
@@ -190,7 +190,7 @@ test("locks the round and protects unique public nicknames", async () => {
     env,
     verifier,
   );
-  assert.equal(duplicateNickname.status, 409);
+  assert.equal(sharedNickname.status, 200);
   assert.equal(
     (
       await poolResponse(
