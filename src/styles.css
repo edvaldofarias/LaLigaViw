@@ -2880,7 +2880,6 @@ button.player-achievement:hover {
   }
   .overview-games {
     position: static;
-    grid-row: 1;
   }
   .matches-toolbar {
     display: block;
