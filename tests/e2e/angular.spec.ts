@@ -1,8 +1,33 @@
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 const data = JSON.parse(fs.readFileSync("dist/data.json", "utf8"));
-test.beforeEach(async ({ page }) => {
+const installPromptTest =
+  "mobile install suggestion remembers a permanent decline";
+test.beforeEach(async ({ page }, testInfo) => {
   await page.route("**/copafacil-web.firebaseio.com/**", (r) => r.abort());
+  if (testInfo.title !== installPromptTest) {
+    await page.addInitScript(() =>
+      localStorage.setItem("laliga-install-declined", "1"),
+    );
+  }
+});
+test(installPromptTest, async ({ page }, testInfo) => {
+  await page.goto("/#/overview");
+  if (testInfo.project.name === "desktop") {
+    await expect(page.locator(".install-prompt-hero")).toHaveCount(0);
+    return;
+  }
+  await expect(page.locator(".install-prompt-hero")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Leve o campeonato com você" })).toBeVisible();
+  await page.locator("#decline-install").click();
+  await expect(page.locator(".install-prompt-hero")).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator(".install-prompt-hero")).toHaveCount(0);
+  expect(
+    await page.evaluate(() =>
+      localStorage.getItem("laliga-install-declined"),
+    ),
+  ).toBe("1");
 });
 test("overview keeps standings and compact round navigation together", async ({
   page,

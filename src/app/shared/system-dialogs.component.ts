@@ -7,7 +7,11 @@ import {
   DestroyRef,
   signal,
 } from "@angular/core";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { MATERIAL } from "./material";
 import { createVersionCheck, reloadURL } from "../../../dist/version-check.mjs";
 @Component({
@@ -16,33 +20,56 @@ import { createVersionCheck, reloadURL } from "../../../dist/version-check.mjs";
   imports: [...MATERIAL, MatDialogModule],
   template: `
     <ng-template #install
-      ><h2 mat-dialog-title>O campeonato na sua tela inicial</h2>
-      <mat-dialog-content
-        ><img src="images/app-icon-192.png" width="64" height="64" alt="VIW" />
-        <p>Acompanhe jogos, classificação e jogadores pelo ícone do celular.</p>
+      ><div class="install-prompt-hero">
+        <img src="images/app-icon-192.png" width="72" height="72" alt="VIW" />
+        <div>
+          <span>Aplicativo La Liga VIW</span>
+          <h2 mat-dialog-title>Leve o campeonato com você</h2>
+          <p>
+            Este site pode funcionar como um aplicativo no seu celular, com
+            acesso rápido pela tela inicial.
+          </p>
+        </div>
+      </div>
+      <mat-dialog-content class="install-prompt-content">
+        <div class="install-benefits">
+          <span><b>⚽</b> Jogos e resultados</span>
+          <span><b>↗</b> Classificação atualizada</span>
+          <span><b>★</b> MVP e destaques</span>
+        </div>
         @if (prompt()) {
-          <button mat-flat-button (click)="installNative()">
-            Instalar agora
-          </button>
+          <p class="install-guidance">
+            Toque em <b>Instalar aplicativo</b> e confirme no navegador.
+          </p>
+        } @else if (isIOS()) {
+          <p class="install-guidance">
+            No Safari, toque em <b>Compartilhar</b> e depois em
+            <b>Adicionar à Tela de Início</b>.
+          </p>
+        } @else {
+          <p class="install-guidance">
+            Abra o menu do navegador e escolha <b>Instalar aplicativo</b> ou
+            <b>Adicionar à tela inicial</b>.
+          </p>
         }
         <p role="status">{{ status() }}</p>
-        <h3>iPhone ou iPad</h3>
-        <p>
-          No Safari, toque em Compartilhar → Adicionar à Tela de Início. Se
-          aparecer “Abrir como App da Web”, deixe ativado.
-        </p>
-        <h3>Android</h3>
-        <p>
-          No Chrome, use “Instalar agora” ou o menu ⋮ → Instalar app / Adicionar
-          à tela inicial.
-        </p>
-        <p>
-          É necessário acesso à internet para atualizar o campeonato. Pelo
-          Instagram ou WhatsApp, abra o link no navegador.
-        </p></mat-dialog-content
-      ><mat-dialog-actions align="end"
-        ><button mat-button mat-dialog-close>Fechar</button></mat-dialog-actions
-      ></ng-template
+      </mat-dialog-content>
+      <mat-dialog-actions align="end" class="install-prompt-actions">
+        <button mat-button id="decline-install" (click)="declineInstall()">
+          Agora não
+        </button>
+        @if (prompt()) {
+          <button
+            mat-flat-button
+            id="confirm-install"
+            (click)="installNative()"
+          >
+            Instalar aplicativo
+          </button>
+        } @else {
+          <button mat-flat-button (click)="closeInstall()">Entendi</button>
+        }
+      </mat-dialog-actions></ng-template
     >
     <ng-template #version
       ><h2 mat-dialog-title>Uma nova versão está disponível</h2>
@@ -67,33 +94,42 @@ export class SystemDialogsComponent {
   versionTemplate = viewChild.required<TemplateRef<any>>("version");
   prompt = signal<any>(null);
   status = signal("");
+  isIOS = signal(false);
   private nextVersion = "";
+  private installRef?: MatDialogRef<any>;
+  private readonly declinedKey = "laliga-install-declined";
   constructor() {
     afterNextRender(() => {
       const button = document.querySelector<HTMLButtonElement>("#install-app")!;
       const standalone = matchMedia("(display-mode: standalone)");
-      const update = () =>
-        (button.hidden =
-          standalone.matches || (navigator as any).standalone === true);
+      const isInstalled = () =>
+        standalone.matches || (navigator as any).standalone === true;
+      const update = () => {
+        button.hidden = isInstalled();
+        if (isInstalled()) this.closeInstall();
+      };
       update();
-      const open = () =>
-        this.dialogs.open(this.installTemplate(), {
-          maxWidth: "94vw",
-          width: "560px",
-        });
+      this.isIOS.set(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+          ((navigator as any).standalone !== undefined &&
+            navigator.platform === "MacIntel"),
+      );
+      const open = () => this.openInstall(false);
       button.addEventListener("click", open);
       const before = (e: Event) => {
         e.preventDefault();
         this.prompt.set(e);
+        this.openAutomaticInstall(isInstalled());
       };
       const installed = () => {
         this.prompt.set(null);
         button.hidden = true;
-        this.dialogs.closeAll();
+        this.closeInstall();
       };
       window.addEventListener("beforeinstallprompt", before);
       window.addEventListener("appinstalled", installed);
       standalone.addEventListener("change", update);
+      this.openAutomaticInstall(isInstalled());
       const current = document.querySelector<HTMLMetaElement>(
         'meta[name="app-version"]',
       )?.content;
@@ -153,6 +189,49 @@ export class SystemDialogsComponent {
   reload() {
     location.assign(reloadURL(location.href, this.nextVersion));
   }
+  private openAutomaticInstall(installed: boolean) {
+    if (
+      installed ||
+      !matchMedia("(max-width: 700px), (pointer: coarse)").matches ||
+      this.installWasDeclined()
+    ) {
+      return;
+    }
+    this.openInstall(true);
+  }
+  private openInstall(automatic: boolean) {
+    if (this.installRef) return;
+    this.status.set("");
+    const ref = this.dialogs.open(this.installTemplate(), {
+      maxWidth: "94vw",
+      width: "520px",
+      panelClass: "install-dialog",
+      disableClose: automatic,
+      autoFocus: false,
+    });
+    this.installRef = ref;
+    ref.afterClosed().subscribe(() => {
+      if (this.installRef === ref) this.installRef = undefined;
+    });
+  }
+  private installWasDeclined() {
+    try {
+      return localStorage.getItem(this.declinedKey) === "1";
+    } catch {
+      return false;
+    }
+  }
+  declineInstall() {
+    try {
+      localStorage.setItem(this.declinedKey, "1");
+    } catch {}
+    this.closeInstall();
+  }
+  closeInstall() {
+    const ref = this.installRef;
+    this.installRef = undefined;
+    ref?.close();
+  }
   async installNative() {
     const p = this.prompt();
     if (!p) return;
@@ -165,6 +244,7 @@ export class SystemDialogsComponent {
           ? "Instalação solicitada. Confirme as etapas do navegador."
           : "Você pode instalar depois pelo menu do navegador.",
       );
+      if (choice.outcome === "accepted") this.closeInstall();
     } catch {
       this.status.set("Use o menu do navegador para instalar.");
     }
