@@ -1,0 +1,51 @@
+[
+  {
+    "playerId": "1789257941190",
+    "name": "Kaique",
+    "teamId": "-OuCEPqc-2Ju1pdvU4j1",
+    "teamName": "Atlético de Madrid",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789257941190.jpg?alt=media&token=1&m=1789795904162"
+  },
+  {
+    "playerId": "1789257958344",
+    "name": "Júnior",
+    "teamId": "-OuCEPqc-2Ju1pdvU4j1",
+    "teamName": "Atlético de Madrid",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789257958344.jpg?alt=media&token=1&m=1789795855090"
+  },
+  {
+    "playerId": "1789220352095",
+    "name": "Felipe",
+    "teamId": "-OuCE8ygQVY-3BXzP80H",
+    "teamName": "Rayo Vallecano",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789220352095.jpg?alt=media&token=1&m=1789220815309"
+  },
+  {
+    "playerId": "1789220936288",
+    "name": "Efraim",
+    "teamId": "-OuCE5UUPYmEL7Mnf4-D",
+    "teamName": "Sevilla",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789220936288.jpg?alt=media&token=1&m=1789221098442"
+  },
+  {
+    "playerId": "1789257892581",
+    "name": "Yurick",
+    "teamId": "-OuCEIPXbahnsYG98j_K",
+    "teamName": "Athletico Bilbao",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789257892581.jpg?alt=media&token=1&m=1789792575677"
+  },
+  {
+    "playerId": "1789257901399",
+    "name": "Pimenta",
+    "teamId": "-OuCEIPXbahnsYG98j_K",
+    "teamName": "Athletico Bilbao",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789257901399.jpg?alt=media&token=1&m=1789795643860"
+  },
+  {
+    "playerId": "1789199579917",
+    "name": "Alan",
+    "teamId": "-OuCEBQOxXueVsu4_Pbt",
+    "teamName": "Real Sociedad",
+    "url": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fplayer%2F1789199579917.jpg?alt=media&token=1&m=1789218053937"
+  }
+]

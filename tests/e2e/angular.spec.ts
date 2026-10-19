@@ -134,7 +134,11 @@ test("round five official selection lists all seven supplied players", async ({
   await page.goto("/#/selection");
   await expect(page.locator("#selection-round")).toContainText("Rodada 5");
   await expect(page.locator(".selection-grid .selection-card")).toHaveCount(7);
-  await expect(page.locator(".selection-source-note")).toBeVisible();
+  const poster = page.locator(".selection-art-preview img");
+  await expect(poster).toBeVisible();
+  await expect(poster).toHaveAttribute("src", /2026-round-5-gold\.png$/);
+  await expect.poll(() => poster.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth === 1080 && img.naturalHeight === 1350)).toBe(true);
+  await expect(page.locator(".selection-download")).toHaveAttribute("download", "viw-selecao-rodada-5.png");
 });
 test("selects and search fields share the global form style", async ({
   page,
@@ -324,14 +328,14 @@ test("player recognitions stay compact and aligned", async ({ page }, info) => {
   await page.locator(".grid-search input").fill("Felipe");
   await page.locator('[data-player="1789220352095"]').click();
   const achievements = page.locator(".player-achievement");
-  await expect(achievements).toHaveCount(3);
+  await expect(achievements).toHaveCount(4);
   const positions = await achievements.evaluateAll((cards) =>
     cards.map((card) => Math.round(card.getBoundingClientRect().top)),
   );
   if (info.project.name === "desktop") {
     expect(new Set(positions).size).toBe(1);
   } else {
-    expect(new Set(positions).size).toBe(3);
+    expect(new Set(positions).size).toBe(4);
   }
   await expect(
     achievements.first().locator(".player-achievement-icon"),
