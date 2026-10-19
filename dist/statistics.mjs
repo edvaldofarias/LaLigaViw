@@ -70,7 +70,7 @@ export function buildStatistics(data,ranking=[],staff=[],awards=[],selections=[]
     const team=teamHonorMap.get(award.teamId);if(!team)continue;
     team.appearances++;team.awards++;team.players.add(award.playerId);
   }
-  const teamHonors=top([...teamHonorMap.values()].map(team=>({...team,players:team.players.size})).filter(team=>team.appearances),(a,b)=>b.players-a.players||b.appearances-a.appearances||b.awards-a.awards);
+  const teamHonors=top([...teamHonorMap.values()].map(team=>({...team,players:team.players.size})).filter(team=>team.appearances),(a,b)=>b.appearances-a.appearances||b.awards-a.awards||b.players-a.players);
 
   return {
     summary:{

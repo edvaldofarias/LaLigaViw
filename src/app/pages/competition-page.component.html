@@ -444,14 +444,14 @@
         </article>
 
         <article class="statistics-panel">
-          <header><span>Força coletiva</span><h3>Equipes com mais premiados</h3></header>
+          <header><span>Força coletiva</span><h3>Equipes mais premiadas</h3></header>
           <ol class="statistics-ranking-list">
             @for (team of s.statistics().teamHonors; track team.id) {
               <li>
-                <b>{{ $index + 1 }}</b>
+                <b [attr.aria-label]="team.appearances + ' premiações'">{{ team.appearances }}</b>
                 <app-entity [entity]="team" kind="team" />
-                <strong>{{ team.players }} jogadores</strong>
-                <small>{{ team.appearances }} premiações · {{ team.awards }} melhores em campo</small>
+                <strong>{{ team.appearances }} premiações</strong>
+                <small>{{ team.players }} jogadores · {{ team.awards }} melhores em campo</small>
               </li>
             }
           </ol>

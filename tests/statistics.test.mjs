@@ -73,3 +73,14 @@ test('worst defenses rank total goals conceded above per-game average',()=>{
   assert.equal(stats.worstDefenses[0].gaAverage,2);
   assert.equal(stats.worstDefenses[1].gaAverage,4);
 });
+
+
+test('most awarded teams rank award totals above distinct player counts',()=>{
+  const selections=[
+    {id:'r1',players:[{playerId:'a1',teamId:'a'},{playerId:'a2',teamId:'a'},{playerId:'b1',teamId:'b'}]},
+    {id:'r2',players:[{playerId:'b1',teamId:'b'}]},
+    {id:'r3',players:[{playerId:'b1',teamId:'b'}]},
+  ];
+  const stats=buildStatistics(data,ranking,staff,[],selections);
+  assert.deepEqual(stats.teamHonors.map(t=>[t.id,t.appearances,t.players]),[['b',3,1],['a',2,2]]);
+});

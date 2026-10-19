@@ -112,10 +112,15 @@ test("statistics combines rankings, team duos and historical awards", async ({
     "Mais vezes na Seleção da Rodada",
     "Mais vezes no time ideal",
     "Mais vezes no time ruim",
-    "Equipes com mais premiados",
+    "Equipes mais premiadas",
   ]) {
     await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
   }
+  const honoredTeams = page.locator(".statistics-panel").filter({has: page.getByRole("heading", {name:"Equipes mais premiadas",exact:true})});
+  const firstHonor = honoredTeams.locator("li").first();
+  const prizeCount = (await firstHonor.locator("strong").innerText()).split(" ")[0];
+  await expect(firstHonor.locator(":scope > b")).toHaveText(prizeCount);
+  await expect(firstHonor.locator("strong")).toContainText("premiações");
   await expect(page.locator(".statistics-duo-card")).toHaveCount(
     Object.keys(data.teams).length,
   );
