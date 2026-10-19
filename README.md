@@ -40,9 +40,8 @@ Os testes de navegador usam Playwright com Google Chrome instalado, nos tamanhos
 - `server/`: Worker do contador e versão da aplicação.
 - `scripts/update-forecast.mjs`: consulta pública e atualização das simulações após rodadas completas.
 - `tests/`: regressões de domínio e integrações; `tests/e2e/`: testes reais da interface Angular.
-- `tests/fixtures/legacy-ui.js`: referência histórica para testes de regressão da migração, não publicada nem executada pela aplicação.
 
-Os arquivos antigos de entrada e renderização da interface foram removidos de `dist`. A aplicação publicada é compilada a partir de `src/`; não há uma aplicação JavaScript antiga rodando dentro do Angular.
+A aplicação publicada é compilada a partir de `src/`; os módulos em `dist/` contêm apenas regras de domínio e integrações ainda reutilizadas pelo Angular.
 
 ## Dados e regras preservadas
 
@@ -63,4 +62,4 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 
 Publicar usando o mesmo `project_id` de `.openai/hosting.json`, após testes/build. O resultado contém `dist/server` e `dist/client`; preservar D1. O GitHub é um segundo repositório do código e não substitui o vínculo de publicação do Sites.
 
-Ver [docs/BIBLIOTECAS.md](docs/BIBLIOTECAS.md) e [docs/MIGRACAO-ANGULAR.md](docs/MIGRACAO-ANGULAR.md).
+Ver [docs/BIBLIOTECAS.md](docs/BIBLIOTECAS.md).

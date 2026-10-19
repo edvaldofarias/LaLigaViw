@@ -23,11 +23,7 @@
                   "client/**",
                   "server/**",
                   ".openai/**",
-                  "index.html",
-                  "app.js",
-                  "navigation.mjs",
-                  "table-ui.mjs",
-                  "charts-ui.mjs"
+                  "index.html"
                 ]
               }
             ],

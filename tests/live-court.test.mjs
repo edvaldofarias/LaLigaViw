@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFileSync} from 'node:fs';
-const source=readFileSync(new URL('../dist/live-court.mjs',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+const source=readFileSync(new URL('../dist/live-court.mjs',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,'');
 function setup(native=true,denyFullscreen=false){
  const handlers={},controls={},statuses=[{},{}],listeners={};let removed=false,fullCalls=0;
  const videos=[0,1].map(()=>({paused:true,muted:false,events:{},canPlayType:()=>native?'maybe':'',addEventListener(k,f){this.events[k]=f},async play(){this.paused=false;this.plays=(this.plays||0)+1},pause(){this.paused=true},load(){},removeAttribute(){}}));
