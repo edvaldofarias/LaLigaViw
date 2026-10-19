@@ -59,3 +59,17 @@ test('counts selection, cartola and team award appearances without duplicating a
   assert.deepEqual(stats.cartolaIdealAppearances,[]);
   assert.deepEqual(stats.cartolaWorstAppearances,[]);
 });
+
+
+test('worst defenses rank total goals conceded above per-game average',()=>{
+  const matches={
+    one:{st:3,team1:'c',team2:'b',dt:{qt_g1:4,qt_g2:0}},
+    two:{st:3,team1:'c',team2:'a',dt:{qt_g1:2,qt_g2:0}},
+    three:{st:3,team1:'c',team2:'a',dt:{qt_g1:2,qt_g2:0}},
+    four:{st:3,team1:'c',team2:'a',dt:{qt_g1:2,qt_g2:0}},
+  };
+  const stats=buildStatistics({...data,matchs:matches},[],[]);
+  assert.deepEqual(stats.worstDefenses.map(t=>[t.id,t.ga]),[['a',6],['b',4],['c',0]]);
+  assert.equal(stats.worstDefenses[0].gaAverage,2);
+  assert.equal(stats.worstDefenses[1].gaAverage,4);
+});

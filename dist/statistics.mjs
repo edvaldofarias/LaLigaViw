@@ -85,7 +85,7 @@ export function buildStatistics(data,ranking=[],staff=[],awards=[],selections=[]
     scorers:top(players.filter(player=>player.goals),(a,b)=>b.goals-a.goals||String(a.name).localeCompare(String(b.name),'pt-BR')),
     attacks:top(eligibleTeams,(a,b)=>b.gf-a.gf||b.gfAverage-a.gfAverage),
     defenses:top(eligibleTeams,(a,b)=>a.gaAverage-b.gaAverage||a.ga-b.ga||b.cleanSheets-a.cleanSheets),
-    worstDefenses:top(eligibleTeams,(a,b)=>b.gaAverage-a.gaAverage||b.ga-a.ga),
+    worstDefenses:top(eligibleTeams,(a,b)=>b.ga-a.ga||String(a.name).localeCompare(String(b.name),'pt-BR')),
     cleanSheets:top(eligibleTeams,(a,b)=>b.cleanSheets-a.cleanSheets||a.gaAverage-b.gaAverage),
     unbeaten:top(eligibleTeams,(a,b)=>b.unbeaten-a.unbeaten||b.wins-a.wins),
     goalkeepers,
