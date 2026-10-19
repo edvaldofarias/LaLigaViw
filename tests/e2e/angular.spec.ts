@@ -4,6 +4,139 @@ const data = JSON.parse(fs.readFileSync("dist/data.json", "utf8"));
 test.beforeEach(async ({ page }) => {
   await page.route("**/copafacil-web.firebaseio.com/**", (r) => r.abort());
 });
+test("overview keeps standings and compact round navigation together", async ({
+  page,
+}) => {
+  await page.goto("/#/overview");
+  await expect(page.locator(".overview-table tbody tr")).toHaveCount(12);
+  await expect(page.locator(".overview-table thead")).toContainText(
+    "Chance G4",
+  );
+  await expect(page.locator(".overview-table thead")).toContainText(
+    "Chance G8",
+  );
+  await expect(page.locator(".overview-form").first()).toBeVisible();
+  await expect(page.locator("app-compact-match-card")).not.toHaveCount(0);
+  await expect(page.locator(".metrics")).toHaveCount(0);
+  const currentRound = await page
+    .locator(".round-carousel-item.active strong")
+    .innerText();
+  const nextButton = page.getByRole("button", { name: "Próxima rodada" });
+  if (await nextButton.isEnabled()) {
+    await nextButton.click();
+    await expect(
+      page.locator(".round-carousel-item.active strong"),
+    ).not.toHaveText(currentRound);
+  }
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
+test("matches opens the current round and reuses compact cards", async ({
+  page,
+}) => {
+  await page.goto("/#/matches");
+  const activeRound = page.locator(".round-carousel-item.active");
+  await expect(activeRound).toBeVisible();
+  await expect(page.locator("app-compact-match-card")).not.toHaveCount(0);
+  await expect(page.locator("app-match-card")).toHaveCount(0);
+  await expect(page.locator(".compact-broadcast").first()).toBeVisible();
+  const filter = page.locator(".matches-toolbar mat-form-field").first();
+  await expect(filter).toBeVisible();
+  expect(
+    await filter.evaluate((element) => {
+      const field = element.querySelector(".mat-mdc-text-field-wrapper")!;
+      const style = getComputedStyle(field);
+      return {
+        height: field.getBoundingClientRect().height,
+        radius: parseFloat(style.borderRadius),
+      };
+    }),
+  ).toEqual({ height: 54, radius: 12 });
+  const visibleMatches = await page.locator("app-compact-match-card").count();
+  expect(visibleMatches).toBeLessThan(Object.keys(data.matchs).length);
+  const previous = page.getByRole("button", { name: "Rodada anterior" });
+  if (await previous.isEnabled()) {
+    const currentRound = await activeRound.getAttribute("data-round-id");
+    await previous.click();
+    await expect(page.locator(".round-carousel-item.active")).not.toHaveAttribute(
+      "data-round-id",
+      currentRound!,
+    );
+  }
+});
+test("selects and search fields share the global form style", async ({
+  page,
+}) => {
+  for (const [route, selector] of [
+    ["matches", ".matches-toolbar mat-form-field"],
+    ["players", ".grid-search"],
+    ["selection", ".filters mat-form-field"],
+  ]) {
+    await page.goto(`/#/${route}`);
+    const field = page.locator(selector).first();
+    await expect(field).toBeVisible();
+    expect(
+      await field.evaluate((element) => {
+        const wrapper = element.querySelector(".mat-mdc-text-field-wrapper")!;
+        return {
+          height: wrapper.getBoundingClientRect().height,
+          radius: parseFloat(getComputedStyle(wrapper).borderRadius),
+        };
+      }),
+    ).toEqual({ height: 54, radius: 12 });
+  }
+  await page.goto("/#/players");
+  const search = page.locator(".grid-search");
+  await expect(search.locator("input")).toHaveAttribute(
+    "placeholder",
+    "Nome, equipe ou estatística",
+  );
+  expect(
+    await search.evaluate((element) => {
+      const label = element.querySelector("label")!.getBoundingClientRect();
+      const input = element.querySelector("input")!.getBoundingClientRect();
+      return label.bottom <= input.top;
+    }),
+  ).toBe(true);
+});
+test("match detail stays compact with broadcast, newspaper and highlights", async ({
+  page,
+}) => {
+  await page.goto("/#/matches");
+  await page.locator(".compact-match-main").first().click();
+  await expect(page.locator(".match-detail-card")).toBeVisible();
+  await expect(page.locator(".match-detail app-match-card")).toHaveCount(0);
+  await expect(page.locator(".match-detail-broadcast")).toBeVisible();
+  await expect(page.locator(".match-image-action")).toHaveText(
+    /Ver imagem do jogo e baixar/,
+  );
+  expect(
+    await page
+      .locator(".match-image-action")
+      .evaluate(
+        (element) =>
+          element.getBoundingClientRect().top >
+          document
+            .querySelector(".match-detail-broadcast")!
+            .getBoundingClientRect().bottom,
+      ),
+  ).toBe(true);
+  await expect(page.locator(".match-detail .match-newspaper")).toBeVisible();
+  await expect(
+    page.locator(".match-detail .detail-section", {
+      hasText: "Estatísticas",
+    }),
+  ).toHaveCount(0);
+  await expect(page.locator(".match-detail .newspaper-columns")).toContainText(
+    /G8|quartas de final|liderança/,
+  );
+  await expect(page.locator(".match-highlights-grid article")).not.toHaveCount(
+    0,
+  );
+});
 test("all Angular routes, old deep links, no horizontal overflow, search and player charts", async ({
   page,
 }) => {
@@ -19,8 +152,6 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
   for (const [path, title] of [
     ["overview", "Visão geral"],
     ["matches", "Partidas"],
-    ["odds", "Odds e simulações"],
-    ["standings", "Classificação"],
     ["teams", "Equipes"],
     ["players", "Jogadores"],
     ["selection", "Seleção da rodada"],
@@ -37,23 +168,164 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
       )
       .toBe(true);
   }
-  await expect(page.locator("#cartola-round")).toContainText("Rodada 5");
-  await page.locator("#cartola-round").click();
+  for (const removedRoute of ["odds", "standings"]) {
+    await page.goto("/#/" + removedRoute);
+    await expect(page).toHaveURL(/#\/overview$/);
+    await expect(page.locator(".section-title h2")).toHaveText("Visão geral");
+  }
+  await expect(page.locator(".desktop-navigation")).not.toContainText(
+    "Odds e simulações",
+  );
+  await expect(page.locator(".desktop-navigation")).not.toContainText(
+    "Classificação",
+  );
+  await page.goto("/#/cartola");
+  await expect(page.locator(".round-carousel-item.active")).toContainText(
+    "Rodada 5",
+  );
   await page
-    .getByRole("option", { name: "Primeira Fase · Rodada 6", exact: true })
+    .locator(".round-carousel-item", { hasText: "Rodada 6" })
     .click();
-  await expect(page.locator(".cartola-team tbody tr")).toHaveCount(7);
-  await expect(
-    page.locator(".cartola-team tbody tr").first().locator("td").last(),
-  ).toBeVisible();
+  await expect(page.locator(".cartola-suggestion-grid .cartola-team")).toHaveCount(2);
+  await expect(page.locator(".cartola-suggestion-row")).toHaveCount(14);
   await page.goto("/#/players");
   await page.locator(".grid-search input").fill("Edvado");
   await expect(page.locator("#content tbody")).toContainText("Edvaldo");
   await page.locator("#content app-entity button").first().click();
   await expect(page.locator("#detail")).toBeVisible();
+  const profilePhoto = page.locator(".player-profile-hero .avatar");
+  await expect(profilePhoto).toBeVisible();
+  await expect
+    .poll(() =>
+      profilePhoto.evaluate((image: HTMLImageElement) => {
+        const imageWidth = image.getBoundingClientRect().width;
+        const frameWidth =
+          image.closest(".player-profile-photo")?.getBoundingClientRect()
+            .width ?? 0;
+        return {
+          loaded: image.complete && image.naturalWidth > 0,
+          fillsFrame: imageWidth >= frameWidth - 8,
+        };
+      }),
+    )
+    .toEqual({
+      loaded: true,
+      fillsFrame: true,
+    });
+  await expect(page.locator(".player-profile-team .crest")).toBeVisible();
+  await expect(page.locator(".player-profile-stats > div")).toHaveCount(4);
+  await expect(page.locator(".player-stat-panel")).toContainText(
+    "Números na competição",
+  );
   await expect(page.locator("#detail canvas")).toHaveCount(2);
   await page.locator("#close-detail").click();
   expect(errors).toEqual([]);
+});
+test("all competition tabs use compact modern surfaces", async ({ page }) => {
+  for (const [route, selector] of [
+    ["teams", ".team-summary-card"],
+    ["players", ".data-panel"],
+    ["ballon", ".data-panel"],
+    ["coaches", ".data-panel"],
+    ["selection", ".feature-panel"],
+    ["motm", ".motm-player-card"],
+    ["cartola", ".data-panel"],
+  ]) {
+    await page.goto(`/#/${route}`);
+    await expect(page.locator(selector).first()).toBeVisible();
+  }
+  await page.goto("/#/coaches");
+  await expect(page.locator("td.mat-column-percent").first()).toHaveText(
+    /^\d+%$/,
+  );
+  await page.goto("/#/motm");
+  await expect(page.locator("#motm-round")).toContainText("Rodada 5");
+  await expect(page.locator(".motm-player-card")).toHaveCount(5);
+  await page.locator("#motm-round").click();
+  await page
+    .getByRole("option", {
+      name: "Melhores em campo · Rodada 4",
+      exact: true,
+    })
+    .click();
+  await expect(page.locator(".motm-player-card")).toHaveCount(5);
+});
+test("player recognitions stay compact and aligned", async ({ page }, info) => {
+  await page.goto("/#/players");
+  await page.locator(".grid-search input").fill("Felipe");
+  await page.locator('[data-player="1789220352095"]').click();
+  const achievements = page.locator(".player-achievement");
+  await expect(achievements).toHaveCount(3);
+  const positions = await achievements.evaluateAll((cards) =>
+    cards.map((card) => Math.round(card.getBoundingClientRect().top)),
+  );
+  if (info.project.name === "desktop") {
+    expect(new Set(positions).size).toBe(1);
+  } else {
+    expect(new Set(positions).size).toBe(3);
+  }
+  await expect(
+    achievements.first().locator(".player-achievement-icon"),
+  ).toHaveCSS("width", "32px");
+  await achievements.filter({ hasText: "Melhor em campo" }).click();
+  await expect(page.locator(".match-detail-card")).toBeVisible();
+});
+test("team detail uses a compact profile and match cards", async ({ page }) => {
+  await page.goto("/#/teams");
+  await page.locator(".team-summary-card button[data-team]").first().click();
+  await expect(page.locator(".team-profile-hero")).toBeVisible();
+  await expect(page.locator(".team-profile-crest .crest")).toBeVisible();
+  await expect(page.locator(".team-profile-stats > span")).toHaveCount(4);
+  await expect(page.locator(".team-detail-panel")).toHaveCount(2);
+  await page
+    .locator("mat-expansion-panel-header", { hasText: "Elenco completo" })
+    .click();
+  await expect(page.locator(".team-roster-section app-grid")).toBeVisible();
+  const rosterCount = Number(
+    (
+      await page
+        .locator("mat-expansion-panel-header", { hasText: "jogadores" })
+        .textContent()
+    )?.match(/(\d+) jogadores/)?.[1],
+  );
+  await expect(
+    page.locator(".team-roster-section app-grid tbody tr"),
+  ).toHaveCount(rosterCount);
+  await expect(page.locator(".team-roster-section mat-paginator")).toHaveCount(
+    0,
+  );
+  await page
+    .locator("mat-expansion-panel-header", { hasText: "Partidas da equipe" })
+    .click();
+  await expect(
+    page.locator(".team-match-grid app-compact-match-card"),
+  ).not.toHaveCount(0);
+  await expect(page.locator("#detail app-match-card")).toHaveCount(0);
+});
+test("MVP scoring rules distinguish bonuses and penalties", async ({ page }) => {
+  await page.goto("/#/ballon");
+  await expect(page.locator(".score-rule")).toHaveCount(12);
+  await expect(page.locator(".score-rule.positive")).toHaveCount(8);
+  await expect(page.locator(".score-rule.negative")).toHaveCount(3);
+  await expect(page.locator(".score-rule.neutral")).toHaveCount(1);
+  await expect(page.locator(".scoring-note")).toContainText(
+    "Jogo sem sofrer gols vale +7 para o goleiro e +3 para a linha",
+  );
+});
+test("completed Cartola round uses compact seven-player lineups", async ({
+  page,
+}) => {
+  await page.goto("/#/cartola");
+  await page
+    .locator(".round-carousel-item", { hasText: "Rodada 5" })
+    .click();
+  await expect(page.locator(".cartola-grid .cartola-team")).toHaveCount(2);
+  await expect(page.locator(".cartola-lineup-row")).toHaveCount(14);
+  await expect(page.locator(".cartola-lineup-row.goalkeeper")).toHaveCount(2);
+  await expect(page.locator(".cartola-grid table")).toHaveCount(0);
+  await expect(
+    page.locator(".cartola-lineup-row .cartola-player-points").first(),
+  ).toContainText("pts");
 });
 test("coach detail teams, match newspaper and selection zoom remain available", async ({
   page,
@@ -64,7 +336,23 @@ test("coach detail teams, match newspaper and selection zoom remain available", 
   await expect(
     page.locator("#detail .coach-team-grid app-entity"),
   ).not.toHaveCount(0);
-  await page.locator(".coach-history button").first().click();
+  const coachGame = page.locator(".coach-history-row").first();
+  await expect(coachGame).toHaveCSS("display", "grid");
+  await expect
+    .poll(() =>
+      coachGame.evaluate((row) => {
+        const title = row.querySelector(".coach-history-copy b");
+        const detail = row.querySelector(".coach-history-copy small");
+        return (
+          !!title &&
+          !!detail &&
+          detail.getBoundingClientRect().top >=
+            title.getBoundingClientRect().bottom
+        );
+      }),
+    )
+    .toBe(true);
+  await coachGame.click();
   await expect(page.locator("#detail .match-newspaper")).toBeVisible();
   await page.locator("#close-detail").click();
   await page.goto("/#/selection");
@@ -97,9 +385,10 @@ test("live scoreboard and provisional points update from source without reloadin
   });
   await page.route("**/click190.com.br/**", (r) => r.abort());
   await page.goto("/#/matches");
-  await expect(
-    page.locator("app-match-card").filter({ hasText: "Ao vivo" }),
-  ).toBeVisible();
+  await page.locator(`[data-round-id="${m.m_set}"]`).click();
+  await expect(page.locator(".compact-match-info b.live")).toHaveText(
+    "Ao vivo",
+  );
   await page.locator('[data-live-court="1"]').first().click();
   await expect(page.locator(".live-scoreboard")).toContainText("0 × 0");
   m.dt = { qt_g1: 2, qt_g2: 0 };
@@ -109,7 +398,7 @@ test("live scoreboard and provisional points update from source without reloadin
   await page.evaluate(() =>
     document.querySelector<HTMLDialogElement>(".live-dialog")!.close(),
   );
-  await page.goto("/#/standings");
+  await page.goto("/#/overview");
   await expect(page.locator(".live-table-notice")).toBeVisible();
   await expect(page.locator(".live-points-label")).toHaveCount(2);
 });
@@ -170,7 +459,7 @@ test("entity alignment, compact chart logos, placeholders and nonzero match even
       body: '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200"><rect width="800" height="1200" fill="#55aacc"/></svg>',
     }),
   );
-  for (const route of ["ballon", "standings", "players"]) {
+  for (const route of ["ballon", "players"]) {
     await page.goto("/#/" + route);
     const entity = page.locator("tbody app-entity .entity-content").first();
     await expect(entity).toBeVisible();
@@ -187,16 +476,6 @@ test("entity alignment, compact chart logos, placeholders and nonzero match even
       )
       .toBe(true);
   }
-  await page.goto("/#/standings");
-  await expect(page.locator(".chart-legend img")).toHaveCount(12);
-  expect(
-    await page.locator(".chart-legend img").evaluateAll((imgs) =>
-      imgs.every((img) => {
-        const r = img.getBoundingClientRect();
-        return r.width <= 24 && r.height <= 24;
-      }),
-    ),
-  ).toBe(true);
   await page.goto("/#/cartola");
   expect(
     await page
@@ -209,23 +488,39 @@ test("entity alignment, compact chart logos, placeholders and nonzero match even
       ),
   ).toBe(true);
   await page.goto("/#/matches");
+  const placeholderMatch = Object.values(data.matchs).find(
+    (match: any) => !data.teams[match.team1] || !data.teams[match.team2],
+  ) as any;
   await page
-    .locator(".fixture")
+    .locator(`[data-round-id="${placeholderMatch.m_set}"]`)
+    .click();
+  await page
+    .locator(".compact-match-main")
     .filter({ hasText: "A Definir" })
     .first()
     .click();
-  await expect(page.locator("#detail .fixture img").first()).toHaveAttribute(
-    "src",
-    /placehold.co/,
-  );
+  await expect(
+    page.locator("#detail .compact-match-team img").first(),
+  ).toHaveAttribute("src", /placehold.co/);
   await page.locator("#close-detail").click();
+  const classic = Object.values(data.matchs).find((match: any) => {
+    const names = [data.teams[match.team1]?.name, data.teams[match.team2]?.name];
+    return names.includes("BARCELONA") && names.includes("REAL MADRID");
+  }) as any;
+  await page.locator(`[data-round-id="${classic.m_set}"]`).click();
   await page
-    .locator(".fixture")
+    .locator(".compact-match-main")
     .filter({ hasText: "Barcelona" })
     .filter({ hasText: "Real Madrid" })
     .first()
     .click();
   await expect(page.locator(".match-event-counts")).not.toHaveCount(0);
+  await expect(
+    page.locator("#detail .match-team-stats-heading .crest"),
+  ).toHaveCount(2);
+  await expect(
+    page.locator("#detail .match-event-player app-entity .avatar").first(),
+  ).toBeVisible();
   const events = await page
     .locator(".match-event-counts > span")
     .allTextContents();
@@ -235,32 +530,13 @@ test("entity alignment, compact chart logos, placeholders and nonzero match even
   ).toContainText("1");
 });
 
-test("odds use the shared match card and Portuguese number formatting", async ({
-  page,
-}) => {
+test("overview odds use Portuguese number formatting", async ({ page }) => {
   await page.goto("/#/overview");
-  await expect(page.locator(".odd-cell b").first()).toBeVisible();
+  await expect(page.locator(".compact-odd b").first()).toBeVisible();
   const odds = await page
-    .locator("app-match-card")
+    .locator("app-compact-match-card")
     .first()
-    .locator(".odd-cell b")
+    .locator(".compact-odd b")
     .allTextContents();
-  await page.goto("/#/odds");
-  await expect(page.locator(".odds-match").first()).toBeVisible();
-  await expect(page.locator(".odds-match > mat-card")).toHaveCount(0);
-  await expect(
-    page.locator(".odds-match app-match-card").first().locator("mat-card"),
-  ).toHaveCount(1);
-  expect(
-    await page
-      .locator(".odds-match app-match-card")
-      .first()
-      .locator(".odd-cell b")
-      .allTextContents(),
-  ).toEqual(odds);
   expect(odds.every((v) => /^\d+,\d{2}$/.test(v.trim()))).toBe(true);
-  await expect(page.locator(".forecast-evidence").first()).toContainText(
-    "Placar mais frequente",
-  );
-  await expect(page.locator(".prediction-facts").first()).toContainText(" x ");
 });

@@ -78,17 +78,15 @@ export class EntityComponent {
     return /^https:\/\//.test(u || "") ? u : this.placeholder();
   }
   placeholder() {
-    return (
-      "https://placehold.co/160x160/e9edf2/647186/png?text=" +
-      encodeURIComponent(
-        this.store
-          .name(this.entity().name)
-          .split(" ")
-          .slice(0, 2)
-          .map((s) => s[0])
-          .join(""),
-      )
-    );
+    const initials = this.store
+      .name(this.entity().name)
+      .split(" ")
+      .slice(0, 2)
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" fill="#e9edf2"/><text x="80" y="86" text-anchor="middle" dominant-baseline="middle" fill="#647186" font-family="Arial,sans-serif" font-size="48" font-weight="700">${initials}</text></svg>`;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   }
   fallback(e: Event) {
     const img = e.target as HTMLImageElement;

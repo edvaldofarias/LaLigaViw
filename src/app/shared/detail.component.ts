@@ -19,7 +19,7 @@ import { CompetitionService } from "../core/competition.service";
 import { EntityComponent } from "./entity.component";
 import { GridComponent, GridColumn } from "./grid.component";
 import { ChartComponent } from "./chart.component";
-import { MatchCardComponent } from "./match-card.component";
+import { CompactMatchCardComponent } from "./compact-match-card.component";
 import { makeMatchFlyer } from "../../../dist/match-flyer.mjs";
 import { makeMotmPoster } from "../../../dist/motm-poster.mjs";
 import { parseStats } from "../core/models";
@@ -32,7 +32,7 @@ import { parseStats } from "../core/models";
     EntityComponent,
     GridComponent,
     ChartComponent,
-    MatchCardComponent,
+    CompactMatchCardComponent,
   ],
   templateUrl: "./detail.component.html",
 })
@@ -47,12 +47,23 @@ export class DetailComponent {
   private generation = 0;
   selected = computed(() => this.s.detail());
   player = computed(() => this.s.player(this.selected()?.id || ""));
+  playerTeam = computed(() => {
+    const player = this.player();
+    const team = player ? this.s.team(player.team) : undefined;
+    return team ? { ...team, id: player.team } : undefined;
+  });
   score = computed(() =>
     this.s.ranking().find((p) => p.id === this.selected()?.id),
   );
   team = computed(() =>
     this.s.standings().find((t) => t.id === this.selected()?.id),
   );
+  teamPosition = computed(() => {
+    const index = this.s
+      .standings()
+      .findIndex((team) => team.id === this.selected()?.id);
+    return index >= 0 ? index + 1 : null;
+  });
   coach = computed(() =>
     this.s.staff().find((c) => c.id === this.selected()?.id),
   );
@@ -141,7 +152,7 @@ export class DetailComponent {
       if (selected) {
         if (!this.ref) {
           const ref = this.dialogs.open(this.dialog(), {
-            width: "960px",
+            width: "840px",
             ariaLabelledBy: "detail-title",
             maxWidth: "96vw",
             maxHeight: "92dvh",
@@ -222,7 +233,31 @@ export class DetailComponent {
   courtNumber(m: any) {
     return Number(String(m.title || "").match(/[12]/)?.[0]) || 0;
   }
+  teamEntity(id: string) {
+    return { id, ...this.s.team(id) };
+  }
   coachGameCount(c: any) {
     return c.games.filter((g) => g.teamId === this.selected()?.id).length;
+  }
+  teamCrest(id: string) {
+    const url = this.s.team(id)?.url;
+    return /^https:\/\//.test(url || "") ? url : this.teamCrestPlaceholder(id);
+  }
+  teamCrestFallback(event: Event, id: string) {
+    const image = event.target as HTMLImageElement;
+    if (image.dataset["fallback"]) return;
+    image.dataset["fallback"] = "1";
+    image.src = this.teamCrestPlaceholder(id);
+  }
+  private teamCrestPlaceholder(id: string) {
+    const initials = this.s
+      .name(this.s.team(id)?.name)
+      .split(" ")
+      .slice(0, 2)
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="180" viewBox="0 0 160 180"><rect width="160" height="180" rx="22" fill="#e9edf2"/><text x="80" y="96" text-anchor="middle" dominant-baseline="middle" fill="#647186" font-family="Arial,sans-serif" font-size="46" font-weight="700">${initials}</text></svg>`;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   }
 }

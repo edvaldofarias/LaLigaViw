@@ -50,7 +50,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Horários de Brasília. Consultas completas a cada 10 minutos em dia de jogo e a cada 12 horas nos demais dias. Consultas de placares/equipes a cada 15 segundos durante jogos e sua janela de início; aba oculta suspende consultas.
 - `st=1` confirma partida em andamento; gols omitidos equivalem a zero somente nesse contexto. Placares do vídeo podem ter atraso em relação às câmeras. Classificação provisória identifica pontos previstos sem alterar a oficial.
 - Reservas representam ausências: não entram em jogos disputados nem recebem pontos coletivos.
-- MVP: gol +5; amarelo −2; vermelho −8; vitória +3; empate +1; derrota −2; craque +2; seleção +4; sem sofrer gols +5 ao goleiro ou +2 à linha; cada gol sofrido −1 por relacionado presente.
+- MVP: presença confirmada +2; gol +7; amarelo −1; vermelho −5; vitória +5; empate +2; derrota 0; craque +4; seleção +6; sem sofrer gols +7 ao goleiro ou +3 à linha; cada gol sofrido −1 por relacionado presente.
 - CARTOLA: um goleiro e seis de linha nas listas por rodada. Sugestões futuras usam desempenho histórico e confronto, sem confirmação de presença.
 - Odds: 20.000 simulações por partida. G4/G8: 20.000 cenários da Primeira Fase. Base somente de rodadas completamente encerradas, sem mudar o modelo estatístico.
 - Apenas a Primeira Fase tem classificação: 1º–4º quartas; 5º–8º repescagem com empate; 9º–12º repescagem sem empate.

@@ -1,5 +1,8 @@
 <ng-template #dialog
-  ><div id="detail">
+  ><div
+    id="detail"
+    [class.match-detail]="selected()?.kind === 'match'"
+  >
     <div class="dialog-top">
       <span>LA LIGA VIW / DETALHES</span
       ><button
@@ -17,30 +20,68 @@
       @switch (selected()?.kind) {
         @case ("player") {
           @if (player(); as p) {
-            <div class="profile-heading">
-              <app-entity [entity]="p" />
-              <div>
+            <section class="player-profile-hero">
+              <div class="player-profile-photo">
+                <app-entity [entity]="p" />
+              </div>
+              <div class="player-profile-copy">
+                <span class="profile-eyebrow">Jogador</span>
                 <h2 id="detail-title">{{ s.name(p.name) }}</h2>
-                <p>{{ s.name(s.team(p.team)?.name) }}</p>
+                @if (playerTeam(); as team) {
+                  <div class="player-profile-team">
+                    <app-entity [entity]="team" kind="team" />
+                  </div>
+                }
+                @if (s.goalkeeper(p.id, p.team)) {
+                  <span class="player-position">Goleiro · Camisa 1</span>
+                }
               </div>
-            </div>
-            <div class="detail-metrics">
-              <div>
-                <b>{{ p.stats[0] ?? "—" }}</b
-                ><span>Gols</span>
-              </div>
-              <div>
-                <b>{{ p.stats[2] }}</b
-                ><span>Jogos</span>
-              </div>
-              <div>
-                <b>{{ p.stats[14] ?? "—" }}</b
-                ><span>Cartões amarelos</span>
-              </div>
-              <div>
-                <b>{{ p.stats[16] ?? "—" }}</b
-                ><span>Cartões vermelhos</span>
-              </div>
+            </section>
+            <div class="player-profile-overview">
+              <section class="player-stat-panel">
+                <h3>Números na competição</h3>
+                <div class="detail-metrics player-profile-stats">
+                  <div>
+                    <b>{{ p.stats[0] ?? "—" }}</b
+                    ><span>Gols</span>
+                  </div>
+                  <div>
+                    <b>{{ p.stats[2] ?? "—" }}</b
+                    ><span>Jogos</span>
+                  </div>
+                  <div>
+                    <b>{{ p.stats[14] ?? "—" }}</b
+                    ><span>Amarelos</span>
+                  </div>
+                  <div>
+                    <b>{{ p.stats[16] ?? "—" }}</b
+                    ><span>Vermelhos</span>
+                  </div>
+                </div>
+              </section>
+              @if (score(); as score) {
+                <section class="player-score">
+                  <div class="player-score-heading">
+                    <div>
+                      <span class="profile-eyebrow">Ranking</span>
+                      <h3>MVP</h3>
+                    </div>
+                    <b>{{ score.total }} <small>pontos</small></b>
+                  </div>
+                  <div class="score-ledger">
+                    @for (c of score.components; track c.key) {
+                      <div>
+                        <span
+                          >{{ c.label }}
+                          <small>{{ c.count }} × {{ c.points }}</small></span
+                        ><b [class.negative-points]="c.earned < 0"
+                          >{{ c.earned > 0 ? "+" : "" }}{{ c.earned }}</b
+                        >
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
             </div>
             @if (p.SUSP) {
               <p class="sheet-warning">
@@ -48,43 +89,38 @@
                 confirmadas.
               </p>
             }
-            @if (score(); as score) {
-              <section class="player-score">
-                <div class="player-score-heading">
-                  <h3>MVP</h3>
-                  <b>{{ score.total }} <small>pontos</small></b>
-                </div>
-                <div class="score-ledger">
-                  @for (c of score.components; track c.key) {
-                    <div>
-                      <span
-                        >{{ c.label }}
-                        <small>{{ c.count }} × {{ c.points }}</small></span
-                      ><b [class.negative-points]="c.earned < 0"
-                        >{{ c.earned > 0 ? "+" : "" }}{{ c.earned }}</b
+            @if (playerAwards().length || playerSelections().length) {
+              <section class="player-achievements">
+                <h3>Reconhecimentos</h3>
+                <div class="player-achievement-list">
+                  @for (a of playerAwards(); track a.matchId) {
+                    <button
+                      class="player-achievement"
+                      type="button"
+                      (click)="s.open('match', a.matchId)"
+                    >
+                      <span class="player-achievement-icon award-icon">★</span>
+                      <span class="player-achievement-copy"
+                        ><b>Melhor em campo</b
+                        ><small>Rodada {{ a.round }} · Ver partida</small></span
+                      >
+                    </button>
+                  }
+                  @for (r of playerSelections(); track r.id) {
+                    <div class="player-achievement">
+                      <span class="player-achievement-icon selection-icon"
+                        >✓</span
+                      >
+                      <span class="player-achievement-copy"
+                        ><b>Seleção da rodada</b
+                        ><small
+                          >Rodada {{ r.roundNumber }} · +6 pontos no MVP</small
+                        ></span
                       >
                     </div>
                   }
                 </div>
               </section>
-            }
-            @if (playerAwards().length) {
-              <h3 class="detail-section">★ Melhor em campo</h3>
-              @for (a of playerAwards(); track a.matchId) {
-                <button
-                  mat-button
-                  class="text-link d-block"
-                  (click)="s.open('match', a.matchId)"
-                >
-                  Rodada {{ a.round }} · {{ s.name(s.team(a.teamId)?.name) }}
-                </button>
-              }
-            }
-            @if (playerSelections().length) {
-              <h3 class="detail-section">Seleções da rodada</h3>
-              @for (r of playerSelections(); track r.id) {
-                <p>Rodada {{ r.roundNumber }} · +4 pontos no MVP</p>
-              }
             }
             <section class="evolution-section">
               <h3>Evolução no MVP</h3>
@@ -113,57 +149,101 @@
         }
         @case ("team") {
           @if (team(); as t) {
-            <div class="profile-heading">
-              <app-entity [entity]="t" kind="team" />
-              <h2 id="detail-title">{{ s.name(t.name) }}</h2>
-            </div>
-            <div class="detail-metrics">
-              <div>
-                <b>{{ t.pts }}</b
-                ><span>Pontos</span>
+            <section class="team-profile-hero">
+              <div class="team-profile-crest">
+                <img
+                  class="crest"
+                  [src]="teamCrest(t.id)"
+                  (error)="teamCrestFallback($event, t.id)"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                />
               </div>
-              <div>
-                <b>{{ t.j }}</b
-                ><span>Jogos</span>
-              </div>
-              <div>
-                <b>{{ t.gp }}</b
-                ><span>Gols pró</span>
-              </div>
-              <div>
-                <b>{{ t.gc }}</b
-                ><span>Gols sofridos</span>
-              </div>
-            </div>
-            <p>
-              {{ t.v }} vitórias · {{ t.e }} empates · {{ t.d }} derrotas ·
-              Saldo {{ t.sg }}
-            </p>
-            <h3 class="detail-section">Técnicos que comandaram a equipe</h3>
-            <div class="team-coach-history">
-              @for (c of teamCoaches(); track c.id) {
-                <div>
-                  <app-entity [entity]="c" kind="coach" /><span
-                    >{{ coachGameCount(c) }} jogo(s) pela equipe</span
-                  >
+              <div class="team-profile-copy">
+                <span class="profile-eyebrow">Equipe</span>
+                <h2 id="detail-title">{{ s.name(t.name) }}</h2>
+                <div class="team-profile-badges">
+                  @if (teamPosition(); as position) {
+                    <span>{{ position }}º na classificação</span>
+                  }
+                  <span>{{ t.percent }}% de aproveitamento</span>
                 </div>
-              } @empty {
-                <p class="subtle">Nenhum técnico informado.</p>
-              }
-            </div>
-            <h3 class="detail-section">Elenco completo</h3>
-            <app-grid
-              [rows]="roster()"
-              [columns]="playerColumns"
-              [searchable]="true"
-            />
-            <h3 class="detail-section">Partidas da equipe</h3>
-            @for (m of teamMatches(); track m.id) {
-              <p class="subtle">
-                {{ s.date(m) }} · {{ s.phase(m.fs) }} · {{ s.round(m) }}
-              </p>
-              <app-match-card [m]="m" />
-            }
+              </div>
+            </section>
+            <section class="team-campaign-panel">
+              <div class="team-profile-stats">
+                <span><b>{{ t.pts }}</b><small>Pontos</small></span>
+                <span><b>{{ t.j }}</b><small>Jogos</small></span>
+                <span><b>{{ t.v }}</b><small>Vitórias</small></span>
+                <span><b>{{ t.sg }}</b><small>Saldo</small></span>
+              </div>
+              <div class="team-campaign-footer">
+                <span
+                  >{{ t.gp }} gols marcados · {{ t.gc }} sofridos ·
+                  {{ t.e }} empates · {{ t.d }} derrotas</span
+                >
+                @if (t.form?.length) {
+                  <div class="form" aria-label="Últimos resultados">
+                    @for (result of t.form; track $index) {
+                      <span
+                        [class.win]="result === 'V'"
+                        [class.loss]="result === 'D'"
+                        >{{ result }}</span
+                      >
+                    }
+                  </div>
+                }
+              </div>
+            </section>
+            <section class="team-detail-section">
+              <div class="team-detail-heading">
+                <div>
+                  <span class="profile-eyebrow">Comissão</span>
+                  <h3>Técnicos da equipe</h3>
+                </div>
+                <small>{{ teamCoaches().length }} no histórico</small>
+              </div>
+              <div class="team-coach-history">
+                @for (c of teamCoaches(); track c.id) {
+                  <div class="team-coach-card">
+                    <app-entity [entity]="c" kind="coach" />
+                    <span>{{ coachGameCount(c) }} jogo(s)</span>
+                  </div>
+                } @empty {
+                  <p class="subtle">Nenhum técnico informado.</p>
+                }
+              </div>
+            </section>
+            <mat-accordion class="team-detail-accordion">
+              <mat-expansion-panel class="team-detail-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Elenco completo</mat-panel-title>
+                  <mat-panel-description
+                    >{{ roster().length }} jogadores</mat-panel-description
+                  >
+                </mat-expansion-panel-header>
+                <div class="team-roster-section">
+                  <app-grid
+                    [rows]="roster()"
+                    [columns]="playerColumns"
+                    [searchable]="true"
+                  />
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel class="team-detail-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Partidas da equipe</mat-panel-title>
+                  <mat-panel-description
+                    >{{ teamMatches().length }} partidas</mat-panel-description
+                  >
+                </mat-expansion-panel-header>
+                <div class="team-match-grid">
+                  @for (m of teamMatches(); track m.id) {
+                    <app-compact-match-card [match]="m" />
+                  }
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
           }
         }
         @case ("coach") {
@@ -206,7 +286,11 @@
             <h3 class="detail-section">Histórico de partidas</h3>
             <div class="coach-history">
               @for (g of c.games; track g.matchId + g.teamId) {
-                <button mat-button (click)="s.open('match', g.matchId)">
+                <button
+                  class="coach-history-row"
+                  type="button"
+                  (click)="s.open('match', g.matchId)"
+                >
                   <span
                     class="badge"
                     [class]="'badge coach-result-' + g.result"
@@ -217,10 +301,11 @@
                           ? "Empate"
                           : "Derrota"
                     }}</span
-                  ><span
-                    ><b>{{ s.name(s.team(g.teamId)?.name) }}</b> ×
-                    {{ s.name(s.team(g.opponentId)?.name)
-                    }}<small
+                  ><span class="coach-history-copy"
+                    ><b
+                      >{{ s.name(s.team(g.teamId)?.name) }} ×
+                      {{ s.name(s.team(g.opponentId)?.name) }}</b
+                    ><small
                       >{{ s.date(s.match(g.matchId)) }} ·
                       {{ s.round(s.match(g.matchId)) }} · Comandou
                       {{ s.name(s.team(g.teamId)?.name) }}
@@ -228,7 +313,9 @@
                         · Substituiu Ênio
                       }
                     </small></span
-                  ><strong>{{ g.gf }} x {{ g.ga }}</strong>
+                  ><strong class="coach-history-score"
+                    >{{ g.gf }} × {{ g.ga }}</strong
+                  >
                 </button>
               }
             </div>
@@ -236,11 +323,26 @@
         }
         @case ("match") {
           @if (match(); as m) {
-            <h2 id="detail-title">
-              {{ s.name(s.team(m.team1)?.name) }} ×
-              {{ s.name(s.team(m.team2)?.name) }}
-            </h2>
-            <app-match-card [m]="m" />
+            <div class="match-detail-heading">
+              <div>
+                <span class="overview-eyebrow"
+                  >{{ s.phase(m.fs) }} · {{ s.round(m) }}</span
+                >
+                <h2 id="detail-title">
+                  {{ s.name(s.team(m.team1)?.name) }} ×
+                  {{ s.name(s.team(m.team2)?.name) }}
+                </h2>
+              </div>
+              <span class="badge" [class.neutral]="s.finished(m)">{{
+                s.status(m)
+              }}</span>
+            </div>
+            <div class="match-detail-card">
+              <app-compact-match-card
+                [match]="m"
+                [broadcast]="false"
+              />
+            </div>
             <div class="detail-info">
               <div>
                 <span>Data · Brasília</span>{{ s.date(m) }} · {{ s.time(m) }}
@@ -255,11 +357,24 @@
             </div>
             @if (!s.finished(m) && courtNumber(m)) {
               <button
-                mat-button
-                class="button btn btn-outline-primary"
+                class="match-detail-broadcast"
+                type="button"
                 [attr.data-live-court]="courtNumber(m)"
               >
-                Assistir ao vivo · {{ s.court(m.title) }}
+                <span aria-hidden="true">▶</span>
+                <span
+                  ><b>Assistir à transmissão ao vivo</b>
+                  <small>{{ s.court(m.title) }}</small></span
+                >
+              </button>
+            }
+            @if (isNext(m)) {
+              <button
+                mat-button
+                class="match-image-action"
+                (click)="s.open('art', 'flyer:' + m.id)"
+              >
+                Ver imagem do jogo e baixar ↓
               </button>
             }
             @if (s.award(m.id); as a) {
@@ -271,7 +386,7 @@
                 />
                 <div>
                   <span class="eyebrow">MELHOR EM CAMPO</span>
-                  <p>Escolha da organização · +2 pontos no MVP</p>
+                  <p>Escolha da organização · +4 pontos no MVP</p>
                   <button
                     mat-button
                     class="text-link"
@@ -287,7 +402,9 @@
               <section class="match-preview match-newspaper">
                 <div class="newspaper-kicker">JORNAL DA PARTIDA</div>
                 <h3>{{ recap.headline }}</h3>
-                <p>{{ recap.intro }}</p>
+                @if (recap.intro) {
+                  <p>{{ recap.intro }}</p>
+                }
                 <div class="newspaper-columns">
                   @for (col of recap.columns; track col.teamId) {
                     <section class="newspaper-column">
@@ -312,77 +429,101 @@
                     <section class="newspaper-column">
                       <h4>{{ col.name }}</h4>
                       <p>{{ col.story }}</p>
-                      @for (p of col.highlights; track $index) {
-                        <p>{{ p.text }}</p>
+                    </section>
+                  }
+                </div>
+                @if (preview.highlights.length) {
+                  <div class="match-highlights">
+                    <div class="match-highlights-heading">
+                      <span class="newspaper-kicker">DESTAQUES</span>
+                      <h4>Jogadores para ficar de olho</h4>
+                    </div>
+                    <div class="match-highlights-grid">
+                      @for (p of preview.highlights; track p.playerId) {
+                        <article>
+                          <app-entity
+                            [entity]="
+                              s.player(p.playerId) || {
+                                id: p.playerId,
+                                name: p.name,
+                              }
+                            "
+                          />
+                          <span>{{
+                            s.name(s.team(p.teamId)?.name)
+                          }}</span>
+                          <p>{{ p.text }}</p>
+                        </article>
+                      }
+                    </div>
+                  </div>
+                }
+              </section>
+            }
+            @if (s.isLive(m) || s.finished(m)) {
+              <h3 class="detail-section">Estatísticas · Gols e cartões</h3>
+              <button
+                mat-button
+                class="text-link"
+                (click)="s.loadSheet(m.id, true)"
+              >
+                Atualizar súmula ↻
+              </button>
+              @if (summary(); as summary) {
+                <div class="match-team-stats-grid">
+                  @for (teamId of [m.team1, m.team2]; track teamId) {
+                    <section class="match-team-stats">
+                      <div class="match-team-stats-heading">
+                        <app-entity
+                          [entity]="teamEntity(teamId)"
+                          kind="team"
+                        />
+                      </div>
+                      @for (
+                        p of summary.players;
+                        track p.teamId + ":" + p.playerId
+                      ) {
+                        @if (p.teamId === teamId) {
+                          <div class="match-event-player">
+                            @if (p.playerId && s.player(p.playerId); as player) {
+                              <app-entity [entity]="player" />
+                            } @else {
+                              <span class="unidentified-player">{{
+                                s.name(p.name)
+                              }}</span>
+                            }
+                            <span class="match-event-counts">
+                              @if (p.goals > 0) {
+                                <span aria-label="Gols">⚽ {{ p.goals }}</span>
+                              }
+                              @if (p.yellow > 0) {
+                                <span aria-label="Cartões amarelos"
+                                  >🟨 {{ p.yellow }}</span
+                                >
+                              }
+                              @if (p.red > 0) {
+                                <span aria-label="Cartões vermelhos"
+                                  >🟥 {{ p.red }}</span
+                                >
+                              }
+                            </span>
+                          </div>
+                        }
                       }
                     </section>
                   }
                 </div>
-              </section>
-            }
-            @if (isNext(m)) {
-              <button
-                mat-button
-                class="button btn btn-outline-primary"
-                (click)="s.open('art', 'flyer:' + m.id)"
-              >
-                Ver panfleto e baixar ↓
-              </button>
-            }
-            <h3 class="detail-section">Estatísticas · Gols e cartões</h3>
-            <button
-              mat-button
-              class="text-link"
-              (click)="s.loadSheet(m.id, true)"
-            >
-              Atualizar súmula ↻
-            </button>
-            @if (summary(); as summary) {
-              <div class="match-team-stats-grid">
-                @for (teamId of [m.team1, m.team2]; track teamId) {
-                  <section class="match-team-stats">
-                    <h4>{{ s.name(s.team(teamId)?.name) }}</h4>
-                    @for (
-                      p of summary.players;
-                      track p.teamId + ":" + p.playerId
-                    ) {
-                      @if (p.teamId === teamId) {
-                        <div class="match-event-player">
-                          <button
-                            mat-button
-                            class="text-link"
-                            (click)="s.open('player', p.playerId)"
-                          >
-                            {{ s.name(p.name) }}</button
-                          ><span class="match-event-counts">
-                            @if (p.goals > 0) {
-                              <span aria-label="Gols">⚽ {{ p.goals }}</span>
-                            }
-                            @if (p.yellow > 0) {
-                              <span aria-label="Cartões amarelos"
-                                >🟨 {{ p.yellow }}</span
-                              >
-                            }
-                            @if (p.red > 0) {
-                              <span aria-label="Cartões vermelhos"
-                                >🟥 {{ p.red }}</span
-                              >
-                            }
-                          </span>
-                        </div>
-                      }
-                    }
-                  </section>
+                @if (!summary.hasEvents) {
+                  <p class="subtle">
+                    Nenhum gol ou cartão disponível na súmula.
+                  </p>
                 }
-              </div>
-              @if (!summary.hasEvents) {
-                <p class="subtle">Nenhum gol ou cartão disponível na súmula.</p>
-              }
-              @if (summary.goalDifference) {
-                <p class="subtle">
-                  Há diferença entre gols atribuídos e placar. Os dados
-                  individuais da fonte podem estar incompletos.
-                </p>
+                @if (summary.goalDifference) {
+                  <p class="subtle">
+                    Há diferença entre gols atribuídos e placar. Os dados
+                    individuais da fonte podem estar incompletos.
+                  </p>
+                }
               }
             }
           }
@@ -390,7 +531,7 @@
         @case ("art") {
           <h2 id="detail-title">
             {{
-              artIsMotm() ? "Man of the Match" : "Panfleto da próxima rodada"
+              artIsMotm() ? "Man of the Match" : "Imagem do jogo"
             }}
           </h2>
           <p class="subtle">PNG · 1080 × 1350 · Fotos e escudos originais.</p>

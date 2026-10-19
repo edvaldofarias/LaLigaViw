@@ -15,3 +15,21 @@ test('new assignments do not leak into past games or count scheduled and missing
  assert.equal(coachFor(original.matchId,original.teamId,more).name,'Patrick');
  assert.equal(coachFor('not-assigned',original.teamId),null);
 });
+test('fifth-round assignments match the organizer list',()=>{
+ const fifthRound={
+   '-OuCEPqc-2Ju1pdvU4j1':'patrick',
+   '-OuCE3jNN_OU-QexjdHw':'patrick',
+   '-OuCE79e187h1srqNCAK':'enio',
+   '-OuCEIPXbahnsYG98j_K':'enio',
+   '-OuCE8ygQVY-3BXzP80H':'guto',
+   '-OuCEUdiPg-VFiAmxP-W':'guto',
+   '-OuCEBQOxXueVsu4_Pbt':'guto',
+   '-OuCEAFLB6cDtcv8W1dI':'renan',
+   '-OuCE5UUPYmEL7Mnf4-D':'renan',
+   '-OuCECnOQDCHySBDLAxx':'renan',
+ };
+ const matchIds=new Set(['1780480367054','1786246792371','1786246792897','1786246793447','1786246794080']);
+ const assignments=coachAssignments.filter(a=>matchIds.has(a.matchId));
+ assert.equal(assignments.length,10);
+ assert.deepEqual(Object.fromEntries(assignments.map(a=>[a.teamId,a.coachId])),fifthRound);
+});

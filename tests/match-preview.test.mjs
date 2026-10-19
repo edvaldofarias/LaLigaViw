@@ -51,3 +51,15 @@ test('a published selection can be cited beyond the immediately previous match',
   const d={...data,matchs:{...data.matchs,moreRecent:{...data.matchs.previous,m_set:'different',d_i:old+1000}}};
   assert.match(matchPreview(game,d,picks,now).highlights[0].text,/seleção da 1ª rodada/);
 });
+
+test('preview explains the G8 race and identifies each team leading scorer',()=>{
+  const teams=Object.fromEntries(Array.from({length:9},(_,i)=>[`t${i+1}`,{name:`Time ${i+1}`}]));
+  const matchs={next:{...game,team1:'t7',team2:'t9'}};
+  for(let i=1;i<=8;i++)matchs[`past${i}`]={team1:`t${i}`,team2:`t${i+1}`,fs:'f',m_set:'r1',d_i:old+i,st:3,dt:{qt_g1:2,qt_g2:0}};
+  const players={a:{name:'Artilheiro Sete',team:'t7',dt:'0=3'},b:{name:'Artilheiro Nove',team:'t9',dt:'0=2'}};
+  const preview=matchPreview(matchs.next,{teams,matchs,player:players,matchDetails:{}},[],now);
+  assert.match(preview.columns[0].story,/G8|quartas de final/);
+  assert.match(preview.columns[1].story,/entrar no G8/);
+  assert.match(preview.columns[0].highlights[0].text,/Artilheiro Sete/);
+  assert.match(preview.columns[1].highlights[0].text,/Artilheiro Nove/);
+});

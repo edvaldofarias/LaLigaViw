@@ -38,7 +38,7 @@ test('round two credits Gustavo Marques instead of the Real Madrid goalkeeper',a
   const round=championshipSelections.find(r=>r.id==='2026-round-2');
   assert.equal(round.players.find(p=>p.teamName==='Real Madrid').playerId,'1789193447398');
   const scores=calculateScores(data,[],[round]);
-  assert.equal(scores.find(p=>p.id==='1789193447398').components.find(c=>c.key==='selections').earned,4);
+  assert.equal(scores.find(p=>p.id==='1789193447398').components.find(c=>c.key==='selections').earned,6);
   assert.equal(scores.find(p=>p.id==='1789193322187').counts.selections,0);
 });
 
@@ -52,5 +52,5 @@ test('round four credits the confirmed goalkeeper and seven distinct players',as
  assert.equal(round.players[0].playerId,'1789193322187');
  assert.equal(round.players[2].playerId,'1789220355162');
  const scores=calculateScores(data,[],[round]);
- for(const p of round.players)assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,4);
+ for(const p of round.players)assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,6);
 });

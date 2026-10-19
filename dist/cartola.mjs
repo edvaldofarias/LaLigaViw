@@ -25,7 +25,7 @@ export function roundCartola(data,roundId,awards=[],selections=[]){
 }
 
 // Suggestions are separate from earned points; keep the official forecast untouched.
-export function suggestCartola(data,roundId,awards=[],selections=[]){
+function cartolaCandidates(data,roundId,awards=[],selections=[]){
  const targets=Object.entries(data.matchs||{}).filter(([,m])=>m.m_set===roundId);
  const start=Math.min(...targets.map(([,m])=>m.d_i||Infinity));
  const history=forecastContext(data,Math.min(Date.now(),start-1)).history;
@@ -55,5 +55,18 @@ export function suggestCartola(data,roundId,awards=[],selections=[]){
   candidates.push({id,...p,goalkeeper,average,games:t.games,opponentId:m.team1===p.team?m.team2:m.team1,win,expectedAgainst:ga,recommendation:average+matchup});
  }
  candidates.sort((a,b)=>b.recommendation-a.recommendation||a.name.localeCompare(b.name,'pt-BR'));
- return [...candidates.filter(p=>p.goalkeeper).slice(0,1),...candidates.filter(p=>!p.goalkeeper).slice(0,6)];
+ return candidates;
+}
+const selectSuggestions=(candidates,reverse=false)=>{
+ const sorted=[...candidates].sort((a,b)=>(reverse?a.recommendation-b.recommendation:b.recommendation-a.recommendation)||a.name.localeCompare(b.name,'pt-BR'));
+ return [...sorted.filter(p=>p.goalkeeper).slice(0,1),...sorted.filter(p=>!p.goalkeeper).slice(0,6)];
+};
+export function suggestCartola(data,roundId,awards=[],selections=[]){
+ return selectSuggestions(cartolaCandidates(data,roundId,awards,selections));
+}
+export function suggestCartolaGroups(data,roundId,awards=[],selections=[]){
+ const candidates=cartolaCandidates(data,roundId,awards,selections);
+ const ideal=selectSuggestions(candidates);
+ const used=new Set(ideal.map(p=>p.id));
+ return {ideal,avoid:selectSuggestions(candidates.filter(p=>!used.has(p.id)),true)};
 }

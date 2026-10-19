@@ -1,16 +1,17 @@
 import {isGoalkeeper} from './goalkeepers.mjs';
 export const SCORE_RULES=[
-  {key:'goals',label:'Gol',points:5},
-  {key:'yellow',label:'Cartão amarelo',points:-2},
-  {key:'red',label:'Cartão vermelho',points:-8},
-  {key:'wins',label:'Vitória da equipe',points:3},
-  {key:'draws',label:'Empate da equipe',points:1},
-  {key:'losses',label:'Derrota da equipe',points:-2},
-  {key:'goalkeeperCleanSheets',label:'Sem sofrer gols · goleiro',points:5},
-  {key:'outfieldCleanSheets',label:'Sem sofrer gols · linha',points:2},
+  {key:'appearances',label:'Presença confirmada',points:2},
+  {key:'goals',label:'Gol',points:7},
+  {key:'yellow',label:'Cartão amarelo',points:-1},
+  {key:'red',label:'Cartão vermelho',points:-5},
+  {key:'wins',label:'Vitória da equipe',points:5},
+  {key:'draws',label:'Empate da equipe',points:2},
+  {key:'losses',label:'Derrota da equipe',points:0},
+  {key:'goalkeeperCleanSheets',label:'Sem sofrer gols · goleiro',points:7},
+  {key:'outfieldCleanSheets',label:'Sem sofrer gols · linha',points:3},
   {key:'goalsAgainst',label:'Gol sofrido pela equipe',points:-1},
-  {key:'motm',label:'Melhor em campo',points:2},
-  {key:'selections',label:'Seleção da rodada',points:4},
+  {key:'motm',label:'Melhor em campo',points:4},
+  {key:'selections',label:'Seleção da rodada',points:6},
 ];
 const stats=value=>Object.fromEntries(String(value||'').split('#').filter(s=>s.includes('=')).map(s=>{const [k,v]=s.split('=');return[k,Math.max(0,Number(v)||0)]}));
 // Organization rule: ac=7 / val1=1 (reserve) means absent in this league.
@@ -78,7 +79,7 @@ export function calculateScores(data,awards=[],selections=[]){
   const rows=Object.entries(data.player||{}).map(([id,p])=>{
     const s=stats(p.dt),r=results.get(id)||emptyResults();
     const goalkeeper=isGoalkeeper(id,p.team);
-    const counts={goals:s[0]||0,yellow:s[14]||0,red:s[16]||0,...r,
+    const counts={appearances:r.wins+r.draws+r.losses,goals:s[0]||0,yellow:s[14]||0,red:s[16]||0,...r,
       motm:uniqueAwards.filter(a=>a.playerId===id).length,
       selections:new Set(selections.filter(r=>r.players.some(p=>p.playerId===id)).map(r=>r.id)).size};
     const components=SCORE_RULES.filter(rule=>rule.key!==(goalkeeper?'outfieldCleanSheets':'goalkeeperCleanSheets')||counts[rule.key]>0).map(rule=>({...rule,count:counts[rule.key],earned:counts[rule.key]*rule.points}));

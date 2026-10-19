@@ -17,6 +17,12 @@ export function matchPreview(match,data,selections=[],now=Date.now()){
   const points={};
   for(const m of history){points[m.team1]=(points[m.team1]||0)+(m.dt.qt_g1>m.dt.qt_g2?3:m.dt.qt_g1===m.dt.qt_g2?1:0);points[m.team2]=(points[m.team2]||0)+(m.dt.qt_g2>m.dt.qt_g1?3:m.dt.qt_g2===m.dt.qt_g1?1:0);}
   const leadingPoints=Math.max(0,...Object.values(points));
+  const standings=Object.keys(data.teams||{}).map(id=>{
+    const games=history.filter(m=>m.team1===id||m.team2===id);
+    let pts=0,wins=0,gf=0,ga=0;
+    for(const m of games){const home=m.team1===id,forGoals=home?m.dt.qt_g1:m.dt.qt_g2,against=home?m.dt.qt_g2:m.dt.qt_g1;gf+=forGoals;ga+=against;if(forGoals>against){pts+=3;wins++;}else if(forGoals===against)pts++;}
+    return {id,pts,wins,gf,gd:gf-ga,games:games.length};
+  }).sort((a,b)=>b.pts-a.pts||b.wins-a.wins||b.gd-a.gd||b.gf-a.gf||label(data.teams?.[a.id]?.name).localeCompare(label(data.teams?.[b.id]?.name),'pt-BR')).map((team,index)=>({...team,rank:index+1}));
   const athletes=Object.entries(data.player||{}).map(([id,p])=>({...p,id,goals:parseStats(p.dt)[0]}));
   const topGoals=Math.max(0,...athletes.map(p=>Number.isFinite(p.goals)?p.goals:0));
   const topScorers=athletes.filter(p=>topGoals>0&&p.goals===topGoals);
@@ -32,10 +38,21 @@ export function matchPreview(match,data,selections=[],now=Date.now()){
       story=gf>ga?`${teamName} chega embalado pela vitória por ${gf} a ${ga} sobre ${opponent} e quer repetir o resultado.`:gf<ga?`${teamName} busca a reação após a derrota por ${gf} a ${ga} para ${opponent}. A equipe tenta responder com uma vitória.`:`Depois do empate por ${gf} a ${ga} com ${opponent}, ${teamName} vai em busca de uma vitória.`;
       if(leadingPoints>0&&(points[teamId]||0)===leadingPoints)story+=Object.values(points).filter(p=>p===leadingPoints).length>1?` Com ${points[teamId]} pontos, a equipe está no grupo que divide a maior pontuação da fase.`:` A equipe lidera a fase em pontos, com ${points[teamId]}.`;
     }
+    const standing=standings.find(team=>team.id===teamId),g8=standings[7];
+    if(standing?.games&&standings.length>=8){
+      if(standing.rank===1)story+=` Na ${standing.rank}ª posição, defende a liderança da competição.`;
+      else if(standing.rank<=4)story+=` Ocupa a ${standing.rank}ª posição e briga por uma vaga direta nas quartas de final.`;
+      else if(standing.rank<=8)story+=` Na ${standing.rank}ª posição, luta para se manter no G8 e avançar à repescagem.`;
+      else{
+        const gap=Math.max(0,(g8?.pts||0)-standing.pts);
+        story+=` Em ${standing.rank}º lugar, busca entrar no G8${gap?` e está a ${gap} ${gap===1?'ponto':'pontos'} da faixa de classificação`:''}.`;
+      }
+    }
     const selected=selections.filter(r=>r.phaseId===match.fs&&completedRounds.has(r.roundId)).flatMap(r=>r.players.filter(p=>p.teamId===teamId&&(!data.player?.[p.playerId]?.team||data.player[p.playerId].team===teamId)).map(p=>({...p,roundNumber:r.roundNumber}))).sort((a,b)=>b.roundNumber-a.roundNumber);
     const stats=last?summarizeMatch(data.matchDetails?.[last.id]?.data,last,data.player||{}):{players:[]};
     const scorers=stats.players.filter(p=>p.teamId===teamId&&p.goals>0&&(!data.player?.[p.playerId]?.team||data.player[p.playerId].team===teamId));
-    const candidates=[...new Set([...selected.map(p=>p.playerId),...topScorers.filter(p=>p.team===teamId).map(p=>p.id),...scorers.map(p=>p.playerId)])].filter(id=>id&&(data.player?.[id]?.name||selected.find(p=>p.playerId===id)?.name));
+    const teamScorers=athletes.filter(p=>p.team===teamId&&p.goals>0).sort((a,b)=>b.goals-a.goals||label(a.name).localeCompare(label(b.name),'pt-BR'));
+    const candidates=[...new Set([...selected.map(p=>p.playerId),...topScorers.filter(p=>p.team===teamId).map(p=>p.id),...scorers.map(p=>p.playerId),...teamScorers.slice(0,2).map(p=>p.id)])].filter(id=>id&&(data.player?.[id]?.name||selected.find(p=>p.playerId===id)?.name));
     const weight=id=>(selected.some(p=>p.playerId===id)?2:0)+(topScorers.some(p=>p.id===id)?3:0);
     candidates.sort((a,b)=>weight(b)-weight(a)||(scorers.find(p=>p.playerId===b)?.goals||0)-(scorers.find(p=>p.playerId===a)?.goals||0));
     const highlights=candidates.slice(0,2).map(playerId=>{
@@ -43,6 +60,7 @@ export function matchPreview(match,data,selections=[],now=Date.now()){
       const playerName=label(data.player?.[playerId]?.name||pick?.name),sentences=[];
       if(pick)sentences.push(`${playerName} foi escolhido para a seleção da ${pick.roundNumber}ª rodada.`);
       if(topScorers.some(p=>p.id===playerId))sentences.push(`${sentences.length?'Também '+(topScorers.length>1?'divide':'lidera'):playerName+(topScorers.length>1?' divide':' lidera')} a artilharia do campeonato, com ${topGoals} ${topGoals===1?'gol':'gols'}.`);
+      else if(teamScorers[0]?.id===playerId)sentences.push(`${playerName} é o principal artilheiro da equipe, com ${teamScorers[0].goals} ${teamScorers[0].goals===1?'gol':'gols'}.`);
       if(p?.goals)sentences.push(`${sentences.length?'Na última partida, marcou':playerName+' marcou'} ${p.goals} ${p.goals===1?'gol':'gols'}${sentences.length?'':' na última partida'}.`);
       return {playerId,teamId,name:playerName,text:sentences.join(' ')};
     }).filter(p=>p.text);

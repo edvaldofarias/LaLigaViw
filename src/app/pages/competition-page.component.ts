@@ -1,27 +1,30 @@
 import { MATERIAL } from "../shared/material";
 import { Component, inject, computed, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { DecimalPipe, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { CompetitionService } from "../core/competition.service";
 import { SECTIONS } from "../core/models";
 import { GridComponent, GridColumn } from "../shared/grid.component";
-import { MatchCardComponent } from "../shared/match-card.component";
+import {
+  CompactMatchCardComponent,
+  teamCrestFallback,
+  teamCrestSource,
+} from "../shared/compact-match-card.component";
+import { RoundCarouselComponent } from "../shared/round-carousel.component";
 import { EntityComponent } from "../shared/entity.component";
-import { ChartComponent } from "../shared/chart.component";
 @Component({
   selector: "app-competition-page",
   standalone: true,
   imports: [
     ...MATERIAL,
     FormsModule,
-    DecimalPipe,
     NgTemplateOutlet,
     GridComponent,
-    MatchCardComponent,
+    CompactMatchCardComponent,
+    RoundCarouselComponent,
     EntityComponent,
-    ChartComponent,
   ],
   templateUrl: "./competition-page.component.html",
 })
@@ -34,16 +37,29 @@ export class CompetitionPageComponent {
   );
   team = signal("");
   playerStatus = signal("");
-  phase = signal("");
   round = signal("");
   status = signal("");
+  overviewRound = signal("");
   selectionId = signal("");
+  motmRound = signal<number | null>(null);
   cartolaId = signal("");
-  evolutionTeam = signal("");
   selectedSelection = computed(
     () =>
       this.s.selections.find((x) => x.id === this.selectionId()) ||
       this.s.selections.at(-1),
+  );
+  motmRounds = computed(() =>
+    [...new Set<number>(this.s.awards.map((award) => Number(award.round)))].sort(
+      (a, b) => a - b,
+    ),
+  );
+  selectedMotmRound = computed(
+    () => this.motmRound() ?? this.motmRounds().at(-1) ?? 0,
+  );
+  motmAwards = computed(() =>
+    this.s.awards.filter(
+      (award) => award.round === this.selectedMotmRound(),
+    ),
   );
   filteredPlayers = computed(() =>
     this.s
@@ -105,8 +121,7 @@ export class CompetitionPageComponent {
       .matches()
       .filter(
         (m) =>
-          (!this.phase() || m.fs === this.phase()) &&
-          (!this.round() || m.m_set === this.round()) &&
+          m.m_set === this.selectedMatchesRound() &&
           (!this.team() || [m.team1, m.team2].includes(this.team())) &&
           (!this.status() ||
             (this.status() === "done"
@@ -132,21 +147,50 @@ export class CompetitionPageComponent {
               : "qualification-playoff",
       })),
   );
-  availableRounds = computed(() =>
-    this.s.rounds().filter(
-      (r) =>
-        this.s.matches().some((m) => m.m_set === r.id && this.s.finished(m)) ||
-        (r.fs === this.s.firstPhase &&
-          this.s
-            .rounds()
-            .filter((x) => x.fs === r.fs)
-            .findIndex((x) => x.id === r.id) >= 4 &&
-          this.s
-            .rounds()
-            .filter((x) => x.fs === r.fs)
-            .findIndex((x) => x.id === r.id) <= 6),
+  overviewRounds = computed(() =>
+    this.s
+      .rounds()
+      .filter((round) =>
+        this.s.matches().some((match) => match.m_set === round.id),
+      ),
+  );
+  selectedOverviewRound = computed(() => {
+    const rounds = this.overviewRounds();
+    const selected = this.overviewRound();
+    if (selected && rounds.some((round) => round.id === selected)) {
+      return selected;
+    }
+    return (
+      this.s.upcoming()[0]?.m_set ||
+      this.s.latestCompleted() ||
+      rounds.at(-1)?.id ||
+      ""
+    );
+  });
+  overviewRoundIndex = computed(() =>
+    this.overviewRounds().findIndex(
+      (round) => round.id === this.selectedOverviewRound(),
     ),
   );
+  overviewMatches = computed(() =>
+    this.s
+      .matches()
+      .filter((match) => match.m_set === this.selectedOverviewRound()),
+  );
+  selectedMatchesRound = computed(() => {
+    const rounds = this.overviewRounds();
+    const selected = this.round();
+    if (selected && rounds.some((item) => item.id === selected)) {
+      return selected;
+    }
+    return (
+      this.s.upcoming()[0]?.m_set ||
+      this.s.latestCompleted() ||
+      rounds.at(-1)?.id ||
+      ""
+    );
+  });
+  availableRounds = computed(() => this.s.rounds());
   chosenCartola = computed(
     () =>
       this.cartolaId() ||
@@ -161,11 +205,10 @@ export class CompetitionPageComponent {
       .every((m) => !this.s.finished(m)),
   );
   cartola = computed(() => this.s.cartola(this.chosenCartola()));
-  suggestions = computed(() =>
-    this.future()
-      ? this.s
-          .suggestions(this.chosenCartola())
-          .map((p) => ({
+  suggestionGroups = computed(() => {
+    if (!this.future()) return { ideal: [], avoid: [] };
+    const decorate = (players: any[]) =>
+      players.map((p) => ({
             ...p,
             confronto:
               this.s.name(this.s.team(p.team)?.name) +
@@ -173,27 +216,12 @@ export class CompetitionPageComponent {
               this.s.name(this.s.team(p.opponentId)?.name),
             averageValue: +p.average.toFixed(1),
             victory: (p.win * 100).toFixed(1) + "%",
-          }))
-      : [],
-  );
-  chartSeries = computed(() => {
-    const history = this.s.teamHistory();
-    return [...this.s.teams()]
-      .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
-      .filter((t) => !this.evolutionTeam() || t.id === this.evolutionTeam())
-      .map((t) => ({
-        name: this.s.name(t.name),
-        logo: t.url,
-        color:
-          this.s.colors[
-            this.s.teams().findIndex((x) => x.id === t.id) %
-              this.s.colors.length
-          ],
-        values: (history.get(t.id) || []).map((p) => ({
-          round: p.round,
-          value: p.rank,
-        })),
-      }));
+          }));
+    const groups = this.s.suggestionGroups(this.chosenCartola());
+    return {
+      ideal: decorate(groups.ideal),
+      avoid: decorate(groups.avoid),
+    };
   });
   readonly playerColumns: GridColumn[] = [
     { key: "name", label: "Jogador", kind: "player" },
@@ -216,7 +244,7 @@ export class CompetitionPageComponent {
   ];
   readonly coachColumns: GridColumn[] = [
     { key: "name", label: "Técnico/Professor", kind: "coach" },
-    { key: "percent", label: "Aprov.", kind: "points" },
+    { key: "percent", label: "Aprov.", kind: "percent" },
     { key: "played", label: "Jogos" },
     { key: "wins", label: "Vitórias" },
     { key: "draws", label: "Empates" },
@@ -225,39 +253,22 @@ export class CompetitionPageComponent {
     { key: "ga", label: "Gols contra" },
     { key: "gd", label: "Saldo" },
   ];
-  readonly standingsColumns: GridColumn[] = [
-    { key: "position", label: "#", priority: 2 },
-    { key: "id", label: "Equipe", kind: "team", priority: 1 },
-    { key: "pts", label: "PTS", kind: "points" },
-    { key: "j", label: "J" },
-    { key: "v", label: "V" },
-    { key: "e", label: "E" },
-    { key: "d", label: "D" },
-    { key: "gp", label: "GP" },
-    { key: "gc", label: "GC" },
-    { key: "sg", label: "SG" },
-    { key: "percent", label: "Aprov." },
-    { key: "g4", label: "Chance G4" },
-    { key: "g8", label: "Chance G8" },
-    { key: "form", label: "Últimos", kind: "form" },
-  ];
-  readonly cartolaColumns: GridColumn[] = [
-    { key: "name", label: "Jogador", kind: "player" },
-    { key: "team", label: "Equipe", kind: "team" },
-    { key: "total", label: "Pontos", kind: "points" },
-  ];
-  readonly suggestionColumns: GridColumn[] = [
-    { key: "name", label: "Jogador", kind: "player" },
-    { key: "confronto", label: "Confronto", kind: "matchup" },
-    { key: "averageValue", label: "Média MVP", kind: "points" },
-  ];
   roundName(id: string) {
     const m = this.s.matches().find((m) => m.m_set === id);
     return m ? this.s.phase(m.fs) + " · " + this.s.round(m) : "Rodada";
   }
-  hasLive = (t: any) => !!t.live;
+  teamCrest(id: string) {
+    return teamCrestSource(this.s, id);
+  }
+  crestFallback(event: Event, id: string) {
+    teamCrestFallback(this.s, event, id);
+  }
+  hasLive = (team: any) => !!team.live;
   cartolaTotal(key: string) {
     return this.cartola()[key].reduce((n: number, p: any) => n + p.total, 0);
+  }
+  teamEntity(id: string) {
+    return { id, ...this.s.team(id) };
   }
   selectedNext(m: any) {
     return this.s.upcoming().some((x) => x.id === m.id);

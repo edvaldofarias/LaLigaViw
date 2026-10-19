@@ -14,212 +14,214 @@
 </div>
 @switch (view()) {
   @case ("overview") {
-    <div class="metrics">
-      <div class="metric">
-        <span>Equipes</span><b>{{ s.teams().length }}</b>
-      </div>
-      <div class="metric">
-        <span>Jogadores</span><b>{{ s.players().length }}</b>
-      </div>
-      <div class="metric">
-        <span>Partidas encerradas</span
-        ><b>{{ s.matches().filter(s.finished).length }}</b>
-      </div>
-    </div>
-    <h3 class="detail-section">Próxima rodada</h3>
-    <div class="cards-grid">
-      @for (m of s.upcoming(); track m.id) {
-        <app-match-card [m]="m" />
-      }
-    </div>
-    <h3 class="detail-section">Classificação · Primeira Fase</h3>
-    <mat-card class="panel" appearance="outlined"
-      ><app-grid
-        [rows]="standingsRows()"
-        [columns]="standingsColumns.slice(0, 9)"
-    /></mat-card>
-  }
-  @case ("matches") {
-    <div class="filters">
-      <ng-container *ngTemplateOutlet="teamFilter" /><mat-form-field
-        appearance="outline"
-        ><mat-label>Filtrar fase</mat-label
-        ><mat-select
-          aria-label="Filtrar fase"
-          [ngModel]="phase()"
-          (ngModelChange)="phase.set($event); round.set('')"
-          ><mat-option [value]="''">Todas as fases</mat-option>
-          @for (id of s.phases(); track id) {
-            <mat-option [value]="id">{{ s.phase(id) }}</mat-option>
-          }
-        </mat-select></mat-form-field
-      ><mat-form-field appearance="outline"
-        ><mat-label>Filtrar rodada</mat-label
-        ><mat-select
-          aria-label="Filtrar rodada"
-          [ngModel]="round()"
-          (ngModelChange)="round.set($event)"
-          ><mat-option [value]="''">Todas as rodadas</mat-option>
-          @for (r of s.rounds(); track r.id) {
-            @if (!phase() || phase() === r.fs) {
-              <mat-option [value]="r.id">{{ roundName(r.id) }}</mat-option>
-            }
-          }
-        </mat-select></mat-form-field
-      ><mat-form-field appearance="outline"
-        ><mat-label>Status da partida</mat-label
-        ><mat-select
-          aria-label="Status da partida"
-          [ngModel]="status()"
-          (ngModelChange)="status.set($event)"
-          ><mat-option [value]="''">Todos os status</mat-option
-          ><mat-option value="done">Encerradas</mat-option
-          ><mat-option value="live">Ao vivo</mat-option
-          ><mat-option value="scheduled">Agendadas</mat-option></mat-select
-        ></mat-form-field
-      >
-    </div>
-    <div class="live-court-access">
-      <button
-        mat-button
-        class="button btn btn-outline-primary"
-        data-live-court="1"
-      >
-        Assistir ao vivo · Quadra 1</button
-      ><button
-        mat-button
-        class="button btn btn-outline-primary"
-        data-live-court="2"
-      >
-        Assistir ao vivo · Quadra 2
-      </button>
-    </div>
-    <div class="cards-grid">
-      @for (m of filteredMatches(); track m.id) {
-        <div>
-          <p class="subtle">
-            {{ s.date(m) }} · {{ s.phase(m.fs) }} · {{ s.round(m) }}
-          </p>
-          <app-match-card [m]="m" />
-          @if (selectedNext(m) && !s.finished(m)) {
-            <button
-              mat-button
-              class="button btn btn-outline-primary my-2"
-              (click)="s.open('art', 'flyer:' + m.id)"
-            >
-              Ver panfleto e baixar ↓
-            </button>
-          }
-        </div>
-      }
-    </div>
-  }
-  @case ("standings") {
     @if (s.standings().some(hasLive)) {
       <p class="live-table-notice">
-        ● Classificação provisória ao vivo: considera os placares atuais como
-        finais. Chances G4/G8 usam apenas rodadas completas.
+        ● Classificação provisória ao vivo. Chances G4/G8 consideram somente
+        rodadas completas.
       </p>
     }
-    <section class="forecast-summary">
-      <div>
-        <h3>Projeção G4 / G8</h3>
-        <p>
-          20.000 cenários da Primeira Fase · referência estatística, sem
-          garantia de classificação.
-        </p>
+    <div class="overview-layout">
+      <section class="overview-standings" aria-labelledby="standings-title">
+        <div class="overview-section-heading">
+          <div>
+            <span class="overview-eyebrow">Primeira fase</span>
+            <h3 id="standings-title">Classificação</h3>
+          </div>
+          <span class="overview-table-hint">Deslize para ver todos os dados</span>
+        </div>
+        <div class="overview-table-wrap">
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th scope="col" colspan="2">Equipe</th>
+                <th scope="col">PTS</th>
+                <th scope="col">J</th>
+                <th scope="col">V</th>
+                <th scope="col">E</th>
+                <th scope="col">D</th>
+                <th scope="col">GP</th>
+                <th scope="col">GC</th>
+                <th scope="col">SG</th>
+                <th scope="col">Aprov.</th>
+                <th scope="col">Chance G4</th>
+                <th scope="col">Chance G8</th>
+                <th scope="col">Últimos</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (team of standingsRows(); track team.id) {
+                <tr
+                  [class.overview-top-four]="team.position <= 4"
+                  [class.overview-playoff]="
+                    team.position > 4 && team.position <= 8
+                  "
+                >
+                  <td class="overview-position">{{ team.position }}</td>
+                  <td class="overview-team">
+                    <img
+                      [src]="teamCrest(team.id)"
+                      referrerpolicy="no-referrer"
+                      (error)="crestFallback($event, team.id)"
+                      alt=""
+                    />
+                    <span>{{ s.name(team.name) }}</span>
+                  </td>
+                  <td class="overview-points">
+                    {{ team.pts }}
+                    @if (team.live) {
+                      <small class="live-points-label">previsto</small>
+                    }
+                  </td>
+                  <td>{{ team.j }}</td>
+                  <td>{{ team.v }}</td>
+                  <td>{{ team.e }}</td>
+                  <td>{{ team.d }}</td>
+                  <td>{{ team.gp }}</td>
+                  <td>{{ team.gc }}</td>
+                  <td>{{ team.sg }}</td>
+                  <td>{{ team.percent }}%</td>
+                  <td class="overview-chance">{{ team.g4 }}</td>
+                  <td class="overview-chance">{{ team.g8 }}</td>
+                  <td>
+                    <span class="overview-form" aria-label="Últimos resultados">
+                      @for (result of team.form; track $index) {
+                        <span
+                          [class.win]="result === 'V'"
+                          [class.loss]="result === 'D'"
+                          >{{ result }}</span
+                        >
+                      }
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="overview-legend" aria-label="Legenda da classificação">
+          <span><i class="top-four"></i>Quartas de final</span>
+          <span><i class="playoff"></i>Repescagem com vantagem</span>
+          <span>Chances calculadas em 20.000 cenários</span>
+        </div>
+      </section>
+
+      <aside class="overview-games" aria-labelledby="games-title">
+        <div class="overview-section-heading">
+          <div>
+            <span class="overview-eyebrow">Calendário</span>
+            <h3 id="games-title">Jogos</h3>
+          </div>
+        </div>
+        <app-round-carousel
+          [rounds]="overviewRounds()"
+          [selected]="selectedOverviewRound()"
+          (selectedChange)="overviewRound.set($event)"
+        />
+        <div class="overview-match-list" aria-live="polite">
+          @for (m of overviewMatches(); track m.id) {
+            <app-compact-match-card [match]="m" />
+          } @empty {
+            <p class="overview-empty">Nenhum jogo disponível nesta rodada.</p>
+          }
+        </div>
+      </aside>
+    </div>
+  }
+  @case ("matches") {
+    <section class="matches-browser">
+      <div class="matches-browser-heading">
+        <div>
+          <span class="overview-eyebrow">Calendário</span>
+          <h3>{{ roundName(selectedMatchesRound()) }}</h3>
+        </div>
+        <span>{{ filteredMatches().length }} jogos</span>
       </div>
-      <div>
-        <b>{{ s.forecast().qualification.cutoffs?.top4?.median ?? "—" }}</b
-        ><span>pontos · referência G4</span
-        ><small
-          >Faixa: {{ s.forecast().qualification.cutoffs?.top4?.low ?? "—" }}–{{
-            s.forecast().qualification.cutoffs?.top4?.high ?? "—"
-          }}</small
-        >
+      <app-round-carousel
+        [rounds]="overviewRounds()"
+        [selected]="selectedMatchesRound()"
+        (selectedChange)="round.set($event)"
+      />
+      <div class="matches-toolbar">
+        <div class="filters">
+          <ng-container *ngTemplateOutlet="teamFilter" />
+          <mat-form-field appearance="outline">
+            <mat-label>Status da partida</mat-label>
+            <mat-select
+              panelClass="viw-filter-panel"
+              aria-label="Status da partida"
+              [ngModel]="status()"
+              (ngModelChange)="status.set($event)"
+              ><mat-option [value]="''">Todos os status</mat-option
+              ><mat-option value="done">Encerradas</mat-option
+              ><mat-option value="live">Ao vivo</mat-option
+              ><mat-option value="scheduled">Agendadas</mat-option></mat-select
+            >
+          </mat-form-field>
+        </div>
+        <div class="live-court-access">
+          <button
+            mat-button
+            class="button btn btn-outline-primary"
+            data-live-court="1"
+          >
+            Ao vivo · Quadra 1</button
+          ><button
+            mat-button
+            class="button btn btn-outline-primary"
+            data-live-court="2"
+          >
+            Ao vivo · Quadra 2
+          </button>
+        </div>
       </div>
-      <div>
-        <b>{{ s.forecast().qualification.cutoffs?.top8?.median ?? "—" }}</b
-        ><span>pontos · referência G8</span
-        ><small
-          >Faixa: {{ s.forecast().qualification.cutoffs?.top8?.low ?? "—" }}–{{
-            s.forecast().qualification.cutoffs?.top8?.high ?? "—"
-          }}</small
-        >
+      <div class="compact-matches-grid" aria-live="polite">
+        @for (m of filteredMatches(); track m.id) {
+          <div class="compact-match-item">
+            <app-compact-match-card [match]="m" />
+            @if (selectedNext(m) && !s.finished(m)) {
+              <button
+                mat-button
+                class="match-flyer-link"
+                (click)="s.open('art', 'flyer:' + m.id)"
+              >
+                Imagem do jogo
+              </button>
+            }
+          </div>
+        } @empty {
+          <p class="overview-empty">Nenhum jogo encontrado nesta rodada.</p>
+        }
       </div>
     </section>
-    <mat-card class="panel" appearance="outlined"
-      ><app-grid
-        [rows]="standingsRows()"
-        [columns]="standingsColumns"
-        [searchable]="true"
-      />
-      <div class="qualification-legend">
-        <p><b>1º ao 4º:</b> direto para as quartas de final.</p>
-        <p><b>5º ao 8º:</b> repescagem com vantagem do empate.</p>
-        <p><b>9º ao 12º:</b> repescagem sem vantagem do empate.</p>
-      </div>
-      <p class="panel-note">
-        A classificação existe apenas na Primeira Fase. Posições oficiais da
-        fonte; durante jogos, os valores são provisórios.
-      </p></mat-card
-    >
-    <mat-card class="panel evolution-section" appearance="outlined"
-      ><h3>Evolução das equipes</h3>
-      <div class="filters">
-        <mat-form-field appearance="outline"
-          ><mat-label>Equipe</mat-label
-          ><mat-select
-            id="evolution-team"
-            [ngModel]="evolutionTeam()"
-            (ngModelChange)="evolutionTeam.set($event)"
-            ><mat-option [value]="''">Todas as equipes</mat-option>
-            @for (t of s.teams(); track t.id) {
-              <mat-option [value]="t.id">{{ s.name(t.name) }}</mat-option>
-            }
-          </mat-select></mat-form-field
-        >
-      </div>
-      <app-chart
-        title="Posição após cada rodada"
-        [series]="chartSeries()"
-        [rank]="true"
-      />
-      <p class="subtle">
-        Histórico reconstruído com os placares de rodadas completas. Desempates:
-        pontos, vitórias, saldo e gols marcados. Empates restantes usam ordem
-        fixa apenas no gráfico.
-      </p></mat-card
-    >
   }
   @case ("teams") {
-    <div class="cards-grid">
-      @for (t of s.standings(); track t.id) {
-        <mat-card class="panel team-card" appearance="outlined"
-          ><app-entity [entity]="t" kind="team" />
-          <div class="detail-metrics">
-            <div>
-              <b>{{ t.pts }}</b
-              ><span>Pontos</span>
-            </div>
-            <div>
-              <b>{{ t.j }}</b
-              ><span>Jogos</span>
-            </div>
-            <div>
-              <b>{{ t.gp }}</b
-              ><span>Gols pró</span>
-            </div>
-          </div>
-          <p class="subtle">
-            {{ t.v }} vitórias · {{ t.e }} empates · {{ t.d }} derrotas
-          </p></mat-card
+    <div class="team-directory-grid">
+      @for (t of s.standings(); track t.id; let index = $index) {
+        <article
+          class="team-summary-card"
+          [class.top-four]="index < 4"
+          [class.playoff]="index >= 4 && index < 8"
         >
+          <header>
+            <span class="team-rank">{{ index + 1 }}º</span>
+            <app-entity [entity]="t" kind="team" />
+          </header>
+          <div class="team-summary-stats">
+            <span><b>{{ t.pts }}</b><small>PTS</small></span>
+            <span><b>{{ t.j }}</b><small>J</small></span>
+            <span><b>{{ t.v }}</b><small>V</small></span>
+            <span><b>{{ t.sg }}</b><small>SG</small></span>
+          </div>
+          <footer>
+            <span>{{ t.gp }} gols pró · {{ t.gc }} sofridos</span>
+            <b>{{ t.percent }}%</b>
+          </footer>
+        </article>
       }
     </div>
   }
   @case ("players") {
-    <div class="filters">
+    <div class="filters page-toolbar">
       <ng-container *ngTemplateOutlet="teamFilter" /><mat-form-field
         appearance="outline"
         ><mat-label>Filtrar jogadores por estatística</mat-label
@@ -237,14 +239,14 @@
         ></mat-form-field
       >
     </div>
-    <mat-card class="panel" appearance="outlined"
+    <mat-card class="panel data-panel" appearance="outlined"
       ><app-grid
         [rows]="filteredPlayers()"
         [columns]="playerColumns"
         [searchable]="true"
         [paged]="true"
     /></mat-card>
-    <p class="subtle">
+    <p class="subtle page-note">
       Jogos contam apenas presenças confirmadas. Reservas e não relacionados não
       contam. — indica estatística indisponível na fonte.
     </p>
@@ -256,49 +258,76 @@
         relação publicada.
       </p>
     }
-    <div class="filters"><ng-container *ngTemplateOutlet="teamFilter" /></div>
-    <mat-card class="panel" appearance="outlined"
+    <div class="filters page-toolbar">
+      <ng-container *ngTemplateOutlet="teamFilter" />
+    </div>
+    <mat-card class="panel data-panel" appearance="outlined"
       ><app-grid
         [rows]="mvp()"
         [columns]="mvpColumns"
         [searchable]="true"
         [paged]="true" /></mat-card
-    ><mat-expansion-panel [expanded]="true"
+    ><mat-expansion-panel class="info-panel" [expanded]="true"
       ><mat-expansion-panel-header
-        ><mat-panel-title
-          >Regras da pontuação</mat-panel-title
+        ><mat-panel-title>Regras da pontuação</mat-panel-title>
+        <mat-panel-description
+          >Como o ranking MVP é calculado</mat-panel-description
         ></mat-expansion-panel-header
       >
       <div class="score-rules">
         @for (rule of s.rules; track rule.key) {
-          <div>
-            <span>{{ rule.label }}</span
-            ><b>{{ rule.points > 0 ? "+" : "" }}{{ rule.points }}</b>
-          </div>
+          <article
+            class="score-rule"
+            [class.positive]="rule.points > 0"
+            [class.negative]="rule.points < 0"
+            [class.neutral]="rule.points === 0"
+          >
+            <span class="score-rule-icon" aria-hidden="true">{{
+              rule.points > 0 ? "↑" : rule.points < 0 ? "↓" : "—"
+            }}</span>
+            <span class="score-rule-copy"
+              ><b>{{ rule.label }}</b
+              ><small>{{
+                rule.points > 0
+                  ? "Bônus"
+                  : rule.points < 0
+                    ? "Penalidade"
+                    : "Sem alteração"
+              }}</small></span
+            >
+            <strong
+              >{{ rule.points > 0 ? "+" : "" }}{{ rule.points
+              }}<small> pts</small></strong
+            >
+          </article>
         }
       </div>
-      <p>
-        Resultado e defesa apenas para relacionados presentes. Reservas são
-        ausentes. Sem sofrer gols: +5 para goleiro ou +2 para linha. Cada gol
-        sofrido: −1 para cada presente. Empates em pontos compartilham a
-        posição.
-      </p></mat-expansion-panel
+      <div class="scoring-note">
+        <span aria-hidden="true">i</span>
+        <p>
+          <b>Como funciona</b>
+          Presença, resultado e defesa contam somente para atletas confirmados
+          na súmula. Jogo sem sofrer gols vale +7 para o goleiro e +3 para a
+          linha. Cada gol sofrido desconta 1 ponto. Empates no total compartilham
+          a posição.
+        </p>
+      </div></mat-expansion-panel
     >
   }
   @case ("coaches") {
-    <mat-card class="panel" appearance="outlined"
+    <mat-card class="panel data-panel" appearance="outlined"
       ><app-grid
         [rows]="s.staff()"
         [columns]="coachColumns"
         [searchable]="true"
     /></mat-card>
-    <p class="subtle">
+    <p class="subtle page-note">
       Ordem inicial: aproveitamento, saldo e gols feitos. Toque no técnico para
       ver equipes e histórico.
     </p>
   }
   @case ("selection") {
-    <div class="filters">
+    <div class="filters page-toolbar">
       <mat-form-field appearance="outline"
         ><mat-label>Rodada</mat-label
         ><mat-select
@@ -315,7 +344,7 @@
       >
     </div>
     @if (selectedSelection(); as r) {
-      <mat-card class="selection-art panel" appearance="outlined"
+      <mat-card class="selection-art panel feature-panel" appearance="outlined"
         ><a
           class="selection-art-preview"
           [href]="r.poster"
@@ -341,7 +370,7 @@
       >
       <div class="selection-grid">
         @for (p of r.players; track p.playerId) {
-          <article class="selection-card">
+          <article class="selection-card modern-card">
             <app-entity
               [entity]="
                 s.player(p.playerId) || {
@@ -352,128 +381,125 @@
               "
             />
             <p>{{ s.name(p.teamName) }}</p>
-            <p class="subtle">Seleção da rodada · +4 pontos no MVP</p>
+            <p class="subtle">Seleção da rodada · +6 pontos no MVP</p>
           </article>
         }
       </div>
     }
   }
   @case ("motm") {
-    <div class="cards-grid">
-      @for (a of s.awards; track a.matchId) {
+    <div class="filters page-toolbar">
+      <mat-form-field appearance="outline">
+        <mat-label>Rodada</mat-label>
+        <mat-select
+          id="motm-round"
+          [ngModel]="selectedMotmRound()"
+          (ngModelChange)="motmRound.set($event)"
+        >
+          @for (round of motmRounds(); track round) {
+            <mat-option [value]="round"
+              >Melhores em campo · Rodada {{ round }}</mat-option
+            >
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="selection-grid motm-round-grid">
+      @for (a of motmAwards(); track a.matchId) {
         @if (s.match(a.matchId); as m) {
-          <mat-card class="panel motm-card" appearance="outlined"
-            ><p class="subtle">{{ s.round(m) }} · {{ s.date(m) }}</p>
-            <section class="motm-banner">
-              <app-entity
-                [entity]="
-                  s.player(a.playerId) || { id: a.playerId, name: a.name }
-                "
-              /><span class="award-mark">★</span>
-            </section>
+          <article class="selection-card modern-card motm-player-card">
+            <span class="motm-star" aria-label="Melhor em campo">★</span>
+            <app-entity
+              [entity]="
+                s.player(a.playerId) || {
+                  id: a.playerId,
+                  name: a.name,
+                  team: a.teamId,
+                }
+              "
+            />
             <p>{{ s.name(s.team(a.teamId)?.name) }} · Melhor em campo</p>
-            <app-match-card [m]="m" [odds]="false" /><button
+            <p class="subtle">
+              {{ s.name(s.team(m.team1)?.name) }} {{ s.score(m) }}
+              {{ s.name(s.team(m.team2)?.name) }}
+            </p>
+            <button
               mat-button
-              class="button btn btn-outline-primary"
+              class="motm-image-action"
               (click)="s.open('art', 'motm:' + m.id)"
             >
-              Imagem para Instagram ↓
-            </button></mat-card
-          >
+              Ver imagem do prêmio
+            </button>
+          </article>
         }
       }
     </div>
-  }
-  @case ("odds") {
-    <section class="forecast-summary">
-      <div>
-        <h3>Odds e simulações</h3>
-        <p>Recalculadas após cada rodada completa.</p>
-        <p>
-          {{ s.forecast().historyCount }} resultados na base ·
-          {{ s.forecast().completedRounds.length }} rodadas encerradas.
-        </p>
-      </div>
-      <div><b>20.000</b><span>cenários por partida</span></div>
-    </section>
-    <div class="cards-grid">
-      @for (p of s.forecast().predictions; track p.matchId) {
-        @if (s.match(p.matchId); as m) {
-          <div class="odds-match">
-            <p class="subtle odds-match-date">
-              {{ s.date(m) }} · {{ s.phase(m.fs) }} · {{ s.round(m) }}
-            </p>
-            <app-match-card [m]="m">
-              @if (p.status === "ready") {
-                <section
-                  match-summary
-                  class="forecast-evidence"
-                  aria-label="Detalhes da simulação"
-                >
-                  <div class="prediction-facts">
-                    <div>
-                      <span>Placar mais frequente</span
-                      ><b>{{ p.topScores[0].score.replace("-", " x ") }}</b>
-                    </div>
-                    <div>
-                      <span>Gols esperados</span
-                      ><b
-                        >{{ p.expectedGoals[0] | number: "1.1-1" }}
-                        <small>×</small>
-                        {{ p.expectedGoals[1] | number: "1.1-1" }}</b
-                      >
-                    </div>
-                  </div>
-                  <p class="subtle">
-                    Amostra {{ p.limitedHistory ? "limitada" : "histórica" }} ·
-                    {{ p.teamGames[0] }} e {{ p.teamGames[1] }} jogos por
-                    equipe.
-                  </p>
-                </section>
-              }
-            </app-match-card>
-          </div>
-        }
-      }
-    </div>
-    <mat-expansion-panel
-      ><mat-expansion-panel-header
-        ><mat-panel-title
-          >Como são calculadas as odds?</mat-panel-title
-        ></mat-expansion-panel-header
-      >
-      <p>
-        20.000 simulações de placares com distribuição de Poisson e suavização
-        por histórico da liga. Somente rodadas completamente encerradas entram
-        na base. Odds justas = 1 / probabilidade, sem margem comercial.
-        Projeções estatísticas, sem vínculo com casas de apostas.
-      </p></mat-expansion-panel
-    >
   }
   @case ("cartola") {
-    <div class="filters">
-      <mat-form-field appearance="outline"
-        ><mat-label>Rodada</mat-label
-        ><mat-select
-          id="cartola-round"
-          [ngModel]="chosenCartola()"
-          (ngModelChange)="cartolaId.set($event)"
-        >
-          @for (r of availableRounds(); track r.id) {
-            <mat-option [value]="r.id">{{ roundName(r.id) }}</mat-option>
-          }
-        </mat-select></mat-form-field
-      >
-    </div>
+    <app-round-carousel
+      [rounds]="availableRounds()"
+      [selected]="chosenCartola()"
+      (selectedChange)="cartolaId.set($event)"
+    />
     @if (future()) {
-      <mat-card class="panel cartola-team" appearance="outlined"
-        ><h3>★ Time ideal sugerido</h3>
-        <p class="subtle">1 goleiro e 6 de linha · sugestão antes dos jogos</p>
-        <app-grid
-          [rows]="suggestions()"
-          [columns]="suggestionColumns"
-          [responsive]="false"
-      /></mat-card>
+      <div class="cartola-grid cartola-suggestion-grid">
+        @for (key of ["ideal", "avoid"]; track key) {
+          <mat-card
+            class="panel cartola-team data-panel"
+            [class.cartola-best]="key === 'ideal'"
+            [class.cartola-worst]="key === 'avoid'"
+            appearance="outlined"
+          >
+            <header class="cartola-lineup-header">
+              <div>
+                <span class="profile-eyebrow">Sugestão antes dos jogos</span>
+                <h3>
+                  <span aria-hidden="true">{{
+                    key === "ideal" ? "★" : "↓"
+                  }}</span>
+                  {{
+                    key === "ideal"
+                      ? "Time ideal sugerido"
+                      : "Jogadores menos indicados"
+                  }}
+                </h3>
+                <p>1 goleiro · 6 jogadores de linha</p>
+              </div>
+              <div class="cartola-lineup-total">
+                <strong>7</strong>
+                <span>atletas</span>
+              </div>
+            </header>
+            <div class="cartola-lineup">
+              @for (
+                player of suggestionGroups()[key];
+                track player.id;
+                let position = $index
+              ) {
+                <article
+                  class="cartola-lineup-row cartola-suggestion-row"
+                  [class.goalkeeper]="player.goalkeeper"
+                >
+                  <span class="cartola-lineup-position">{{
+                    position + 1
+                  }}</span>
+                  <app-entity [entity]="player" />
+                  <div class="cartola-suggestion-matchup">
+                    <b>{{ player.confronto }}</b>
+                    <small>Vitória estimada: {{ player.victory }}</small>
+                  </div>
+                  <span class="cartola-position-badge">{{
+                    player.goalkeeper ? "Goleiro" : "Linha"
+                  }}</span>
+                  <strong class="cartola-player-points"
+                    >{{ player.averageValue }} <small>média</small></strong
+                  >
+                </article>
+              }
+            </div>
+          </mat-card>
+        }
+      </div>
     } @else {
       @if (cartola().pending || !cartola().complete) {
         <p class="sheet-warning">
@@ -482,16 +508,59 @@
       }
       <div class="cartola-grid">
         @for (key of ["best", "worst"]; track key) {
-          <mat-card class="panel cartola-team" appearance="outlined"
-            ><h3>{{ key === "best" ? "★ Os 7 melhores" : "Os 7 piores" }}</h3>
-            <p class="subtle">
-              1 goleiro + 6 de linha · {{ cartolaTotal(key) }} pontos
-            </p>
-            <app-grid
-              [rows]="cartola()[key]"
-              [columns]="cartolaColumns"
-              [responsive]="false"
-          /></mat-card>
+          <mat-card
+            class="panel cartola-team data-panel"
+            [class.cartola-best]="key === 'best'"
+            [class.cartola-worst]="key === 'worst'"
+            appearance="outlined"
+          >
+            <header class="cartola-lineup-header">
+              <div>
+                <span class="profile-eyebrow">Desempenho da rodada</span>
+                <h3>
+                  <span aria-hidden="true">{{
+                    key === "best" ? "★" : "↓"
+                  }}</span>
+                  {{ key === "best" ? "Os 7 melhores" : "Os 7 piores" }}
+                </h3>
+                <p>1 goleiro · 6 jogadores de linha</p>
+              </div>
+              <div class="cartola-lineup-total">
+                <small>Total</small>
+                <strong>{{ cartolaTotal(key) }}</strong>
+                <span>pontos</span>
+              </div>
+            </header>
+            <div class="cartola-lineup">
+              @for (
+                player of cartola()[key];
+                track player.id;
+                let position = $index
+              ) {
+                <article
+                  class="cartola-lineup-row"
+                  [class.goalkeeper]="player.goalkeeper"
+                >
+                  <span class="cartola-lineup-position">{{
+                    position + 1
+                  }}</span>
+                  <app-entity [entity]="player" />
+                  <app-entity
+                    [entity]="teamEntity(player.team)"
+                    kind="team"
+                  />
+                  <span class="cartola-position-badge">{{
+                    player.goalkeeper ? "Goleiro" : "Linha"
+                  }}</span>
+                  <strong
+                    class="cartola-player-points"
+                    [class.negative-points]="player.total < 0"
+                    >{{ player.total }} <small>pts</small></strong
+                  >
+                </article>
+              }
+            </div>
+          </mat-card>
         }
       </div>
       <p class="subtle">
@@ -499,7 +568,7 @@
         Empates são exibidos em ordem alfabética.
       </p>
     }
-    <mat-expansion-panel
+    <mat-expansion-panel class="info-panel"
       ><mat-expansion-panel-header
         ><mat-panel-title
           >Como são feitas as sugestões?</mat-panel-title
@@ -519,6 +588,7 @@
   ><mat-form-field appearance="outline"
     ><mat-label>Filtrar por equipe</mat-label
     ><mat-select
+      panelClass="viw-filter-panel"
       aria-label="Filtrar por equipe"
       [ngModel]="team()"
       (ngModelChange)="team.set($event)"

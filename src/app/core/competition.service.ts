@@ -39,7 +39,11 @@ import { championshipSelections } from "../../../dist/selections.mjs";
 import { coaches, coachFor, coachStatistics } from "../../../dist/coaches.mjs";
 import { predictMatchCoaches } from "../../../dist/coach-predictions.mjs";
 import { isGoalkeeper } from "../../../dist/goalkeepers.mjs";
-import { roundCartola, suggestCartola } from "../../../dist/cartola.mjs";
+import {
+  roundCartola,
+  suggestCartola,
+  suggestCartolaGroups,
+} from "../../../dist/cartola.mjs";
 import {
   completedRoundGroups,
   playerEvolution,
@@ -454,6 +458,14 @@ export class CompetitionService {
   }
   suggestions(id: string) {
     return suggestCartola(this.data(), id, this.awards, this.selections);
+  }
+  suggestionGroups(id: string) {
+    return suggestCartolaGroups(
+      this.data(),
+      id,
+      this.awards,
+      this.selections,
+    );
   }
   history(id: string) {
     return playerEvolution(this.data(), id, this.awards, this.selections);

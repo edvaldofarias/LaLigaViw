@@ -48,6 +48,16 @@ export const coachAssignments=[
   {matchId:'1786245750160',teamId:'-OuCE2n4ni8czw1OPXtQ',coachId:'joao',substituteFor:'enio'},
   {matchId:'1786246233389',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'renan'},
   {matchId:'1786246233389',teamId:'-OuCEBQOxXueVsu4_Pbt',coachId:'guto'},
+  {matchId:'1780480367054',teamId:'-OuCECnOQDCHySBDLAxx',coachId:'renan'},
+  {matchId:'1780480367054',teamId:'-OuCEBQOxXueVsu4_Pbt',coachId:'guto'},
+  {matchId:'1786246792371',teamId:'-OuCE79e187h1srqNCAK',coachId:'enio'},
+  {matchId:'1786246792371',teamId:'-OuCEPqc-2Ju1pdvU4j1',coachId:'patrick'},
+  {matchId:'1786246792897',teamId:'-OuCEAFLB6cDtcv8W1dI',coachId:'renan'},
+  {matchId:'1786246792897',teamId:'-OuCE8ygQVY-3BXzP80H',coachId:'guto'},
+  {matchId:'1786246793447',teamId:'-OuCEIPXbahnsYG98j_K',coachId:'enio'},
+  {matchId:'1786246793447',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'patrick'},
+  {matchId:'1786246794080',teamId:'-OuCEUdiPg-VFiAmxP-W',coachId:'guto'},
+  {matchId:'1786246794080',teamId:'-OuCE5UUPYmEL7Mnf4-D',coachId:'renan'},
 ];
 export function coachFor(matchId,teamId,assignments=coachAssignments){return coaches.find(c=>c.id===assignments.slice().reverse().find(a=>a.matchId===matchId&&a.teamId===teamId)?.coachId)||null;}
 export function coachStatistics(data,assignments=coachAssignments){

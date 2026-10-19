@@ -20,7 +20,14 @@ import { CompetitionService } from "../core/competition.service";
 export interface GridColumn {
   key: string;
   label: string;
-  kind?: "player" | "team" | "coach" | "form" | "points" | "matchup";
+  kind?:
+    | "player"
+    | "team"
+    | "coach"
+    | "form"
+    | "points"
+    | "percent"
+    | "matchup";
   priority?: number;
 }
 function portuguesePaginator() {
@@ -49,7 +56,10 @@ function portuguesePaginator() {
   providers: [{ provide: MatPaginatorIntl, useFactory: portuguesePaginator }],
   template: `
     @if (searchable()) {
-      <mat-form-field class="grid-search" appearance="outline"
+      <mat-form-field
+        class="grid-search"
+        appearance="outline"
+        floatLabel="always"
         ><mat-label>Buscar</mat-label
         ><input
           matInput
@@ -97,9 +107,14 @@ function portuguesePaginator() {
                   >
                 }
                 @default {
-                  <span [class.score-total]="c.kind === 'points'">{{
-                    scalar(r, c)
-                  }}</span>
+                  <span
+                    [class.score-total]="
+                      c.kind === 'points' || c.kind === 'percent'
+                    "
+                    >{{ scalar(r, c) }}{{
+                      c.kind === "percent" ? "%" : ""
+                    }}</span
+                  >
                   @if (c.key === "pts" && r.live) {
                     <small class="live-points-label">previsto</small>
                   }
