@@ -55,6 +55,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Odds: 20.000 simulações por partida. G4/G8: 20.000 cenários da Primeira Fase. Base somente de rodadas completamente encerradas, sem mudar o modelo estatístico.
 - Apenas a Primeira Fase tem classificação: 1º–4º quartas; 5º–8º repescagem com empate; 9º–12º repescagem sem empate.
 - Técnicos, prêmios e seleções são escolhas manuais preservadas por IDs. João foi substituto de Ênio apenas na quarta rodada.
+- Craques informados da 6ª rodada: Nanddo (Getafe), Edvaldo (Barcelona), Igor (Real Sociedad), Reinaldo (Rayo Vallecano) e Igor (Athletico Bilbao). O bônus de MVP considera apenas partidas encerradas.
 - Panfletos apenas para a próxima rodada. Local fixo: Pro Beach — Av. Cézar Magnani, nº 840, Paulicéia, São Bernardo do Campo — SP, 09694-000.
 - Fotos originais preservadas; ausência/erro usa iniciais no Placehold.co. Downloads PNG e zoom das artes continuam disponíveis.
 

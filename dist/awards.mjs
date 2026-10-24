@@ -25,4 +25,9 @@ export const matchAwards=[
   {matchId:'1780480367054',playerId:'1789199579917',teamId:'-OuCEBQOxXueVsu4_Pbt',name:'Alan',round:5},
   {matchId:'1786246793447',playerId:'1789257901399',teamId:'-OuCEIPXbahnsYG98j_K',name:'Pimenta',round:5},
   {matchId:'1786246792371',playerId:'1789257958344',teamId:'-OuCEPqc-2Ju1pdvU4j1',name:'Júnior',round:5},
+  {matchId:'1786247139164',playerId:'1789196253284',teamId:'-OuCECnOQDCHySBDLAxx',name:'Nanddo',round:6},
+  {matchId:'1780480368454',playerId:'1789172821599',teamId:'-OuCE2n4ni8czw1OPXtQ',name:'Edvaldo',round:6},
+  {matchId:'1786247139523',playerId:'1789199583001',teamId:'-OuCEBQOxXueVsu4_Pbt',name:'Igor',round:6},
+  {matchId:'1786247140006',playerId:'1789220349061',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Reinaldo',round:6},
+  {matchId:'1786247139815',playerId:'1789257889097',teamId:'-OuCEIPXbahnsYG98j_K',name:'Igor',round:6},
 ];
