@@ -2,14 +2,8 @@ import {buildForecast,forecastContext} from './forecast.mjs';
 import {isGoalkeeper} from './goalkeepers.mjs';
 import {calculateScores,relatedPlayers} from './player-score.mjs';
 import {summarizeMatch} from './match-stats.mjs';
-export function isSuspendedForMatch(player,match,matches){
- const suspendedAt=Number(player?.SUSP);
- if(!Number(player?.SUSP2)||!Number.isFinite(suspendedAt)||!Number.isFinite(match?.d_i)||match.d_i<=suspendedAt)return false;
- const next=[...Object.values(matches||{})]
-  .filter(m=>Number.isFinite(m?.d_i)&&m.d_i>suspendedAt&&(m.team1===player.team||m.team2===player.team))
-  .sort((a,b)=>a.d_i-b.d_i)[0];
- return next===match;
-}
+import {isSuspendedForMatch} from './suspensions.mjs';
+export {isSuspendedForMatch} from './suspensions.mjs';
 export function roundCartola(data,roundId,awards=[],selections=[]){
  const matchs=Object.fromEntries(Object.entries(data.matchs||{}).filter(([,m])=>m.m_set===roundId));
  const player={},present=new Set();let pending=0;
@@ -19,7 +13,7 @@ export function roundCartola(data,roundId,awards=[],selections=[]){
   if(!sheet){pending++;continue;}
   const related=relatedPlayers(sheet,m);
   if([...related.values()].some(ids=>!ids.size))pending++;
-  for(const [team,ids] of related)for(const pid of ids){present.add(pid);player[pid] ||= {...data.player?.[pid],team,dt:'0=0#14=0#16=0'};}
+  for(const [team,ids] of related)for(const pid of ids){if(isSuspendedForMatch(data.player?.[pid],m,data.matchs))continue;present.add(pid);player[pid] ||= {...data.player?.[pid],team,dt:'0=0#14=0#16=0'};}
   for(const row of summarizeMatch(sheet,m,data.player).players){
    if(!present.has(row.playerId)||!related.get(row.teamId)?.has(row.playerId))continue;
    const p=player[row.playerId],stats=Object.fromEntries(p.dt.split('#').map(s=>s.split('=')));
@@ -27,7 +21,7 @@ export function roundCartola(data,roundId,awards=[],selections=[]){
   }
  }
  const selected=selections.filter(s=>s.roundId===roundId);
- const rows=calculateScores({...data,matchs,player},awards,selected);
+ const rows=calculateScores({...data,matchs,player,suspensionMatches:data.matchs},awards,selected);
  const choose=reverse=>{const sorted=[...rows].sort((a,b)=>(reverse?a.total-b.total:b.total-a.total)||String(a.name).localeCompare(String(b.name),'pt-BR'));return [...sorted.filter(p=>p.goalkeeper).slice(0,1),...sorted.filter(p=>!p.goalkeeper).slice(0,6)];};
  return {rows,best:choose(false),worst:choose(true),pending,players:rows.length,complete:Object.values(matchs).every(m=>Number(m.st)===3||m.finished)};
 }
@@ -36,11 +30,12 @@ export function roundCartola(data,roundId,awards=[],selections=[]){
 function cartolaCandidates(data,roundId,awards=[],selections=[]){
  const targets=Object.entries(data.matchs||{}).filter(([,m])=>m.m_set===roundId);
  const start=Math.min(...targets.map(([,m])=>m.d_i||Infinity));
- const history=forecastContext(data,Math.min(Date.now(),start-1)).history;
+ const asOf=Math.min(Date.now(),start-1);
+ const history=forecastContext(data,asOf).history;
  const leagueMean=history.length?history.reduce((sum,m)=>sum+m.dt.qt_g1+m.dt.qt_g2,0)/(history.length*2):1;
  const ids=new Set(history.map(m=>m.id));
  const base={...data,matchs:Object.fromEntries(Object.entries(data.matchs).filter(([id])=>ids.has(id)))};
- const estimates=buildForecast({...base,matchs:{...base.matchs,...Object.fromEntries(targets)}}).predictions;
+ const estimates=buildForecast({...base,matchs:{...base.matchs,...Object.fromEntries(targets)}},asOf).predictions;
  const totals=new Map();
  for(const r of new Set(history.map(m=>m.m_set))){// Use all confirmed participants from each completed round.
   const roundMatches=Object.fromEntries(Object.entries(base.matchs).filter(([,m])=>m.m_set===r));

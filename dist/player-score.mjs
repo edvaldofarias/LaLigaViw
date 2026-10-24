@@ -1,3 +1,4 @@
+import {isSuspendedForMatch} from './suspensions.mjs';
 import {isGoalkeeper} from './goalkeepers.mjs';
 export const SCORE_RULES=[
   {key:'appearances',label:'Presença confirmada',points:2},
@@ -62,6 +63,7 @@ export function calculateScores(data,awards=[],selections=[]){
     [m.team1,m.team2].forEach((teamId,i)=>{
       const gf=i?m.dt.qt_g2:m.dt.qt_g1,ga=i?m.dt.qt_g1:m.dt.qt_g2;
       for(const playerId of related.get(teamId)){
+        if(isSuspendedForMatch(data.player?.[playerId],m,data.suspensionMatches||data.matchs))continue;
         const row=results.get(playerId)||emptyResults();
         row[gf>ga?'wins':gf===ga?'draws':'losses']++;
         if(ga===0){

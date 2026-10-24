@@ -43,3 +43,17 @@ test('future suggestions select seven distinct eligible athletes with one goalke
   assert.equal(new Set([...groups.ideal,...groups.avoid].map(p=>p.id)).size,14);
  }
 });
+
+test('Celo earns no positive or negative round-six points while suspended, even if listed',()=>{
+ const id='1789196749177',p=data.player[id];
+ const matches=Object.entries(data.matchs).filter(([,m])=>[m.team1,m.team2].includes(p.team)).sort(([,a],[,b])=>a.d_i-b.d_i);
+ const index=matches.findIndex(([,m])=>m.d_i===p.SUSP),[mid,next]=matches[index+1];
+ const m={...next,st:3,dt:{qt_g1:4,qt_g2:3}};
+ const d={...data,matchs:{...data.matchs,[mid]:m},matchDetails:{...data.matchDetails,[mid]:{data:{list:{celo:{ac:7,team1:p.team,pl_id1:id,val1:0}}}}}};
+ const r=roundCartola(d,m.m_set,matchAwards,championshipSelections);
+ assert.equal(r.rows.find(p=>p.id===id)?.total??0,0);
+ assert.equal(r.best.some(p=>p.id===id),false);
+ assert.equal(r.worst.some(p=>p.id===id),false);
+ const prior=roundCartola(d,matches[index][1].m_set,matchAwards,championshipSelections);
+ assert.ok(prior.rows.some(p=>p.id===id),'the earlier match and its card remain in history');
+});

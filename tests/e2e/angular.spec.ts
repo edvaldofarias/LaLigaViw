@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
+import {matchAwards} from "../../dist/awards.mjs";
 const data = JSON.parse(fs.readFileSync("dist/data.json", "utf8"));
 const installPromptTest =
   "mobile install suggestion remembers a permanent decline";
@@ -317,8 +318,9 @@ test("all competition tabs use compact modern surfaces", async ({ page }) => {
     /^\d+%$/,
   );
   await page.goto("/#/motm");
-  await expect(page.locator("#motm-round")).toContainText("Rodada 5");
-  await expect(page.locator(".motm-player-card")).toHaveCount(5);
+  const latestRound = Math.max(...matchAwards.map(a => a.round));
+  await expect(page.locator("#motm-round")).toContainText(`Rodada ${latestRound}`);
+  await expect(page.locator(".motm-player-card")).toHaveCount(matchAwards.filter(a => a.round === latestRound).length);
   await page.locator("#motm-round").click();
   await page
     .getByRole("option", {
