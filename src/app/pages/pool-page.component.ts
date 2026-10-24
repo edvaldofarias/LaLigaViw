@@ -1,5 +1,6 @@
 import {
   Component,
+  DestroyRef,
   afterNextRender,
   computed,
   effect,
@@ -37,6 +38,8 @@ export class PoolPageComponent {
   readonly s = inject(CompetitionService);
   readonly voting = inject(VotingService);
   private readonly pool = inject(PoolService);
+  private readonly destroyRef=inject(DestroyRef);
+  private rankingLoading=false;
   readonly predictions = signal<Record<string, EditablePrediction>>({});
   readonly ranking = signal<PoolRankingEntry[]>([]);
   readonly expandedPlayer = signal<number | null>(null);
@@ -55,6 +58,8 @@ export class PoolPageComponent {
 
   constructor() {
     afterNextRender(async () => {
+      const timer=setInterval(()=>{if(!document.hidden)void this.loadRanking();},15000);
+      this.destroyRef.onDestroy(()=>clearInterval(timer));
       await this.voting.initialize();
       await this.loadRanking();
     });
@@ -149,10 +154,12 @@ export class PoolPageComponent {
   }
 
   private async loadRanking() {
+    if(this.rankingLoading)return;
+    this.rankingLoading=true;
     try {
       this.ranking.set((await this.pool.ranking()).ranking);
     } catch (error) {
       this.feedback.set(this.voting.errorMessage(error));
-    }
+    } finally { this.rankingLoading=false; }
   }
 }

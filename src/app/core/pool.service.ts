@@ -10,6 +10,7 @@ export interface PoolPrediction {
 }
 
 export interface PoolResult {
+  live?: boolean;
   matchId: string;
   roundId: string;
   homeTeamId: string;

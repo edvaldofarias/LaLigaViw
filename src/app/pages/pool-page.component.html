@@ -103,7 +103,7 @@
 
   <mat-card class="voting-card pool-ranking" appearance="outlined">
     <span class="profile-eyebrow">Classificação geral</span>
-    <h3>Ranking do bolão</h3>
+    <h3>Ranking do bolão</h3><p class="subtle">Placares atualizados a cada 15 segundos com a página aberta. Pontos ao vivo são provisórios e só entram no ranking após o encerramento.</p>
     <div class="pool-ranking-table">
       @for (player of ranking(); track $index) {
         <div class="pool-ranking-entry">
@@ -131,23 +131,15 @@
                   [class.pool-result-correct]="result.correct"
                   [class.pool-result-wrong]="!result.correct"
                 >
+                  <div class="pool-result-top"><span class="badge" [class.pool-live]="result.live">{{ result.live ? 'Ao vivo · provisório' : 'Encerrado' }}</span><b class="pool-result-points">{{ resultLabel(result) }} · {{ result.points }} pts{{ result.live ? ' previstos' : '' }}</b></div>
                   <div class="pool-result-match">
-                    <strong>{{
-                      s.name(s.team(result.homeTeamId)?.name)
-                    }}</strong>
-                    <span>{{ result.actualHomeScore }} × {{ result.actualAwayScore }}</span>
-                    <strong>{{
-                      s.name(s.team(result.awayTeamId)?.name)
-                    }}</strong>
+                    <div class="pool-result-team"><img [src]="teamCrest(result.homeTeamId)" (error)="crestFallback($event,result.homeTeamId)" alt="" referrerpolicy="no-referrer"/><strong>{{ s.name(s.team(result.homeTeamId)?.name) }}</strong></div>
+                    <div class="pool-score-comparison"><small>{{ result.live ? 'Agora' : 'Resultado' }}</small><b class="pool-actual-score">{{ result.actualHomeScore }} <span>×</span> {{ result.actualAwayScore }}</b><small>Palpite</small><b class="pool-picked-score">{{ result.predictedHomeScore }} <span>×</span> {{ result.predictedAwayScore }}</b></div>
+                    <div class="pool-result-team"><img [src]="teamCrest(result.awayTeamId)" (error)="crestFallback($event,result.awayTeamId)" alt="" referrerpolicy="no-referrer"/><strong>{{ s.name(s.team(result.awayTeamId)?.name) }}</strong></div>
                   </div>
-                  <span
-                    >Palpite: {{ result.predictedHomeScore }} ×
-                    {{ result.predictedAwayScore }}</span
-                  >
-                  <b>{{ resultLabel(result) }} · {{ result.points }} pts</b>
                 </article>
               } @empty {
-                <p class="subtle">Nenhuma partida encerrada com palpite.</p>
+                <p class="subtle">Nenhuma partida iniciada com palpite.</p>
               }
             </div>
           }

@@ -268,3 +268,14 @@ test("locks the round and allows shared display names", async () => {
     400,
   );
 });
+
+test('live pool scores refresh from zero, stay provisional, and become official only at the final whistle',async()=>{
+ const env=environment();const matches=[{id:'live-1',m_set:'round-live',team1:'a',team2:'b',d_i:2000}];const load=async()=>matches;
+ await setNickname(env,'person-1','Ao vivo');
+ const save=await poolResponse(request('/api/pool/entry','person-1',{roundId:'round-live',predictions:[{matchId:'live-1',homeScore:2,awayScore:1}]}),env,verifier,load,1000);assert.equal(save.status,200);
+ const get=async()=>(await (await poolResponse(request('/api/pool/ranking'),env,verifier,load,3000)).json()).ranking[0];
+ assert.equal((await get()).results.length,0,'unstarted predictions are not exposed');
+ matches[0].st=1;let player=await get();assert.equal(player.results[0].actualHomeScore,0);assert.equal(player.results[0].live,true);assert.equal(player.points,0);
+ matches[0].dt={qt_g1:2,qt_g2:1};player=await get();assert.equal(player.results[0].points,5);assert.equal(player.points,0,'provisional points do not change official ranking');
+ matches[0].st=3;player=await get();assert.equal(player.points,5);assert.equal(player.results[0].live,undefined);
+});

@@ -3711,3 +3711,14 @@ button.player-achievement:hover {
   width: 100%;
   text-align: center;
 }
+
+/* Conditional last-round projections and aligned pool result cards. */
+.qualification-scenarios { margin:24px 0;padding:24px;border:1px solid #dbe3ec;border-radius:18px;background:#f8fafc; }
+.qualification-scenarios h3 {margin:0 0 12px}.qualification-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.qualification-team{min-width:0}.qualification-team article{margin-top:12px;padding:16px;border-radius:12px;border:1px solid #dbe3ec;background:white}
+.qualification-team h4{margin:0 0 12px}.qualification-rates{display:flex;gap:12px}.qualification-rates>span{flex:1;display:flex;justify-content:space-between;gap:8px;padding:10px;background:#edf4fb;border-radius:8px}.scenario-help{font-size:.85rem;line-height:1.6;color:#466246}
+.pool-player-results article {grid-template-columns:1fr;border:1px solid #dbe3ec;border-left:4px solid #c43f4f;padding:16px;gap:16px;background:#fff}
+.pool-player-results article.pool-result-correct{border-left-color:#168554;background:#f6fbf8}
+.pool-result-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.pool-result-points{font-size:.85rem;color:#5b6779}.pool-result-correct .pool-result-points{color:#116642}.pool-live{background:#ffecdc;color:#9b3900}
+.pool-result-team{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;min-width:0}.pool-result-team img{width:38px;height:42px;object-fit:contain;flex:none}.pool-result-match strong:last-child{text-align:center}.pool-result-team strong{font-size:.9rem;overflow-wrap:anywhere}.pool-score-comparison{text-align:center;display:grid;gap:4px;min-width:104px}.pool-score-comparison small{text-transform:uppercase;font-size:.65rem;letter-spacing:.08em}.pool-actual-score{font-size:1.45rem;font-variant-numeric:tabular-nums}.pool-actual-score span,.pool-picked-score span{color:#94a3b8;font-weight:400}.pool-picked-score{padding:6px 10px;border-radius:8px;background:#e8eef7;color:#214a7a;font-variant-numeric:tabular-nums}
+@media(max-width:600px){.qualification-columns{grid-template-columns:1fr}.qualification-scenarios{padding:16px}.pool-player-results{padding-left:0}.pool-result-match{grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr)}.pool-score-comparison{min-width:0}.pool-result-team strong{font-size:.8rem}}

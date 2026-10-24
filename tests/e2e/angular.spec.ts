@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
+import {completedRoundGroups} from "../../dist/evolution.mjs";
 import {matchAwards} from "../../dist/awards.mjs";
 const data = JSON.parse(fs.readFileSync("dist/data.json", "utf8"));
 const installPromptTest =
@@ -260,10 +261,10 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
   );
   await page.goto("/#/cartola");
   await expect(page.locator(".round-carousel-item.active")).toContainText(
-    "Rodada 5",
+    `Rodada ${completedRoundGroups(data).at(-1)!.number}`,
   );
   await page
-    .locator(".round-carousel-item", { hasText: "Rodada 6" })
+    .locator(".round-carousel-item", { hasText: "Rodada 7" })
     .click();
   await expect(page.locator(".cartola-suggestion-grid .cartola-team")).toHaveCount(2);
   await expect(page.locator(".cartola-suggestion-row")).toHaveCount(14);
@@ -562,7 +563,7 @@ test("Material controls sort, filter, paginate and open accessible navigation", 
   );
   await expect(
     page.locator("tbody tr").first().locator(".mat-column-goals"),
-  ).toHaveText("9");
+  ).toHaveText(String(Math.max(...Object.values(data.player).map((p:any)=>Number(Object.fromEntries(String(p.dt||"").split("#").filter(x=>x.includes("=")).map(x=>x.split("=")))["0"]||0)))));
   await page
     .getByRole("button", { name: "Próxima página", exact: true })
     .click();
@@ -682,4 +683,32 @@ test("overview odds use Portuguese number formatting", async ({ page }) => {
     .locator(".compact-odd b")
     .allTextContents();
   expect(odds.every((v) => /^\d+,\d{2}$/.test(v.trim()))).toBe(true);
+});
+
+test('round seven match scenarios have two teams and no mobile overflow', async ({page},info)=>{
+ await page.goto('/#/matches');
+ await page.locator('[data-round-id="1780480356187"]').click();
+ await page.locator('.compact-match-main').first().click();
+ await expect(page.locator('.qualification-team')).toHaveCount(2);
+ await expect(page.locator('.qualification-team article')).toHaveCount(6);
+ await expect(page.locator('.qualification-scenarios')).toContainText('20.000');
+ expect(await page.locator('#detail-content').evaluate(e=>e.scrollWidth<=e.clientWidth+1)).toBe(true);
+ await page.locator('.qualification-scenarios').screenshot({path:`/tmp/laliga-scenarios-${info.project.name}.png`});
+ await page.locator('#close-detail').click();
+ await page.locator('[data-round-id="1780480354570"]').click();
+ await page.locator('.compact-match-main').first().click();
+ await expect(page.locator('.qualification-scenarios')).toHaveCount(0);
+});
+
+test('pool cards show crests and distinguish live score from the prediction',async({page},info)=>{
+ const m=Object.entries(data.matchs)[0];
+ await page.route('**/api/pool/ranking',r=>r.fulfill({json:{ranking:[{position:1,nickname:'Teste',points:7,exact:1,hits:2,predictions:2,results:[{matchId:m[0],roundId:m[1].m_set,homeTeamId:m[1].team1,awayTeamId:m[1].team2,predictedHomeScore:2,predictedAwayScore:1,actualHomeScore:0,actualAwayScore:0,points:0,correct:false,exact:false,live:true}]}]}}));
+ await page.goto('/#/pool');
+ await page.getByRole('button',{name:'Teste',exact:true}).click();
+ await expect(page.locator('.pool-result-team img')).toHaveCount(2);
+ await expect(page.locator('.pool-result-top')).toContainText('Ao vivo');
+ await expect(page.locator('.pool-picked-score')).toHaveText('2 × 1');
+ await expect(page.locator('.pool-actual-score')).toHaveText('0 × 0');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await page.locator('.pool-player-results').screenshot({path:`/tmp/laliga-pool-${info.project.name}.png`});
 });

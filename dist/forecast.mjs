@@ -165,3 +165,51 @@ export function buildForecast(data, now = Date.now()) {
     priorMatches: PRIOR_MATCHES, teamWindow: TEAM_WINDOW, roundId: first?.m_set || null,
     phaseId: first?.fs || null, predictions,qualification:projectQualification(data,context) };
 }
+
+// Conditional view for the last league round; the official completed-round model stays unchanged.
+const matchScenarioCache = new Map();
+export function matchQualificationScenarios(data, matchId) {
+  const context=forecastContext(data), target=context.all.find(m=>m.id===matchId);
+  const phase=context.all.find(m=>m.fs)?.fs;
+  const rounds=[...new Set(context.all.filter(m=>m.fs===phase).map(m=>m.m_set))];
+  if(!target||target.fs!==phase||rounds.indexOf(target.m_set)!==6)return null;
+  const games=context.all.filter(m=>m.fs===phase),ids=Object.keys(data.teams||{}).sort();
+  if(ids.length<8||games.some(m=>!ids.includes(m.team1)||!ids.includes(m.team2)))return null;
+  const history=context.history.filter(m=>m.fs===phase);
+  if(!history.length)return null;
+  const key=JSON.stringify([matchId,games.map(m=>[m.id,m.st,m.finished,m.dt?.qt_g1,m.dt?.qt_g2])]);
+  if(matchScenarioCache.has(key))return matchScenarioCache.get(key);
+  const model=goalModel(history),index=new Map(ids.map((id,i)=>[id,i]));
+  const fixed=games.filter(m=>m.id!==matchId&&finished(m)&&validScore(m));
+  const pending=games.filter(m=>m.id!==matchId&&!fixed.includes(m));
+  const distributions=pending.map(m=>({m,cdf:model.means(m).expectedGoals.map(poissonCDF)}));
+  const targetCDF=model.means(target).expectedGoals.map(poissonCDF);
+  const apply=(rows,m,h,a)=>{const x=rows[index.get(m.team1)],y=rows[index.get(m.team2)];x.gf+=h;x.ga+=a;y.gf+=a;y.ga+=h;if(h>a){x.points+=3;x.wins++}else if(h<a){y.points+=3;y.wins++}else{x.points++;y.points++}};
+  const initial=ids.map(id=>({id,points:0,wins:0,gf:0,ga:0}));
+  fixed.forEach(m=>apply(initial,m,m.dt.qt_g1,m.dt.qt_g2));
+  const rng=random(hash(key));
+  const outcomes=finished(target)&&validScore(target)?[Math.sign(target.dt.qt_g1-target.dt.qt_g2)]:[1,0,-1];
+  const teams=[target.team1,target.team2].map(id=>({id,scenarios:[]}));
+  for(const outcome of outcomes){
+    const counts=teams.map(()=>({top4:0,top8:0,help:distributions.map(()=>Array.from({length:3},()=>({n:0,g4:0,g8:0})))}));
+    // Exact conditional score distribution, including margin-dependent tie breakers.
+    const scores=[];let mass=0;
+    for(let h=0;h<targetCDF[0].length;h++)for(let a=0;a<targetCDF[1].length;a++)if(Math.sign(h-a)===outcome){mass+=(targetCDF[0][h]-(targetCDF[0][h-1]||0))*(targetCDF[1][a]-(targetCDF[1][a-1]||0));scores.push({h,a,cdf:mass});}
+    for(let n=0;n<TRIALS;n++){
+      const rows=initial.map(r=>({...r,tie:rng()})),results=[];
+      for(const {m,cdf} of distributions){const h=sample(cdf[0],rng()),a=sample(cdf[1],rng());apply(rows,m,h,a);results.push(1-Math.sign(h-a));}
+      let h,a;
+      if(finished(target)&&validScore(target)){h=target.dt.qt_g1;a=target.dt.qt_g2}else{const u=rng()*mass;let lo=0,hi=scores.length-1;while(lo<hi){const mid=(lo+hi)>>1;if(scores[mid].cdf<u)lo=mid+1;else hi=mid;}({h,a}=scores[lo]);}
+      apply(rows,target,h,a);
+      rows.sort((a,b)=>b.points-a.points||b.wins-a.wins||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf||a.tie-b.tie);
+      teams.forEach((team,i)=>{const rank=rows.findIndex(r=>r.id===team.id),c=counts[i];if(rank<4)c.top4++;if(rank<8)c.top8++;results.forEach((r,j)=>{const v=c.help[j][r];v.n++;if(rank<4)v.g4++;if(rank<8)v.g8++;});});
+    }
+    teams.forEach((team,i)=>{
+      const c=counts[i],favorable=field=>c.help.flatMap((b,j)=>{const candidates=b.map((v,k)=>({k,n:v.n,p:v.n?v[field]/v.n:0})).filter(v=>v.n>=100);const best=candidates.sort((a,b)=>b.p-a.p)[0],base=c[field==='g4'?'top4':'top8']/TRIALS;return best&&best.p>base+.02?[{matchId:distributions[j].m.id,home:distributions[j].m.team1,away:distributions[j].m.team2,outcome:1-best.k,chance:best.p}]:[];});
+      team.scenarios.push({outcome:(i?-outcome:outcome)||0,top4:c.top4/TRIALS,top8:c.top8/TRIALS,favorable4:favorable('g4'),favorable8:favorable('g8')});
+    });
+  }
+  teams.forEach(t=>t.scenarios.sort((a,b)=>b.outcome-a.outcome));
+  const value={teams,trials:TRIALS,remaining:pending.length,final:finished(target)&&validScore(target),live:games.some(m=>!finished(m)&&Number(m.st)===1)};
+  if(matchScenarioCache.size>20)matchScenarioCache.clear();matchScenarioCache.set(key,value);return value;
+}

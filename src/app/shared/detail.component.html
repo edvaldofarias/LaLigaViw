@@ -343,6 +343,32 @@
                 [broadcast]="false"
               />
             </div>
+            @if (qualification(); as q) {
+              <section class="qualification-scenarios" aria-label="Cenários G4 e G8">
+                <h3>7ª rodada · Caminhos para G4 e G8</h3>
+                <p class="subtle">{{ q.final ? 'Resultado encerrado aplicado.' : 'Chances condicionadas ao resultado deste jogo.' }} Os demais jogos encerrados são fixados a cada atualização.</p>
+                <div class="qualification-columns">
+                  @for (team of q.teams; track team.id) {
+                    <div class="qualification-team">
+                      <app-entity [entity]="{id: team.id, name: s.team(team.id)?.name, url: s.team(team.id)?.url}" kind="team" />
+                      @for (row of team.scenarios; track row.outcome) {
+                        <article>
+                          <h4>{{ row.outcome === 1 ? 'Vitória' : row.outcome === 0 ? 'Empate' : 'Derrota' }}</h4>
+                          <div class="qualification-rates"><span>G4 <b>{{ percent(row.top4) }}</b></span><span>G8 <b>{{ percent(row.top8) }}</b></span></div>
+                          @for (group of [{name: 'G4', chance: row.top4, items: row.favorable4}, {name: 'G8', chance: row.top8, items: row.favorable8}]; track group.name) {
+                            <p class="subtle"><b>{{ group.name }}:</b> {{ group.chance === 1 ? 'Classificado em todos os cenários simulados.' : group.chance === 0 ? 'Não classificou nos cenários simulados.' : 'Ainda depende da combinação de resultados e dos critérios de desempate.' }}</p>
+                            @if (group.chance > 0 && group.chance < 1 && group.items.length) {
+                              <p class="scenario-help">Resultados que favorecem: @for (item of group.items; track item.matchId; let last = $last) { {{ favorableText(item) }}{{ last ? '.' : ';' }} }</p>
+                            }
+                          }
+                        </article>
+                      }
+                    </div>
+                  }
+                </div>
+                <p class="subtle">20.000 simulações por resultado, com pontos, vitórias, saldo e gols marcados. Resultados favoráveis não são condições obrigatórias: margens de gols e combinações também influenciam. Percentuais são estimativas; 0% e 100% representam a amostra, não uma garantia matemática. Jogos em andamento continuam projetados até o encerramento.</p>
+              </section>
+            }
             <div class="detail-info">
               <div>
                 <span>Data · Brasília</span>{{ s.date(m) }} · {{ s.time(m) }}

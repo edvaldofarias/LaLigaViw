@@ -1,3 +1,4 @@
+import {matchQualificationScenarios} from "../../../dist/forecast.mjs";
 import { TemplateRef } from "@angular/core";
 import {
   MatDialog,
@@ -68,6 +69,9 @@ export class DetailComponent {
     this.s.staff().find((c) => c.id === this.selected()?.id),
   );
   match = computed(() => this.s.match(this.selected()?.id || ""));
+  qualification = computed<any>(() => this.selected()?.kind === "match" ? matchQualificationScenarios(this.s.data(),this.selected()!.id) : null);
+  percent(value: number) { return value === 0 ? "0%" : value === 1 ? "100%" : (value*100).toLocaleString("pt-BR", {minimumFractionDigits:1,maximumFractionDigits:1}) + "%"; }
+  favorableText(item: any) { return item.outcome === 0 ? `empate entre ${this.s.name(this.s.team(item.home)?.name)} e ${this.s.name(this.s.team(item.away)?.name)}` : `vitória de ${this.s.name(this.s.team(item.outcome === 1 ? item.home : item.away)?.name)}`; }
   roster = computed(() =>
     this.s
       .players()

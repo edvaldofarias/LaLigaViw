@@ -1,3 +1,4 @@
+import {isLiveMatch,liveScore} from "../dist/live-match.mjs";
 import {
   authenticateVoter,
   saveVoterProfile,
@@ -115,13 +116,19 @@ async function ranking(db, matches) {
     }
     if (!prediction.match_id) continue;
     const match = matchById.get(prediction.match_id);
-    if (!match || (Number(match.st) !== 3 && !match.finished)) continue;
-    const points = pointsFor(prediction, match);
+    if (!match || (Number(match.st) !== 3 && !match.finished && !isLiveMatch(match))) continue;
+    const live=isLiveMatch(match);
+    const score=live?liveScore(match):[match.dt?.qt_g1,match.dt?.qt_g2];
+    if(!score||score.some(n=>!Number.isInteger(n)||n<0))continue;
+    const scoredMatch={...match,dt:{...match.dt,qt_g1:score[0],qt_g2:score[1]}};
+    const points = pointsFor(prediction, scoredMatch);
     const player = players.get(prediction.uid);
+    if(!live){
     player.points += points;
     player.exact += Number(points === 5);
     player.hits += Number(points > 0);
     player.predictions += 1;
+    }
     player.results.push({
       matchId: match.id,
       roundId: prediction.round_id,
@@ -129,8 +136,9 @@ async function ranking(db, matches) {
       awayTeamId: match.team2,
       predictedHomeScore: prediction.home_score,
       predictedAwayScore: prediction.away_score,
-      actualHomeScore: Number(match.dt.qt_g1),
-      actualAwayScore: Number(match.dt.qt_g2),
+      ...(live?{live:true}:{}),
+      actualHomeScore: score[0],
+      actualAwayScore: score[1],
       points,
       correct: points > 0,
       exact: points === 5,
