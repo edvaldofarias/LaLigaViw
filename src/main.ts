@@ -24,7 +24,9 @@ bootstrapApplication(AppComponent, {
         ...SECTIONS.map(([view]) => ({
           path: view,
           loadComponent: () =>
-            view === "voting"
+            view === "simulation"
+              ? import("./app/pages/simulation-page.component").then(m => m.SimulationPageComponent)
+              : view === "voting"
               ? import("./app/pages/voting-page.component").then(
                   (m) => m.VotingPageComponent,
                 )

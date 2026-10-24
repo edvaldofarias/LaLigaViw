@@ -21,6 +21,7 @@ export const PHASE_NAMES: Record<string, string> = {
 export const SECTIONS = [
   ["overview", "Visão geral"],
   ["matches", "Partidas"],
+  ["simulation", "Simulação"],
   ["voting", "Votação secreta"],
   ["pool", "Bolão"],
   ["teams", "Equipes"],

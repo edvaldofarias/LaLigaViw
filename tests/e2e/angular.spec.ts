@@ -712,3 +712,24 @@ test('pool cards show crests and distinguish live score from the prediction',asy
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.locator('.pool-player-results').screenshot({path:`/tmp/laliga-pool-${info.project.name}.png`});
 });
+
+test('round seven simulator updates standings and clears custom scores without mobile overflow',async({page},info)=>{
+ await page.goto('/#/simulation');
+ await expect(page.getByRole('heading',{name:'Simulação · 7ª rodada'})).toBeVisible();
+ await expect(page.locator('.simulation-match')).toHaveCount(6);
+ const fixture=page.locator('.simulation-match').first();
+ const fields=fixture.locator('input');
+ const match=Object.values(data.matchs).filter((m:any)=>m.m_set==='1780480356187').sort((a:any,b:any)=>a.d_i-b.d_i)[0] as any;
+ const teamName=String(data.teams[match.team1].name).toLocaleLowerCase('pt-BR');
+ const row=page.locator('.simulation-table tbody tr').filter({has:page.locator('app-entity')}).filter({hasText:new RegExp(teamName,'i')});
+ const before=Number(await row.locator('.mat-column-pts').innerText());
+ await fields.nth(0).fill('4');await fields.nth(1).fill('1');
+ await expect(page.locator('.simulation-toolbar')).toContainText('1 de 6');
+ await expect(row.locator('.mat-column-pts')).toHaveText(String(before+3));
+ await expect(fixture).toContainText('Simulado');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await page.locator('.simulation-fixtures').screenshot({path:`/tmp/laliga-simulation-${info.project.name}.png`});
+ await page.getByRole('button',{name:'Limpar placares'}).click();
+ await expect(page.locator('.simulation-toolbar')).toContainText('0 de 6');
+ await expect(row.locator('.mat-column-pts')).toHaveText(String(before));
+});

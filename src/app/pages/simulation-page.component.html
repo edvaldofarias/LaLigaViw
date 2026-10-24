@@ -1,0 +1,29 @@
+<div class="section-title"><div><h2>Simulação · 7ª rodada</h2><p>Experimente os placares e veja como fica a classificação da Primeira Fase.</p></div></div>
+@if (simulation(); as sim) {
+  <div class="simulation-toolbar"><span class="badge">{{ sim.entered }} de {{ sim.total }} jogos preenchidos</span><div><button mat-button (click)="clear()">Limpar placares</button><button mat-stroked-button (click)="reset()">Restaurar resultados oficiais</button></div></div>
+  <p class="simulation-notice" role="status">Simulação pessoal: não altera resultados oficiais, chances ou palpites do bolão. Jogos sem os dois placares não entram na tabela.</p>
+  @if (sim.pendingEarlier) {<p class="live-table-notice">Há {{ sim.pendingEarlier }} jogo(s) anterior(es) sem resultado final válido. A base ainda está incompleta.</p>}
+  @if (sim.invalid) {<p class="live-table-notice" role="alert">Complete os dois placares com números inteiros entre 0 e 99 para incluir o jogo.</p>}
+  <div class="simulation-layout">
+    <section aria-label="Placares da sétima rodada" class="simulation-fixtures">
+      @for (m of sim.fixtures; track m.id) {
+        <mat-card appearance="outlined" class="simulation-match">
+          <div class="simulation-match-heading"><small>{{ s.date(m) }} · {{ s.time(m) }} · {{ s.court(m.title) }}</small><span class="badge">{{ m.custom ? 'Simulado' : m.official ? 'Resultado oficial' : 'Preencha o placar' }}</span></div>
+          <div class="simulation-scoreline">
+            <app-entity [entity]="entity(m.team1)" kind="team" />
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" floatLabel="always"><mat-label>Gols</mat-label><input matInput type="number" min="0" max="99" step="1" [attr.aria-label]="'Gols de ' + s.name(s.team(m.team1)?.name)" [ngModel]="m.home" (ngModelChange)="setScore(m.id,'home',$event)" /></mat-form-field>
+            <span aria-hidden="true">×</span>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" floatLabel="always"><mat-label>Gols</mat-label><input matInput type="number" min="0" max="99" step="1" [attr.aria-label]="'Gols de ' + s.name(s.team(m.team2)?.name)" [ngModel]="m.away" (ngModelChange)="setScore(m.id,'away',$event)" /></mat-form-field>
+            <app-entity [entity]="entity(m.team2)" kind="team" />
+          </div>
+        </mat-card>
+      } @empty {<mat-card class="simulation-match"><p>Aguardando o calendário da 7ª rodada.</p></mat-card>}
+    </section>
+    <mat-card appearance="outlined" class="simulation-table">
+      <h3>Classificação simulada</h3><p class="subtle">Variação em relação à classificação antes da 7ª rodada.</p>
+      <app-grid [rows]="sim.rows" [columns]="columns" [searchable]="false" />
+      <p class="subtle">1º–4º: G4 · 5º–8º: G8 · 9º–12º: fora do G8.</p>
+      <p class="subtle">Desempates: pontos, vitórias, saldo e gols marcados. Persistindo igualdade, a ordem alfabética organiza apenas esta simulação; a posição oficial pode depender de outros critérios. A tabela inclui somente jogos anteriores encerrados e os placares preenchidos aqui.</p>
+    </mat-card>
+  </div>
+}
