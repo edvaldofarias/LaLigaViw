@@ -90,6 +90,20 @@ test("saves editable next-round predictions and ranks exact scores", async () =>
       st: 0,
       dt: {},
     },
+    {
+      id: "match-3",
+      m_set: "round-1",
+      d_i: 2_200,
+      st: 0,
+      dt: {},
+    },
+    {
+      id: "match-4",
+      m_set: "round-1",
+      d_i: 2_300,
+      st: 0,
+      dt: {},
+    },
   ];
   const load = async () => matches;
   await setNickname(env, "person-1", "Craque");
@@ -99,6 +113,8 @@ test("saves editable next-round predictions and ranks exact scores", async () =>
       predictions: [
         { matchId: "match-1", homeScore: 2, awayScore: 1 },
         { matchId: "match-2", homeScore: 1, awayScore: 1 },
+        { matchId: "match-3", homeScore: 0, awayScore: 1 },
+        { matchId: "match-4", homeScore: 4, awayScore: 0 },
       ],
     }),
     env,
@@ -129,12 +145,19 @@ test("saves editable next-round predictions and ranks exact scores", async () =>
   assert.deepEqual((await entry.json()).predictions, [
     { matchId: "match-1", homeScore: 3, awayScore: 1 },
     { matchId: "match-2", homeScore: 1, awayScore: 1 },
+    { matchId: "match-3", homeScore: 0, awayScore: 1 },
+    { matchId: "match-4", homeScore: 4, awayScore: 0 },
   ]);
 
+  Object.assign(matches[0], { team1: "home-1", team2: "away-1" });
   matches[0].st = 3;
   matches[0].dt = { qt_g1: 3, qt_g2: 1 };
+  Object.assign(matches[1], { team1: "home-2", team2: "away-2" });
   matches[1].st = 3;
   matches[1].dt = { qt_g1: 2, qt_g2: 2 };
+  Object.assign(matches[2], { team1: "home-3", team2: "away-3" });
+  matches[2].st = 3;
+  matches[2].dt = { qt_g1: 2, qt_g2: 0 };
   const ranking = await poolResponse(
     request("/api/pool/ranking"),
     env,
@@ -149,7 +172,48 @@ test("saves editable next-round predictions and ranks exact scores", async () =>
       points: 7,
       exact: 1,
       hits: 2,
-      predictions: 2,
+      predictions: 3,
+      results: [
+        {
+          matchId: "match-1",
+          roundId: "round-1",
+          homeTeamId: "home-1",
+          awayTeamId: "away-1",
+          predictedHomeScore: 3,
+          predictedAwayScore: 1,
+          actualHomeScore: 3,
+          actualAwayScore: 1,
+          points: 5,
+          correct: true,
+          exact: true,
+        },
+        {
+          matchId: "match-2",
+          roundId: "round-1",
+          homeTeamId: "home-2",
+          awayTeamId: "away-2",
+          predictedHomeScore: 1,
+          predictedAwayScore: 1,
+          actualHomeScore: 2,
+          actualAwayScore: 2,
+          points: 2,
+          correct: true,
+          exact: false,
+        },
+        {
+          matchId: "match-3",
+          roundId: "round-1",
+          homeTeamId: "home-3",
+          awayTeamId: "away-3",
+          predictedHomeScore: 0,
+          predictedAwayScore: 1,
+          actualHomeScore: 2,
+          actualAwayScore: 0,
+          points: 0,
+          correct: false,
+          exact: false,
+        },
+      ],
     },
   ]);
 });

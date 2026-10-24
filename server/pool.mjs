@@ -97,7 +97,7 @@ function pointsFor(prediction, match) {
 async function ranking(db, matches) {
   const query = await db
     .prepare(
-      "SELECT p.voter_uid AS uid, v.nickname, r.match_id, r.home_score, r.away_score FROM pool_players p JOIN voter_profiles v ON v.uid = p.voter_uid LEFT JOIN pool_predictions r ON r.voter_uid = p.voter_uid WHERE v.nickname IS NOT NULL ORDER BY v.nickname",
+      "SELECT p.voter_uid AS uid, v.nickname, r.round_id, r.match_id, r.home_score, r.away_score FROM pool_players p JOIN voter_profiles v ON v.uid = p.voter_uid LEFT JOIN pool_predictions r ON r.voter_uid = p.voter_uid WHERE v.nickname IS NOT NULL ORDER BY v.nickname, r.round_id, r.match_id",
     )
     .all();
   const matchById = new Map(matches.map((match) => [match.id, match]));
@@ -110,6 +110,7 @@ async function ranking(db, matches) {
         exact: 0,
         hits: 0,
         predictions: 0,
+        results: [],
       });
     }
     if (!prediction.match_id) continue;
@@ -121,6 +122,19 @@ async function ranking(db, matches) {
     player.exact += Number(points === 5);
     player.hits += Number(points > 0);
     player.predictions += 1;
+    player.results.push({
+      matchId: match.id,
+      roundId: prediction.round_id,
+      homeTeamId: match.team1,
+      awayTeamId: match.team2,
+      predictedHomeScore: prediction.home_score,
+      predictedAwayScore: prediction.away_score,
+      actualHomeScore: Number(match.dt.qt_g1),
+      actualAwayScore: Number(match.dt.qt_g2),
+      points,
+      correct: points > 0,
+      exact: points === 5,
+    });
   }
   return [...players.values()]
     .sort(

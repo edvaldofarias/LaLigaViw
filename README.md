@@ -52,6 +52,8 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Reservas representam ausências: não entram em jogos disputados nem recebem pontos coletivos.
 - MVP: presença confirmada +2; gol +7; amarelo −1; vermelho −5; vitória +5; empate +2; derrota 0; craque +4; seleção +6; sem sofrer gols +7 ao goleiro ou +3 à linha; cada gol sofrido −1 por relacionado presente.
 - CARTOLA: um goleiro e seis de linha nas listas por rodada. Sugestões futuras usam desempenho histórico e confronto, sem confirmação de presença.
+- Atletas com suspensão ativa não entram nas sugestões nem na relação da rodada em que cumprem a suspensão.
+- No ranking do bolão, o nome abre os palpites de partidas encerradas, seus resultados e a indicação de acerto ou erro; jogos ainda não realizados permanecem ocultos.
 - Odds: 20.000 simulações por partida. G4/G8: 20.000 cenários da Primeira Fase. Base somente de rodadas completamente encerradas, sem mudar o modelo estatístico.
 - Apenas a Primeira Fase tem classificação: 1º–4º quartas; 5º–8º repescagem com empate; 9º–12º repescagem sem empate.
 - Técnicos, prêmios e seleções são escolhas manuais preservadas por IDs. João foi substituto de Ênio apenas na quarta rodada.

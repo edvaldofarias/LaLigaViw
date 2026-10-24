@@ -354,19 +354,70 @@ app-detail {
 .pool-ranking {
   grid-column: 1 / -1;
 }
-.pool-ranking-table > div {
+.pool-ranking-entry {
+  border-bottom: 1px solid #edf0f3;
+}
+.pool-ranking-row {
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 12px;
   min-height: 48px;
-  border-bottom: 1px solid #edf0f3;
 }
-.pool-ranking-table > div > b {
+.pool-ranking-row > b {
   color: #0d7042;
 }
 .pool-ranking-table small {
   color: #748096;
+}
+.pool-ranking-name {
+  width: fit-content;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.pool-ranking-name:hover,
+.pool-ranking-name:focus-visible {
+  color: #0d7042;
+  text-decoration-color: currentColor;
+}
+.pool-player-results {
+  display: grid;
+  gap: 8px;
+  padding: 4px 0 14px 54px;
+}
+.pool-player-results article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-left: 4px solid;
+  border-radius: 8px;
+  background: #f8fafb;
+}
+.pool-result-correct {
+  border-color: #168554;
+}
+.pool-result-wrong {
+  border-color: #c43f4f;
+}
+.pool-result-match {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+.pool-result-match strong:last-child {
+  text-align: right;
 }
 @media (max-width: 760px) {
   .pool-layout {
@@ -394,11 +445,20 @@ app-detail {
   .pool-prediction-team.away strong {
     order: 2;
   }
-  .pool-ranking-table > div {
+  .pool-ranking-row {
     grid-template-columns: 36px minmax(0, 1fr) auto;
   }
   .pool-ranking-table small {
     grid-column: 2 / -1;
+  }
+  .pool-player-results {
+    padding-left: 0;
+  }
+  .pool-player-results article {
+    grid-template-columns: 1fr auto;
+  }
+  .pool-result-match {
+    grid-column: 1 / -1;
   }
 }
 

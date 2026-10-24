@@ -105,12 +105,52 @@
     <span class="profile-eyebrow">Classificação geral</span>
     <h3>Ranking do bolão</h3>
     <div class="pool-ranking-table">
-      @for (player of ranking(); track player.nickname) {
-        <div>
-          <b>{{ player.position }}º</b>
-          <strong>{{ player.nickname }}</strong>
-          <span>{{ player.points }} pts</span>
-          <small>{{ player.exact }} placar(es) exato(s)</small>
+      @for (player of ranking(); track $index) {
+        <div class="pool-ranking-entry">
+          <div class="pool-ranking-row">
+            <b>{{ player.position }}º</b>
+            <button
+              type="button"
+              class="pool-ranking-name"
+              (click)="togglePlayer(player.position)"
+              [attr.aria-expanded]="expandedPlayer() === player.position"
+              [attr.aria-controls]="'pool-results-' + player.position"
+            >
+              {{ player.nickname }}
+            </button>
+            <span>{{ player.points }} pts</span>
+            <small>{{ player.exact }} placar(es) exato(s)</small>
+          </div>
+          @if (expandedPlayer() === player.position) {
+            <div
+              class="pool-player-results"
+              [id]="'pool-results-' + player.position"
+            >
+              @for (result of player.results; track result.matchId) {
+                <article
+                  [class.pool-result-correct]="result.correct"
+                  [class.pool-result-wrong]="!result.correct"
+                >
+                  <div class="pool-result-match">
+                    <strong>{{
+                      s.name(s.team(result.homeTeamId)?.name)
+                    }}</strong>
+                    <span>{{ result.actualHomeScore }} × {{ result.actualAwayScore }}</span>
+                    <strong>{{
+                      s.name(s.team(result.awayTeamId)?.name)
+                    }}</strong>
+                  </div>
+                  <span
+                    >Palpite: {{ result.predictedHomeScore }} ×
+                    {{ result.predictedAwayScore }}</span
+                  >
+                  <b>{{ resultLabel(result) }} · {{ result.points }} pts</b>
+                </article>
+              } @empty {
+                <p class="subtle">Nenhuma partida encerrada com palpite.</p>
+              }
+            </div>
+          }
         </div>
       } @empty {
         <p class="subtle">O ranking aparecerá após os primeiros palpites.</p>

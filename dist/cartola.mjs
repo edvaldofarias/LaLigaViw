@@ -2,6 +2,14 @@ import {buildForecast,forecastContext} from './forecast.mjs';
 import {isGoalkeeper} from './goalkeepers.mjs';
 import {calculateScores,relatedPlayers} from './player-score.mjs';
 import {summarizeMatch} from './match-stats.mjs';
+export function isSuspendedForMatch(player,match,matches){
+ const suspendedAt=Number(player?.SUSP);
+ if(!Number(player?.SUSP2)||!Number.isFinite(suspendedAt)||!Number.isFinite(match?.d_i)||match.d_i<=suspendedAt)return false;
+ const next=[...Object.values(matches||{})]
+  .filter(m=>Number.isFinite(m?.d_i)&&m.d_i>suspendedAt&&(m.team1===player.team||m.team2===player.team))
+  .sort((a,b)=>a.d_i-b.d_i)[0];
+ return next===match;
+}
 export function roundCartola(data,roundId,awards=[],selections=[]){
  const matchs=Object.fromEntries(Object.entries(data.matchs||{}).filter(([,m])=>m.m_set===roundId));
  const player={},present=new Set();let pending=0;
@@ -48,7 +56,8 @@ function cartolaCandidates(data,roundId,awards=[],selections=[]){
   const t=totals.get(id);if(!t?.games)continue;
   const target=targets.find(([,m])=>m.team1===p.team||m.team2===p.team);if(!target)continue;
   const [mid,m]=target,pred=estimates.find(p=>p.matchId===mid&&p.status==='ready');if(!pred)continue;
-  const side=m.team1===p.team?0:1,against=1-side;
+   if(isSuspendedForMatch(p,m,data.matchs))continue;
+   const side=m.team1===p.team?0:1,against=1-side;
   const average=t.points/t.games,win=pred.probabilities[side?2:0],draw=pred.probabilities[1],loss=pred.probabilities[side?0:2],ga=pred.expectedGoals[against];
   const goalkeeper=isGoalkeeper(id,p.team);
   const matchup=3*win+draw-2*loss-ga+(goalkeeper?5:2)*Math.exp(-ga)+(goalkeeper?0:5*(t.goals/t.games)*(pred.expectedGoals[side]/Math.max(0.1,leagueMean)-1));

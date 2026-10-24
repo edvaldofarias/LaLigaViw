@@ -10,7 +10,12 @@ import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { MATERIAL } from "../shared/material";
 import { CompetitionService } from "../core/competition.service";
-import { PoolPrediction, PoolService } from "../core/pool.service";
+import {
+  PoolPrediction,
+  PoolRankingEntry,
+  PoolResult,
+  PoolService,
+} from "../core/pool.service";
 import { VotingService } from "../core/voting.service";
 import {
   teamCrestFallback,
@@ -33,7 +38,8 @@ export class PoolPageComponent {
   readonly voting = inject(VotingService);
   private readonly pool = inject(PoolService);
   readonly predictions = signal<Record<string, EditablePrediction>>({});
-  readonly ranking = signal<any[]>([]);
+  readonly ranking = signal<PoolRankingEntry[]>([]);
+  readonly expandedPlayer = signal<number | null>(null);
   readonly busy = signal(false);
   readonly feedback = signal("");
   readonly upcomingMatches = computed(() => this.s.upcoming());
@@ -66,6 +72,17 @@ export class PoolPageComponent {
 
   prediction(matchId: string) {
     return this.predictions()[matchId] || {};
+  }
+
+  togglePlayer(position: number) {
+    this.expandedPlayer.update((current) =>
+      current === position ? null : position,
+    );
+  }
+
+  resultLabel(result: PoolResult) {
+    if (result.exact) return "Placar exato";
+    return result.correct ? "Acertou" : "Errou";
   }
 
   teamCrest(id: string) {

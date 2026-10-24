@@ -9,6 +9,30 @@ export interface PoolPrediction {
   awayScore: number;
 }
 
+export interface PoolResult {
+  matchId: string;
+  roundId: string;
+  homeTeamId: string;
+  awayTeamId: string;
+  predictedHomeScore: number;
+  predictedAwayScore: number;
+  actualHomeScore: number;
+  actualAwayScore: number;
+  points: number;
+  correct: boolean;
+  exact: boolean;
+}
+
+export interface PoolRankingEntry {
+  position: number;
+  nickname: string;
+  points: number;
+  exact: number;
+  hits: number;
+  predictions: number;
+  results: PoolResult[];
+}
+
 @Injectable({ providedIn: "root" })
 export class PoolService {
   private readonly http = inject(HttpClient);
@@ -44,7 +68,7 @@ export class PoolService {
 
   async ranking() {
     return firstValueFrom(
-      this.http.get<{ ranking: any[] }>("/api/pool/ranking"),
+      this.http.get<{ ranking: PoolRankingEntry[] }>("/api/pool/ranking"),
     );
   }
 }

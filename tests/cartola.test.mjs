@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {roundCartola} from '../dist/cartola.mjs';
+import {isSuspendedForMatch,roundCartola} from '../dist/cartola.mjs';
 import {matchAwards} from '../dist/awards.mjs';
 import {championshipSelections} from '../dist/selections.mjs';
 import {relatedPlayers,SCORE_RULES} from '../dist/player-score.mjs';
@@ -22,12 +22,22 @@ test('round teams contain one goalkeeper and six outfield players with only roun
 });
 test('missing sheets do not fabricate zero-point players',()=>{const r=roundCartola({...data,matchDetails:{}},championshipSelections[0].roundId);assert.equal(r.best.length,0);assert.ok(r.pending>0)});
 
+test('active suspensions exclude the player only from the next team match',()=>{
+ const celo=data.player['1789196749177'];
+ const matches=Object.values(data.matchs).filter(m=>m.team1===celo.team||m.team2===celo.team).sort((a,b)=>a.d_i-b.d_i);
+ const suspendedIndex=matches.findIndex(m=>m.d_i===celo.SUSP);
+ assert.ok(suspendedIndex>=0);
+ assert.equal(isSuspendedForMatch(celo,matches[suspendedIndex+1],data.matchs),true);
+ assert.equal(isSuspendedForMatch(celo,matches[suspendedIndex+2],data.matchs),false);
+ assert.equal(isSuspendedForMatch({...celo,SUSP2:undefined},matches[suspendedIndex+1],data.matchs),false);
+});
+
 test('future suggestions select seven distinct eligible athletes with one goalkeeper and exclude byes',async()=>{
  const {suggestCartola,suggestCartolaGroups}=await import('../dist/cartola.mjs');
  const rounds=[...new Set(Object.values(data.matchs).map(m=>m.m_set))];
  for(const round of rounds.slice(4,7).filter(id=>Object.values(data.matchs).filter(m=>m.m_set===id).every(m=>!(Number(m.st)===3||m.finished)))){
   const rows=suggestCartola(data,round,matchAwards,championshipSelections);assert.equal(rows.length,7);assert.equal(new Set(rows.map(p=>p.id)).size,7);assert.equal(rows.filter(p=>p.goalkeeper).length,1);
-  for(const p of rows){assert.ok(p.games>0);assert.ok(Number.isFinite(p.average));assert.ok(Object.values(data.matchs).some(m=>m.m_set===round&&[m.team1,m.team2].includes(p.team)));}
+  for(const p of rows){assert.ok(p.games>0);assert.ok(Number.isFinite(p.average));const match=Object.values(data.matchs).find(m=>m.m_set===round&&[m.team1,m.team2].includes(p.team));assert.ok(match);assert.equal(isSuspendedForMatch(p,match,data.matchs),false);}
   const groups=suggestCartolaGroups(data,round,matchAwards,championshipSelections);
   for(const group of [groups.ideal,groups.avoid]){assert.equal(group.length,7);assert.equal(group.filter(p=>p.goalkeeper).length,1);}
   assert.equal(new Set([...groups.ideal,...groups.avoid].map(p=>p.id)).size,14);
