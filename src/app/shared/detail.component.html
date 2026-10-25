@@ -394,6 +394,39 @@
                 >
               </button>
             }
+            @if (replay(); as replay) {
+              <section class="match-replay" aria-labelledby="match-replay-title">
+                <div class="match-replay-heading">
+                  <div>
+                    <span class="profile-eyebrow">Jogo completo</span>
+                    <h3 id="match-replay-title">Assistir ao replay da partida</h3>
+                  </div>
+                  <a
+                    mat-button
+                    [href]="replay.watchUrl"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Abrir no YouTube ↗
+                  </a>
+                </div>
+                <div class="match-replay-frame">
+                  <iframe
+                    [src]="replayUrl()"
+                    [title]="
+                      'Replay de ' +
+                      s.name(s.team(m.team1)?.name) +
+                      ' contra ' +
+                      s.name(s.team(m.team2)?.name)
+                    "
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </section>
+            }
             @if (isNext(m)) {
               <button
                 mat-button

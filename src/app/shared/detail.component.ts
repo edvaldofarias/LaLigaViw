@@ -24,6 +24,8 @@ import { CompactMatchCardComponent } from "./compact-match-card.component";
 import { makeMatchFlyer } from "../../../dist/match-flyer.mjs";
 import { makeMotmPoster } from "../../../dist/motm-poster.mjs";
 import { parseStats } from "../core/models";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { replayForMatch } from "../../../dist/replays.mjs";
 @Component({
   selector: "app-detail",
   standalone: true,
@@ -41,6 +43,7 @@ export class DetailComponent {
   s = inject(CompetitionService);
   dialog = viewChild.required<TemplateRef<any>>("dialog");
   private dialogs = inject(MatDialog);
+  private sanitizer = inject(DomSanitizer);
   private ref?: MatDialogRef<any>;
   art = signal("");
   artError = signal("");
@@ -69,6 +72,17 @@ export class DetailComponent {
     this.s.staff().find((c) => c.id === this.selected()?.id),
   );
   match = computed(() => this.s.match(this.selected()?.id || ""));
+  replay = computed<any>(() =>
+    this.selected()?.kind === "match"
+      ? replayForMatch(this.selected()!.id)
+      : null,
+  );
+  replayUrl = computed<SafeResourceUrl | null>(() => {
+    const replay = this.replay();
+    return replay
+      ? this.sanitizer.bypassSecurityTrustResourceUrl(replay.embedUrl)
+      : null;
+  });
   qualification = computed<any>(() => this.selected()?.kind === "match" ? matchQualificationScenarios(this.s.data(),this.selected()!.id) : null);
   percent(value: number) { return value === 0 ? "0%" : value === 1 ? "100%" : (value*100).toLocaleString("pt-BR", {minimumFractionDigits:1,maximumFractionDigits:1}) + "%"; }
   favorableText(item: any) { return item.outcome === 0 ? `empate entre ${this.s.name(this.s.team(item.home)?.name)} e ${this.s.name(this.s.team(item.away)?.name)}` : `vitória de ${this.s.name(this.s.team(item.outcome === 1 ? item.home : item.away)?.name)}`; }

@@ -54,6 +54,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - CARTOLA: um goleiro e seis de linha nas listas por rodada. Sugestões futuras usam desempenho histórico e confronto, sem confirmação de presença.
 - Atletas com suspensão ativa não entram nas sugestões nem na relação da rodada em que cumprem a suspensão.
 - No ranking do bolão, o nome abre os palpites de partidas encerradas, seus resultados e a indicação de acerto ou erro; jogos ainda não realizados permanecem ocultos.
+- Os detalhes das partidas das rodadas 1 a 5 exibem os 25 replays da playlist oficial do YouTube, vinculados individualmente por ID da partida.
 - Odds: 20.000 simulações por partida. G4/G8: 20.000 cenários da Primeira Fase. Base somente de rodadas completamente encerradas, sem mudar o modelo estatístico.
 - Apenas a Primeira Fase tem classificação: 1º–4º quartas; 5º–8º repescagem com empate; 9º–12º repescagem sem empate.
 - Técnicos, prêmios e seleções são escolhas manuais preservadas por IDs. João foi substituto de Ênio apenas na quarta rodada.
