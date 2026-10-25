@@ -20,7 +20,8 @@ for(const file of files){
   }
 }
 const htmlFile=new URL('index.html',client);
-const html=(await readFile(htmlFile,'utf8')).replace('__BUILD_VERSION__',version);
+const releasedAt=new Date().toISOString();
+const html=(await readFile(htmlFile,'utf8')).replace('__BUILD_VERSION__',version).replace('__RELEASE_DATE__',releasedAt);
 await writeFile(htmlFile,html);
-await writeFile(new URL('version.json',client),JSON.stringify({version,forceReload}));
+await writeFile(new URL('version.json',client),JSON.stringify({version,forceReload,releasedAt}));
 console.log('Static site assets copied to dist/client.');

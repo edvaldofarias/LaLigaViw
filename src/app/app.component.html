@@ -88,6 +88,9 @@
             >Copa Fácil ↗</a
           ></span
         >
+        @if (releaseVersion()) {
+          <span class="release-info">Versão {{ releaseVersion() }} @if (releaseDate()) {<span>· Última publicação: {{ releaseDate() }} (Brasília)</span>}</span>
+        }
       </footer>
     </main>
   </mat-sidenav-content></mat-sidenav-container

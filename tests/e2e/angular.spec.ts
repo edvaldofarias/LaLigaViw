@@ -733,3 +733,12 @@ test('round seven simulator updates standings and clears custom scores without m
  await expect(page.locator('.simulation-toolbar')).toContainText('0 de 6');
  await expect(row.locator('.mat-column-pts')).toHaveText(String(before));
 });
+
+test('footer identifies the served version and its release date',async({page})=>{
+ await page.goto('/#/overview');
+ const metadata=JSON.parse(fs.readFileSync('dist/client/version.json','utf8'));
+ await expect(page.locator('.release-info')).toContainText(`Versão ${metadata.version.slice(0,8)}`);
+ const date=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short'}).format(new Date(metadata.releasedAt));
+ await expect(page.locator('.release-info')).toContainText(`Última publicação: ${date}`);
+ await expect(page.locator('.release-info')).toContainText('Brasília');
+});

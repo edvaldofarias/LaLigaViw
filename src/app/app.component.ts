@@ -39,6 +39,8 @@ import { SECTIONS } from "./core/models";
 })
 export class AppComponent {
   navOpen = signal(false);
+  releaseVersion = signal("");
+  releaseDate = signal("");
   s = inject(CompetitionService);
   voting = inject(VotingService);
   sections = SECTIONS;
@@ -58,6 +60,11 @@ export class AppComponent {
       }
     });
     afterNextRender(async () => {
+      const version=document.querySelector<HTMLMetaElement>('meta[name="app-version"]')?.content;
+      const date=document.querySelector<HTMLMetaElement>('meta[name="app-release-date"]')?.content;
+      if(version && /^[a-f0-9]{16}$/.test(version)) this.releaseVersion.set(version.slice(0,8));
+      if(date && Number.isFinite(Date.parse(date))) this.releaseDate.set(new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short'}).format(new Date(date)));
+
       await this.voting.initialize();
       await import("../../dist/live-court.mjs");
       await import("../../dist/gallery-ui.mjs");
