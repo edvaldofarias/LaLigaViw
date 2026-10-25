@@ -27,6 +27,11 @@ export const matchReplays = [
   {matchId:'1786246792897',videoId:'8vpaZa63fSY'},
   {matchId:'1786246793447',videoId:'D3GOr_R3VbQ'},
   {matchId:'1786246794080',videoId:'JAKJU7i_B4w'},
+  {matchId:'1786247139164',videoId:'RiTKlCkB9PQ'},
+  {matchId:'1780480368454',videoId:'dNnapbTj23o'},
+  {matchId:'1786247139523',videoId:'HIzgX9ZCzzc'},
+  {matchId:'1786247139815',videoId:'2nkTRHEI1B8'},
+  {matchId:'1786247140006',videoId:'elBZTQIijKo'},
 ].map(replay => ({
   ...replay,
   embedUrl: `https://www.youtube-nocookie.com/embed/${replay.videoId}`,
