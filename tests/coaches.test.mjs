@@ -33,3 +33,20 @@ test('fifth-round assignments match the organizer list',()=>{
  assert.equal(assignments.length,10);
  assert.deepEqual(Object.fromEntries(assignments.map(a=>[a.teamId,a.coachId])),fifthRound);
 });
+test('sixth-round assignments credit only the confirmed teams and their results',()=>{
+ const snapshot=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+ const matches=Object.fromEntries(Object.entries(snapshot.matchs).filter(([,m])=>m.m_set==='1780480354570'));
+ const assignments=coachAssignments.filter(a=>matches[a.matchId]);
+ assert.equal(assignments.length,9);
+ assert.deepEqual(Object.fromEntries(assignments.map(a=>[a.teamId,a.coachId])),{
+  '-OuCE1lbs7UFbj9mOJgT':'patrick','-OuCE8ygQVY-3BXzP80H':'patrick',
+  '-OuCE2n4ni8czw1OPXtQ':'enio','-OuCEIPXbahnsYG98j_K':'enio','-OuCE3jNN_OU-QexjdHw':'enio',
+  '-OuCE5UUPYmEL7Mnf4-D':'renan','-OuCE79e187h1srqNCAK':'renan',
+  '-OuCECnOQDCHySBDLAxx':'guto','-OuCEBQOxXueVsu4_Pbt':'guto',
+ });
+ assert.equal(coachFor('1786247140006','-OuCEPqc-2Ju1pdvU4j1'),null);
+ assert.deepEqual(coachStatistics({matchs:matches}).map(c=>[c.id,c.played,c.wins,c.draws,c.losses,c.gf,c.ga,c.points]),[
+  ['patrick',2,1,0,1,6,6,3],['enio',3,2,0,1,11,6,6],
+  ['renan',2,0,0,2,4,10,0],['guto',2,2,0,0,6,2,6],['joao',0,0,0,0,0,0,0],
+ ]);
+});

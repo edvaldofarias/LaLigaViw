@@ -58,6 +58,16 @@ export const coachAssignments=[
   {matchId:'1786246793447',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'patrick'},
   {matchId:'1786246794080',teamId:'-OuCEUdiPg-VFiAmxP-W',coachId:'guto'},
   {matchId:'1786246794080',teamId:'-OuCE5UUPYmEL7Mnf4-D',coachId:'renan'},
+  // Sixth round: confirmed by the organizer; unlisted teams remain unassigned.
+  {matchId:'1780480368454',teamId:'-OuCE2n4ni8czw1OPXtQ',coachId:'enio'},
+  {matchId:'1780480368454',teamId:'-OuCE5UUPYmEL7Mnf4-D',coachId:'renan'},
+  {matchId:'1786247139164',teamId:'-OuCECnOQDCHySBDLAxx',coachId:'guto'},
+  {matchId:'1786247139164',teamId:'-OuCE3jNN_OU-QexjdHw',coachId:'enio'},
+  {matchId:'1786247139523',teamId:'-OuCE1lbs7UFbj9mOJgT',coachId:'patrick'},
+  {matchId:'1786247139523',teamId:'-OuCEBQOxXueVsu4_Pbt',coachId:'guto'},
+  {matchId:'1786247139815',teamId:'-OuCE79e187h1srqNCAK',coachId:'renan'},
+  {matchId:'1786247139815',teamId:'-OuCEIPXbahnsYG98j_K',coachId:'enio'},
+  {matchId:'1786247140006',teamId:'-OuCE8ygQVY-3BXzP80H',coachId:'patrick'},
 ];
 export function coachFor(matchId,teamId,assignments=coachAssignments){return coaches.find(c=>c.id===assignments.slice().reverse().find(a=>a.matchId===matchId&&a.teamId===teamId)?.coachId)||null;}
 export function coachStatistics(data,assignments=coachAssignments){
