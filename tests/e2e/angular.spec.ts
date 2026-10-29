@@ -135,17 +135,17 @@ test("statistics combines rankings, team duos and historical awards", async ({
     )
     .toBe(true);
 });
-test("round five official selection lists all seven supplied players", async ({
+test("latest official selection lists all seven supplied players", async ({
   page,
 }) => {
   await page.goto("/#/selection");
-  await expect(page.locator("#selection-round")).toContainText("Rodada 5");
+  await expect(page.locator("#selection-round")).toContainText("Rodada 6");
   await expect(page.locator(".selection-grid .selection-card")).toHaveCount(7);
   const poster = page.locator(".selection-art-preview img");
   await expect(poster).toBeVisible();
-  await expect(poster).toHaveAttribute("src", /2026-round-5-gold\.png$/);
+  await expect(poster).toHaveAttribute("src", /2026-round-6-gold\.png$/);
   await expect.poll(() => poster.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth === 1080 && img.naturalHeight === 1350)).toBe(true);
-  await expect(page.locator(".selection-download")).toHaveAttribute("download", "viw-selecao-rodada-5.png");
+  await expect(page.locator(".selection-download")).toHaveAttribute("download", "viw-selecao-rodada-6.png");
 });
 test("selects and search fields share the global form style", async ({
   page,

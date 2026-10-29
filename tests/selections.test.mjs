@@ -54,3 +54,20 @@ test('round four credits the confirmed goalkeeper and seven distinct players',as
  const scores=calculateScores(data,[],[round]);
  for(const p of round.players)assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,6);
 });
+
+test('round six preserves the supplied positions, homonyms and clubs',async()=>{
+ const {isGoalkeeper}=await import('../dist/goalkeepers.mjs');
+ const round=championshipSelections.find(r=>r.id==='2026-round-6');
+ assert.equal(round.roundId,'1780480354570');
+ assert.deepEqual(round.players.map(p=>[p.name,p.teamName]),[
+  ['Felipe','Barcelona'],
+  ['Bira','Athletico Bilbao'],
+  ['Igor','Real Sociedad'],
+  ['Bruno Blotti','Athletico Bilbao'],
+  ['Felipe','Rayo Vallecano'],
+  ['Igor','Athletico Bilbao'],
+  ['Reinaldo','Rayo Vallecano'],
+ ]);
+ assert.equal(new Set(round.players.map(p=>p.playerId)).size,7);
+ assert.deepEqual(round.players.filter(p=>isGoalkeeper(p.playerId,p.teamId)).map(p=>p.playerId),['1789172492805']);
+});

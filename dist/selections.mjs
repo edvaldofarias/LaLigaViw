@@ -190,6 +190,21 @@ export const championshipSelections = [
     {playerId:'1789199579917',name:'Alan',teamId:'-OuCEBQOxXueVsu4_Pbt',teamName:'Real Sociedad'},
   ],
 },
+{
+  id:'2026-round-6', season:2026, roundNumber:6,
+  poster:'images/selections/2026-round-6-gold.png',
+  phaseId:'1780479913323', roundId:'1780480354570',
+  source:'Seleção informada pela organização',
+  players:[
+    {playerId:'1789172492805',name:'Felipe',teamId:'-OuCE2n4ni8czw1OPXtQ',teamName:'Barcelona'},
+    {playerId:'1789257875096',name:'Bira',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+    {playerId:'1789199583001',name:'Igor',teamId:'-OuCEBQOxXueVsu4_Pbt',teamName:'Real Sociedad'},
+    {playerId:'1789257879880',name:'Bruno Blotti',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+    {playerId:'1789220352095',name:'Felipe',teamId:'-OuCE8ygQVY-3BXzP80H',teamName:'Rayo Vallecano'},
+    {playerId:'1789257889097',name:'Igor',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+    {playerId:'1789220349061',name:'Reinaldo',teamId:'-OuCE8ygQVY-3BXzP80H',teamName:'Rayo Vallecano'},
+  ],
+},
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){
