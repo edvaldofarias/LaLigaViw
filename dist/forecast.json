@@ -1,7 +1,7 @@
 {
   "modelVersion": "poisson-shrinkage-v1",
   "updatePolicy": "completed-round",
-  "cutoff": 1793042297014,
+  "cutoff": 1793193657828,
   "completedRounds": [
     {
       "key": "1780479913323:1780480342602",
