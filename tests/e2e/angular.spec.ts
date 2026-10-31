@@ -135,6 +135,150 @@ test("statistics combines rankings, team duos and historical awards", async ({
     )
     .toBe(true);
 });
+test("wiki presents Edvaldo's consolidated history", async ({ page }) => {
+  await page.goto("/#/wiki");
+  await expect(
+    page.getByRole("heading", { name: "Edvaldo", exact: true, level: 2 }),
+  ).toBeVisible();
+  await expect(page.locator(".encyclopedia-career-list article")).toHaveCount(4);
+  await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(4);
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("30");
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
+test("wiki 2 presents Yurick's seven-edition timeline", async ({ page }) => {
+  await page.goto("/#/wiki-2");
+  await expect(
+    page.getByRole("heading", { name: "Yurick", exact: true, level: 2 }),
+  ).toBeVisible();
+  await expect(page.locator(".encyclopedia-career-list article")).toHaveCount(7);
+  await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(7);
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("54");
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
+test("historical ranking orders every team campaign", async ({ page }) => {
+  await page.goto("/#/ranking");
+  await expect(
+    page.getByRole("heading", { name: "Ranking", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".historical-ranking-table tbody tr")).toHaveCount(
+    90,
+  );
+  await expect(page.locator(".historical-ranking-podium article")).toHaveCount(
+    3,
+  );
+  await expect(page.locator(".historical-ranking-star.gold")).toHaveCount(7);
+  await expect(page.locator(".historical-ranking-star.silver")).toHaveCount(7);
+  await expect(page.locator(".historical-ranking-star.bronze")).toHaveCount(7);
+  const firstTeam = page
+    .locator(".historical-ranking-table tbody tr")
+    .first()
+    .locator("td")
+    .nth(1);
+  await expect(firstTeam).toContainText(/\(.+ 20\d{2}\)/);
+  const firstPoints = Number(
+    await page
+      .locator(".historical-ranking-table tbody tr")
+      .first()
+      .locator("td")
+      .last()
+      .innerText(),
+  );
+  const secondPoints = Number(
+    await page
+      .locator(".historical-ranking-table tbody tr")
+      .nth(1)
+      .locator("td")
+      .last()
+      .innerText(),
+  );
+  expect(firstPoints).toBeGreaterThanOrEqual(secondPoints);
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
+test("wiki 3 presents Andrews as an encyclopedia article", async ({ page }) => {
+  await page.goto("/#/wiki-3");
+  await expect(
+    page.getByRole("heading", { name: "Andrews", exact: true, level: 2 }),
+  ).toBeVisible();
+  await expect(page.locator(".encyclopedia-stats-table tbody tr")).toHaveCount(
+    6,
+  );
+  await expect(page.locator(".encyclopedia-career-list article")).toHaveCount(
+    6,
+  );
+  await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(6);
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText(
+    "44",
+  );
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText(
+    "18",
+  );
+  await expect(page.locator(".encyclopedia-notes")).toContainText(
+    "ID canônico 3",
+  );
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
+test("beta hub keeps experimental history pages out of the main menu", async ({
+  page,
+}) => {
+  await page.goto("/#/teste");
+  await expect(
+    page.getByRole("heading", { name: "Teste (beta)", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".beta-hub-grid > a")).toHaveCount(5);
+  await expect(page.locator(".beta-hub-hero")).toContainText(
+    "ainda é um teste geral",
+  );
+  const navigation = page.locator(".desktop-navigation");
+  await expect(navigation).not.toContainText("Wiki");
+  await expect(navigation).not.toContainText("Ranking");
+  await expect(navigation.locator("a").last()).toHaveText("Teste (beta)");
+});
+test("historical statistics ranks teams and scoring duos", async ({ page }) => {
+  await page.goto("/#/teste-estatisticas");
+  await expect(page).toHaveURL(/#\/teste-estatisticas\/duplas$/);
+  await expect(
+    page.getByRole("heading", { name: "Estatísticas históricas", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".history-stat-tabs a")).toHaveCount(8);
+  await expect(page.locator(".history-duo-grid > article")).toHaveCount(90);
+  await expect(page.locator(".history-duo-grid > article.ongoing")).toHaveCount(12);
+  await expect(page.locator(".team-ranking")).toHaveCount(0);
+  await page.getByRole("link", { name: "Melhores ataques" }).click();
+  await expect(page.locator(".attack-card-grid > article")).toHaveCount(90);
+  await page.getByRole("link", { name: "Melhores defesas" }).click();
+  await expect(page.locator(".defense-card-grid > article")).toHaveCount(90);
+  await page.getByRole("link", { name: "Jogos sem sofrer gols" }).click();
+  await expect(page.locator(".clean-sheet-card-grid > article")).toHaveCount(90);
+  await page.getByRole("link", { name: "Cartões por equipe", exact: true }).click();
+  await expect(page.locator(".discipline-card-grid > article")).toHaveCount(90);
+  await page.getByRole("link", { name: "Cartões por jogador", exact: true }).click();
+  await expect(page.locator(".discipline-editions article")).toHaveCount(8);
+  await expect(page.locator(".discipline-editions li")).toHaveCount(60);
+  await expect(page.locator(".discipline-editions article.ongoing")).toHaveCount(1);
+  await page.getByRole("link", { name: "Artilheiros por Copa" }).click();
+  await expect(page.locator(".scoring-editions article")).toHaveCount(8);
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+});
 test("latest official selection lists all seven supplied players", async ({
   page,
 }) => {

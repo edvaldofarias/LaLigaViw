@@ -33,6 +33,7 @@ export const SECTIONS = [
   ["ballon", "MVP"],
   ["cartola", "CARTOLA"],
   ["user", "Usuário"],
+  ["teste", "Teste (beta)"],
 ];
 export const displayName = (s: any) =>
   String(s ?? "A definir")

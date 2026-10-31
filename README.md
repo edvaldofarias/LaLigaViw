@@ -31,7 +31,12 @@ Os testes de navegador usam Playwright com Google Chrome instalado, nos tamanhos
 
 - `src/app/core/competition.service.ts`: estado com Signals, consultas com HttpClient/RxJS, atualização e seleção dos detalhes.
 - `src/app/core/models.ts`: contratos de dados e nomes oficiais das fases.
-- `src/app/pages/`: templates Angular das 11 áreas; carregamento por rota.
+- `src/app/core/wiki-data.ts`: perfil histórico demonstrativo que consolida as quatro identidades de EDVALDO.
+- `src/app/core/yurick-wiki-data.ts`: segundo perfil demonstrativo, com sete identidades históricas de YURICK.
+- `src/app/core/andrews-wiki-data.ts`: terceiro perfil, em formato enciclopédico, com as seis identidades históricas de ANDREWS.
+- `src/app/core/historical-team-statistics-data.ts`: 90 campanhas, ataques, defesas, sequências invictas, cartões, artilheiros por edição e duplas exportados como TypeScript.
+- `src/app/pages/`: páginas Angular carregadas por rota, incluindo o hub Teste (beta), as Wikis enciclopédicas e as estatísticas históricas.
+- As estatísticas históricas usam abas independentes para duplas, ataques, defesas, invencibilidade, cartões e artilheiros por Copa.
 - `src/app/shared/`: componentes de entidades, partidas, Angular Material, Chart.js e detalhes.
 - `src/main.ts`: inicialização standalone, modo zoneless e Router.
 - `dist/*.mjs`: módulos de domínio reutilizados e testados: pontuação, simulações, histórico, técnicos, seleções, artes e reprodução HLS.

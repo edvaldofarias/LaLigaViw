@@ -47,9 +47,18 @@ export class AppComponent {
   private router = inject(Router);
   url = signal(this.router.url);
   current = computed(
-    () =>
-      this.sections.find((x) => this.url().includes("/" + x[0]))?.[1] ||
-      "Visão geral",
+    () => {
+      if (
+        ["/wiki", "/ranking", "/teste-estatisticas"].some((path) =>
+          this.url().startsWith(path),
+        )
+      )
+        return "Teste (beta)";
+      return (
+        this.sections.find((x) => this.url().includes("/" + x[0]))?.[1] ||
+        "Visão geral"
+      );
+    },
   );
   constructor() {
     this.router.events.subscribe((e) => {

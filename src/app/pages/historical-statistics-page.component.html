@@ -1,0 +1,269 @@
+<div class="beta-page-back"><a routerLink="/teste">← Voltar para Teste (beta)</a></div>
+
+<section class="history-stats-hero">
+  <span>Arquivo completo · 2023—2026</span>
+  <h2>Estatísticas históricas</h2>
+  <p>
+    Cada assunto possui sua própria aba. A página começa pelo grid das duplas
+    artilheiras de cada equipe.
+  </p>
+</section>
+
+<nav class="history-stat-tabs" aria-label="Tipos de estatística">
+  @for (tab of tabs; track tab.view) {
+    <a
+      [routerLink]="'/teste-estatisticas/' + tab.view"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >{{ tab.label }}</a>
+  }
+</nav>
+
+<section class="history-stats-toolbar">
+  <mat-form-field appearance="outline">
+    <mat-label>Pesquisar</mat-label>
+    <input
+      matInput
+      placeholder="Equipe ou jogador"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Campeonato</mat-label>
+    <mat-select [ngModel]="eventKey()" (ngModelChange)="eventKey.set($event)">
+      <mat-option value="">Todos os campeonatos</mat-option>
+      @for (competition of competitions; track competition.eventKey) {
+        <mat-option [value]="competition.eventKey">{{ competition.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <p>{{ filtered().length }} campanhas</p>
+</section>
+
+@switch (view()) {
+  @case ("duplas") {
+    <section class="history-tab-heading">
+      <span>Ranking de duplas</span>
+      <h3>Dupla artilheira de cada equipe</h3>
+      <p>Somente os dois jogadores com mais gols em cada campanha.</p>
+    </section>
+    <div class="history-duo-grid">
+      @for (row of duoRanking(); track row.editionTeamId) {
+        <article [class.ongoing]="row.ongoing">
+          <header>
+            <b>{{ row.duoRank }}º</b>
+            @if (row.ongoing) {
+              <span>Em andamento</span>
+            }
+          </header>
+          <div class="history-duo-team">
+            <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+            <h4>{{ teamLabel(row) }}</h4>
+          </div>
+          <ol>
+            <li>
+              <span><i>1</i>{{ row.duo[0].name }}</span>
+              <b>{{ row.duo[0].goals }} gols</b>
+            </li>
+            <li>
+              <span><i>2</i>{{ row.duo[1].name }}</span>
+              <b>{{ row.duo[1].goals }} gols</b>
+            </li>
+          </ol>
+          <footer><span>Total da dupla</span><strong>{{ row.duoGoals }} gols</strong></footer>
+        </article>
+      }
+    </div>
+  }
+
+  @case ("ataques") {
+    <section class="history-tab-heading">
+      <span>Ranking ofensivo</span>
+      <h3>Melhores ataques</h3>
+      <p>Ordenado pelo total de gols marcados em cada campanha.</p>
+    </section>
+    <div class="history-ranking-card-grid attack-card-grid">
+      @for (row of attackRanking(); track row.editionTeamId) {
+        <article [class.ongoing]="row.ongoing">
+          <b>{{ row.attackRank }}º</b>
+          <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+          <div><h4>{{ teamLabel(row) }}</h4><span>{{ row.matches }} jogos · {{ row.failedToScore }} sem marcar</span></div>
+          <strong>{{ row.goalsFor }}<small> gols</small></strong>
+          <footer>
+            <span>{{ (row.goalsFor / row.matches).toFixed(2) }} por jogo</span>
+            <span>Maior margem +{{ row.biggestWinMargin }}</span>
+          </footer>
+          @if (row.ongoing) { <em>Em andamento</em> }
+        </article>
+      }
+    </div>
+  }
+
+  @case ("defesas") {
+    <section class="history-tab-heading">
+      <span>Ranking defensivo</span>
+      <h3>Melhores defesas</h3>
+      <p>Ordenado pela menor média de gols sofridos por partida.</p>
+    </section>
+    <div class="history-ranking-card-grid defense-card-grid">
+      @for (row of defenseRanking(); track row.editionTeamId) {
+        <article [class.ongoing]="row.ongoing">
+          <b>{{ row.defenseRank }}º</b>
+          <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+          <div><h4>{{ teamLabel(row) }}</h4><span>{{ row.cleanSheets }} jogos sem sofrer gols</span></div>
+          <strong>{{ (row.goalsAgainst / row.matches).toFixed(2) }}<small> por jogo</small></strong>
+          <footer>
+            <span>{{ row.goalsAgainst }} gols sofridos</span>
+            <span>Maior derrota: {{ row.biggestLossMargin }} gols</span>
+          </footer>
+          @if (row.ongoing) { <em>Em andamento</em> }
+        </article>
+      }
+    </div>
+  }
+
+  @case ("invencibilidade") {
+    <section class="history-tab-heading">
+      <span>Sequências históricas</span>
+      <h3>Maiores invencibilidades</h3>
+      <p>Partidas consecutivas sem derrota em cada campanha.</p>
+    </section>
+    <div class="history-ranking-card-grid unbeaten-card-grid">
+      @for (row of unbeatenRanking(); track row.editionTeamId; let index = $index) {
+        <article [class.ongoing]="row.ongoing">
+          <b>{{ index + 1 }}º</b>
+          <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+          <div><h4>{{ teamLabel(row) }}</h4><span>{{ row.wins }}V · {{ row.draws }}E · {{ row.losses }}D</span></div>
+          <strong>{{ row.unbeatenStreak }}<small> jogos</small></strong>
+          <footer><span>{{ ((row.points / (row.matches * 3)) * 100).toFixed(0) }}% de aproveitamento</span></footer>
+          @if (row.ongoing) { <em>Em andamento</em> }
+        </article>
+      }
+
+    </div>
+  }
+
+  @case ("jogos-sem-sofrer") {
+    <section class="history-tab-heading">
+      <span>Defesas intactas</span>
+      <h3>Times com mais jogos sem sofrer gols</h3>
+      <p>Quantidade de partidas em que a equipe não sofreu nenhum gol.</p>
+    </section>
+    <div class="history-ranking-card-grid clean-sheet-card-grid">
+      @for (row of cleanSheetRanking(); track row.editionTeamId; let index = $index) {
+        <article [class.ongoing]="row.ongoing">
+          <b>{{ index + 1 }}º</b>
+          <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+          <div>
+            <h4>{{ teamLabel(row) }}</h4>
+            <span>{{ row.matches }} jogos · {{ row.goalsAgainst }} gols sofridos</span>
+          </div>
+          <strong>{{ row.cleanSheets }}<small> jogos</small></strong>
+          <footer>
+            <span>{{ ((row.cleanSheets / row.matches) * 100).toFixed(0) }}% das partidas</span>
+            <span>{{ (row.goalsAgainst / row.matches).toFixed(2) }} sofridos/jogo</span>
+          </footer>
+          @if (row.ongoing) { <em>Em andamento</em> }
+        </article>
+      }
+    </div>
+  }
+
+  @case ("cartoes") {
+    <section class="history-tab-heading">
+      <span>Disciplina</span>
+      <h3>Equipes com mais cartões</h3>
+      <p>Soma de amarelos, vermelhos e azuis dos jogadores de cada campanha.</p>
+    </section>
+    <div class="history-ranking-card-grid discipline-card-grid">
+      @for (row of cardRanking(); track row.editionTeamId) {
+        <article [class.ongoing]="row.ongoing">
+          <b>{{ row.cardRank }}º</b>
+          <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+          <div><h4>{{ teamLabel(row) }}</h4><span>{{ row.matches }} partidas</span></div>
+          <strong>{{ row.totalCards }}<small> cartões</small></strong>
+          <footer>
+            <span class="history-card yellow">{{ row.yellowCards }}</span>
+            <span class="history-card red">{{ row.redCards }}</span>
+            <span class="history-card blue">{{ row.blueCards }}</span>
+          </footer>
+          @if (row.ongoing) { <em>Em andamento</em> }
+        </article>
+      }
+    </div>
+  }
+
+  @case ("cartoes-jogadores") {
+    <section class="history-tab-heading">
+      <span>Disciplina por edição</span>
+      <h3>Jogadores com mais cartões por campeonato</h3>
+      <p>Os dez jogadores mais advertidos de cada edição.</p>
+    </section>
+    <div class="history-edition-grid discipline-editions history-discipline-player-grid">
+      @for (edition of disciplineEditions(); track edition.eventKey) {
+        <article [class.ongoing]="editionOngoing(edition.eventKey)">
+          <h4>
+            {{ editionLabel(edition) }}
+            @if (editionOngoing(edition.eventKey)) {
+              <span>Em andamento</span>
+            }
+          </h4>
+          @if (edition.leaders.length) {
+            <ol>
+              @for (player of edition.leaders; track player.name + player.editionTeamId) {
+                <li>
+                  <b>{{ player.position }}º</b>
+                  <span><strong>{{ player.name }}</strong><small>{{ teamLabel(teamById(player.editionTeamId)) }}</small></span>
+                  <em><i class="yellow">{{ player.yellowCards }}</i><i class="red">{{ player.redCards }}</i><i class="blue">{{ player.blueCards }}</i><strong>{{ player.totalCards }}</strong></em>
+                </li>
+              }
+            </ol>
+          } @else {
+            <p>Nenhum cartão registrado nesta edição.</p>
+          }
+        </article>
+      }
+    </div>
+  }
+
+  @case ("artilheiros") {
+    <section class="history-tab-heading">
+      <span>Artilharia por edição</span>
+      <h3>Maiores artilheiros de cada Copa</h3>
+      <p>Os dez jogadores com mais gols em cada campeonato.</p>
+    </section>
+    <div class="history-edition-grid scoring-editions history-scorer-grid">
+      @for (edition of scoringEditions(); track edition.eventKey) {
+        <article [class.ongoing]="editionOngoing(edition.eventKey)">
+          <h4>
+            {{ editionLabel(edition) }}
+            @if (editionOngoing(edition.eventKey)) {
+              <span>Em andamento</span>
+            }
+          </h4>
+          <ol>
+            @for (player of edition.leaders; track player.name + player.editionTeamId) {
+              <li>
+                <b>{{ player.position }}º</b>
+                <span><strong>{{ player.name }}</strong><small>{{ teamLabel(teamById(player.editionTeamId)) }}</small></span>
+                <em>{{ player.goals }} gols</em>
+              </li>
+            }
+          </ol>
+        </article>
+      }
+    </div>
+  }
+
+  @default {
+    <section class="history-tab-heading">
+      <h3>Estatística não encontrada</h3>
+      <p>Escolha uma das abas acima.</p>
+    </section>
+  }
+}
+
+<p class="history-stats-note">
+  Dados estáticos em TypeScript. Esta página publicada não acessa o SQL Server.
+</p>

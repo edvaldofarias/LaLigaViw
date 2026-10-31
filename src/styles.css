@@ -1,5 +1,12 @@
 app-root,
 app-competition-page,
+app-wiki-page,
+app-wiki-two-page,
+app-wiki-three-page,
+app-encyclopedia-wiki,
+app-ranking-page,
+app-beta-hub-page,
+app-historical-statistics-page,
 app-grid,
 app-chart,
 app-match-card,
@@ -7,6 +14,2410 @@ app-compact-match-card,
 app-round-carousel,
 app-detail {
   display: block;
+}
+
+.wiki-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.wiki-kicker {
+  color: #00788e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.wiki-demo-badge,
+.wiki-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 11px;
+  border: 1px solid #dbe3e8;
+  border-radius: 999px;
+  color: #607084;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.wiki-player-hero {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) minmax(220px, 0.42fr);
+  min-height: 330px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px solid #d9e2e8;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 72% 20%, rgb(0 156 180 / 20%), transparent 34%),
+    linear-gradient(135deg, #101c2d, #172c3e 68%, #0b5362);
+  box-shadow: 0 18px 45px rgb(18 35 50 / 12%);
+}
+.wiki-player-photo {
+  position: relative;
+  min-height: 330px;
+  background: #dfe7eb;
+}
+.wiki-player-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 330px;
+  object-fit: cover;
+}
+.wiki-player-photo::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 46%;
+  content: "";
+  background: linear-gradient(transparent, rgb(7 16 27 / 84%));
+}
+.wiki-player-photo span {
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  padding: 8px 10px;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 10px;
+  background: rgb(7 16 27 / 56%);
+  font-size: 11px;
+  font-weight: 750;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.wiki-player-intro {
+  align-self: center;
+  padding: 34px 38px;
+}
+.wiki-player-intro .wiki-kicker {
+  color: #72d9e8;
+}
+.wiki-player-intro h3 {
+  margin: 7px 0 8px;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+}
+.wiki-player-intro > p {
+  max-width: 610px;
+  margin: 0;
+  color: #c7d5df;
+  line-height: 1.6;
+}
+.wiki-team-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.wiki-team-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 4px 10px 4px 6px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 999px;
+  color: #e5edf2;
+  background: rgb(255 255 255 / 7%);
+  font-size: 11px;
+  font-weight: 700;
+}
+.wiki-team-list img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.wiki-best-finish {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  margin: 30px;
+  padding: 24px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 20px;
+  background: rgb(255 255 255 / 7%);
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.wiki-best-finish span,
+.wiki-best-finish small {
+  color: #aebfca;
+}
+.wiki-best-finish span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.wiki-best-finish strong {
+  margin: 7px 0 1px;
+  color: #7ee4ee;
+  font-size: 58px;
+  line-height: 1;
+}
+.wiki-best-finish b {
+  font-size: 14px;
+}
+.wiki-best-finish small {
+  margin-top: 4px;
+  font-size: 11px;
+}
+.wiki-overall {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 38px;
+}
+.wiki-overall article {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid #dfe6eb;
+  border-radius: 14px;
+  background: #fff;
+}
+.wiki-overall span {
+  color: #718093;
+  font-size: 11px;
+  font-weight: 700;
+}
+.wiki-overall strong {
+  color: #172235;
+  font-size: 26px;
+}
+.wiki-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.wiki-section-heading h3 {
+  margin: 4px 0 0;
+  color: #172235;
+  font-size: 23px;
+}
+.wiki-section-heading p {
+  margin: 0;
+  color: #718093;
+  font-size: 12px;
+}
+.wiki-campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.wiki-campaign-card {
+  overflow: hidden;
+  border-radius: 18px !important;
+  background: #fff !important;
+}
+.wiki-campaign-card > header {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e7ecef;
+  background: #f8fafb;
+}
+.wiki-competition-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+.wiki-campaign-card header small {
+  color: #778496;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.wiki-campaign-card h4 {
+  margin: 3px 0 0;
+  color: #172235;
+  font-size: 16px;
+}
+.wiki-status.ongoing {
+  border-color: #9bdcc5;
+  color: #126746;
+  background: #eaf8f1;
+}
+.wiki-status.ongoing::before {
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #28a86f;
+  content: "";
+  box-shadow: 0 0 0 4px rgb(40 168 111 / 12%);
+}
+.wiki-campaign-player {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+}
+.wiki-campaign-player > img {
+  width: 86px;
+  height: 96px;
+  border-radius: 14px;
+  background: #eef2f4;
+  object-fit: cover;
+}
+.wiki-campaign-team {
+  display: grid;
+  gap: 6px;
+}
+.wiki-campaign-team > span,
+.wiki-position span {
+  color: #7a8796;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.wiki-campaign-team b {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #263348;
+  font-size: 13px;
+}
+.wiki-campaign-team img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.wiki-position {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  text-align: right;
+}
+.wiki-position strong {
+  color: #172235;
+  font-size: 18px;
+}
+.wiki-position.current strong {
+  color: #087950;
+}
+.wiki-campaign-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0 20px;
+  overflow: hidden;
+  border: 1px solid #e2e8ec;
+  border-radius: 12px;
+}
+.wiki-campaign-stats div {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 11px 5px;
+  border-right: 1px solid #e2e8ec;
+}
+.wiki-campaign-stats div:last-child {
+  border-right: 0;
+}
+.wiki-campaign-stats .highlight {
+  color: #006f82;
+  background: #eaf7f9;
+}
+.wiki-campaign-stats span {
+  color: #788698;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.wiki-campaign-stats b {
+  font-size: 17px;
+}
+.wiki-campaign-card > footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 15px 20px 19px;
+  color: #718093;
+  font-size: 11px;
+}
+.wiki-campaign-card footer b {
+  color: #344156;
+}
+.wiki-gallery-heading {
+  margin-top: 38px;
+}
+.wiki-photo-history {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.wiki-photo-history figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #dfe6ea;
+  border-radius: 16px;
+  background: #fff;
+}
+.wiki-photo-history figure > div {
+  position: relative;
+  aspect-ratio: 4 / 4.5;
+  overflow: hidden;
+  background: #e8edf0;
+}
+.wiki-photo-history figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+.wiki-photo-history figure:hover img {
+  transform: scale(1.025);
+}
+.wiki-photo-history figure > div span {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #fff;
+  background: #13865c;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.wiki-photo-history figcaption {
+  display: grid;
+  gap: 3px;
+  padding: 14px 15px 16px;
+}
+.wiki-photo-history figcaption strong {
+  color: #263348;
+  font-size: 13px;
+}
+.wiki-photo-history figcaption small {
+  color: #778496;
+}
+@media (max-width: 1000px) {
+  .wiki-player-hero {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+  .wiki-best-finish {
+    grid-column: 1 / -1;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    gap: 12px;
+    justify-items: start;
+    margin-top: 0;
+    text-align: left;
+  }
+  .wiki-best-finish strong {
+    font-size: 36px;
+  }
+  .wiki-best-finish small {
+    grid-column: 3;
+  }
+  .wiki-overall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .wiki-title,
+  .wiki-section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .wiki-player-hero {
+    grid-template-columns: 120px minmax(0, 1fr);
+    min-height: 240px;
+  }
+  .wiki-player-photo,
+  .wiki-player-photo img {
+    min-height: 240px;
+  }
+  .wiki-player-photo span {
+    display: none;
+  }
+  .wiki-player-intro {
+    padding: 24px 18px;
+  }
+  .wiki-player-intro h3 {
+    font-size: 38px;
+    letter-spacing: -2px;
+  }
+  .wiki-player-intro > p {
+    font-size: 12px;
+  }
+  .wiki-team-list {
+    margin-top: 16px;
+  }
+  .wiki-team-list span {
+    font-size: 0;
+  }
+  .wiki-best-finish {
+    margin: 0 14px 14px;
+  }
+  .wiki-campaign-grid {
+    grid-template-columns: 1fr;
+  }
+  .wiki-photo-history {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .wiki-overall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wiki-campaign-card > header {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+  .wiki-competition-logo {
+    width: 42px;
+    height: 42px;
+  }
+  .wiki-status {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .wiki-campaign-player {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+  .wiki-campaign-player > img {
+    width: 72px;
+    height: 86px;
+  }
+  .wiki-position {
+    grid-column: 1 / -1;
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+.wiki2-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+.wiki2-overline {
+  color: #a3522c;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.wiki2-sample {
+  padding: 8px 12px;
+  border: 1px solid #dacfc6;
+  border-radius: 4px;
+  color: #775744;
+  background: #fffdf9;
+  font: 700 10px Georgia, serif;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.wiki2-cover {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.75fr) minmax(0, 1.25fr) 230px;
+  min-height: 430px;
+  overflow: hidden;
+  border-radius: 6px;
+  color: #f7f0e7;
+  background: #24201d;
+}
+.wiki2-cover-photo {
+  position: relative;
+  min-height: 430px;
+  background: #ded5cd;
+}
+.wiki2-cover-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 430px;
+  object-fit: cover;
+  filter: saturate(0.82) contrast(1.04);
+}
+.wiki2-cover-photo::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, transparent 65%, #24201d);
+}
+.wiki2-cover-photo span {
+  position: absolute;
+  z-index: 1;
+  bottom: 18px;
+  left: 20px;
+  padding: 6px 9px;
+  color: #241e1a;
+  background: #f0b45d;
+  font: 800 11px Georgia, serif;
+  letter-spacing: 1px;
+}
+.wiki2-cover-copy {
+  align-self: center;
+  padding: 42px 48px;
+}
+.wiki2-cover-copy .wiki2-overline {
+  color: #e7a865;
+}
+.wiki2-cover-copy h3 {
+  margin: 6px 0 16px;
+  font: 700 clamp(54px, 7vw, 92px) / 0.9 Georgia, serif;
+  letter-spacing: -5px;
+  text-transform: uppercase;
+}
+.wiki2-cover-copy > p {
+  max-width: 590px;
+  margin: 0;
+  color: #c8bbb0;
+  font: 16px/1.7 Georgia, serif;
+}
+.wiki2-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 26px;
+  color: #9dddb8;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.wiki2-live i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4fc486;
+  box-shadow: 0 0 0 5px rgb(79 196 134 / 12%);
+}
+.wiki2-current-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 28px;
+  padding: 9px 13px 9px 9px;
+  border: 1px solid #484039;
+  border-radius: 3px;
+  color: #ac9f94;
+}
+.wiki2-current-team img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+.wiki2-current-team span {
+  display: grid;
+  gap: 2px;
+  font-size: 10px;
+}
+.wiki2-current-team b {
+  color: #fff7ef;
+  font-size: 12px;
+}
+.wiki2-cover-number {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  border-left: 1px solid #433b35;
+  background: #2c2723;
+  text-align: center;
+}
+.wiki2-cover-number small {
+  color: #aa9c91;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.wiki2-cover-number strong {
+  color: #f0b45d;
+  font: 700 100px/1 Georgia, serif;
+}
+.wiki2-cover-number span {
+  color: #c9bcb1;
+  font: italic 12px Georgia, serif;
+}
+.wiki2-record-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: solid #d8d1ca;
+  border-width: 0 1px 1px;
+  background: #fff;
+}
+.wiki2-record-board article {
+  display: grid;
+  gap: 2px;
+  padding: 21px 24px;
+  border-right: 1px solid #ddd6cf;
+}
+.wiki2-record-board article:last-child {
+  border-right: 0;
+}
+.wiki2-record-board small {
+  color: #86786e;
+  font: 700 10px Georgia, serif;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.wiki2-record-board strong {
+  color: #2b2521;
+  font: 700 30px Georgia, serif;
+}
+.wiki2-record-board span {
+  color: #8a7e75;
+  font-size: 10px;
+}
+.wiki2-results {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.4fr) minmax(260px, 1fr);
+  align-items: center;
+  gap: 12px 32px;
+  margin: 32px 0 44px;
+  padding: 24px 28px;
+  border: 1px solid #ded7d0;
+  border-radius: 6px;
+  background: #fffdf9;
+}
+.wiki2-results h3 {
+  margin: 4px 0 0;
+  color: #312a25;
+  font: 700 21px Georgia, serif;
+}
+.wiki2-result-bar {
+  display: flex;
+  height: 13px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #eee9e4;
+}
+.wiki2-result-bar span {
+  height: 100%;
+}
+.wiki2-result-bar .wins,
+.wiki2-result-legend i.wins {
+  background: #288361;
+}
+.wiki2-result-bar .draws,
+.wiki2-result-legend i.draws {
+  background: #d59a49;
+}
+.wiki2-result-bar .losses,
+.wiki2-result-legend i.losses {
+  background: #a54b43;
+}
+.wiki2-result-legend {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  color: #7a6f66;
+  font-size: 11px;
+}
+.wiki2-result-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.wiki2-result-legend i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.wiki2-result-legend b {
+  color: #332b26;
+}
+.wiki2-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+.wiki2-section-heading h3 {
+  margin: 4px 0 0;
+  color: #2d2723;
+  font: 700 28px Georgia, serif;
+}
+.wiki2-section-heading p {
+  margin: 0;
+  color: #847970;
+  font: italic 12px Georgia, serif;
+}
+.wiki2-timeline {
+  border-top: 1px solid #d9d2cc;
+}
+.wiki2-timeline > article {
+  display: grid;
+  grid-template-columns: 85px 108px minmax(230px, 1fr) minmax(310px, 0.9fr);
+  align-items: stretch;
+  min-height: 142px;
+  border-bottom: 1px solid #d9d2cc;
+  background: #fff;
+}
+.wiki2-timeline > article.ongoing {
+  background: #f4faf6;
+}
+.wiki2-time-marker {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  border-right: 1px solid #ddd6d0;
+}
+.wiki2-time-marker span {
+  color: #3b332e;
+  font: 700 18px Georgia, serif;
+}
+.wiki2-time-marker i {
+  position: absolute;
+  right: -5px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #b56d3e;
+  box-shadow: 0 0 0 1px #b56d3e;
+}
+.wiki2-time-photo {
+  position: relative;
+  margin: 14px;
+  overflow: hidden;
+  background: #e4ddd7;
+}
+.wiki2-time-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 112px;
+  object-fit: cover;
+}
+.wiki2-time-photo small {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  padding: 3px 5px;
+  color: #fff;
+  background: rgb(37 31 27 / 75%);
+  font-size: 9px;
+}
+.wiki2-time-main {
+  display: grid;
+  align-content: center;
+  gap: 13px;
+  padding: 18px 20px;
+}
+.wiki2-time-main header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wiki2-time-main header > img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+.wiki2-time-main header span {
+  color: #8b7e74;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.wiki2-time-main h4 {
+  margin: 2px 0 0;
+  color: #332b26;
+  font: 700 16px Georgia, serif;
+}
+.wiki2-running {
+  margin-left: auto;
+  padding: 5px 8px;
+  border-radius: 2px;
+  color: #1c704b;
+  background: #dff3e7;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.wiki2-time-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wiki2-time-team img {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+.wiki2-time-team b {
+  color: #524740;
+  font-size: 11px;
+}
+.wiki2-time-team span {
+  margin-left: auto;
+  color: #9b5934;
+  font: 700 11px Georgia, serif;
+}
+.wiki2-time-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  border-left: 1px solid #e1dbd5;
+}
+.wiki2-time-stats div {
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  padding: 10px;
+}
+.wiki2-time-stats b {
+  color: #312925;
+  font: 700 20px Georgia, serif;
+}
+.wiki2-time-stats span {
+  color: #8a7d73;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.wiki2-portraits-heading {
+  margin-top: 44px;
+}
+.wiki2-portraits {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px;
+  background: #29231f;
+}
+.wiki2-portraits figure {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: #ded6cf;
+}
+.wiki2-portraits img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.75);
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+.wiki2-portraits figure:hover img {
+  filter: saturate(1);
+  transform: scale(1.025);
+}
+.wiki2-portraits figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: 1px;
+  padding: 26px 9px 9px;
+  color: #fff;
+  background: linear-gradient(transparent, rgb(25 21 18 / 92%));
+}
+.wiki2-portraits strong {
+  font: 700 13px Georgia, serif;
+}
+.wiki2-portraits span {
+  overflow: hidden;
+  color: #d7cbc1;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 1050px) {
+  .wiki2-cover {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+  .wiki2-cover-number {
+    grid-column: 1 / -1;
+    grid-template-columns: auto auto auto;
+    gap: 12px;
+    padding: 18px;
+    border-top: 1px solid #433b35;
+    border-left: 0;
+  }
+  .wiki2-cover-number strong {
+    font-size: 42px;
+  }
+  .wiki2-timeline > article {
+    grid-template-columns: 72px 96px minmax(210px, 1fr);
+  }
+  .wiki2-time-stats {
+    grid-column: 2 / -1;
+    border-top: 1px solid #e1dbd5;
+    border-left: 0;
+  }
+  .wiki2-portraits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .wiki2-title,
+  .wiki2-section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .wiki2-cover {
+    grid-template-columns: 42% 58%;
+    min-height: 330px;
+  }
+  .wiki2-cover-photo,
+  .wiki2-cover-photo img {
+    min-height: 330px;
+  }
+  .wiki2-cover-copy {
+    padding: 26px 18px;
+  }
+  .wiki2-cover-copy h3 {
+    font-size: 42px;
+    letter-spacing: -3px;
+  }
+  .wiki2-cover-copy > p {
+    font-size: 12px;
+  }
+  .wiki2-live {
+    margin-bottom: 16px;
+  }
+  .wiki2-record-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wiki2-record-board article:nth-child(2) {
+    border-right: 0;
+  }
+  .wiki2-record-board article:nth-child(-n + 2) {
+    border-bottom: 1px solid #ddd6cf;
+  }
+  .wiki2-results {
+    grid-template-columns: 1fr;
+  }
+  .wiki2-result-legend {
+    grid-column: 1;
+  }
+  .wiki2-timeline > article {
+    grid-template-columns: 62px 82px minmax(0, 1fr);
+  }
+  .wiki2-time-main {
+    padding: 14px 10px;
+  }
+  .wiki2-time-main header > img {
+    display: none;
+  }
+  .wiki2-time-team span {
+    display: none;
+  }
+  .wiki2-portraits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.encyclopedia {
+  min-height: 100vh;
+  padding: 24px 28px 36px;
+  border: 1px solid #a2a9b1;
+  color: #202122;
+  background: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.encyclopedia-masthead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #a2a9b1;
+}
+.encyclopedia-masthead span:first-child {
+  color: #54595d;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.encyclopedia-masthead h2 {
+  margin: 2px 0 0;
+  color: #000;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+.encyclopedia-masthead p {
+  margin: 0 0 6px;
+  color: #54595d;
+  font-size: 12px;
+}
+.encyclopedia-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  border: 1px solid #a2a9b1;
+  color: #202122;
+  background: #f8f9fa;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.encyclopedia-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #14866d;
+}
+.encyclopedia-infobox {
+  float: right;
+  width: 300px;
+  margin: 4px 0 18px 24px;
+  padding: 4px;
+  border: 1px solid #a2a9b1;
+  background: #f8f9fa;
+  font-size: 12px;
+}
+.encyclopedia-infobox > h3 {
+  margin: 0;
+  padding: 6px 8px;
+  color: #000;
+  background: #dfe8f6;
+  font-size: 18px;
+  text-align: center;
+}
+.encyclopedia-infobox-photo {
+  padding: 7px 7px 3px;
+  text-align: center;
+}
+.encyclopedia-infobox-photo img {
+  width: 100%;
+  max-height: 330px;
+  object-fit: cover;
+  object-position: top;
+}
+.encyclopedia-infobox-photo small {
+  display: block;
+  color: #54595d;
+}
+.encyclopedia-infobox > h4 {
+  margin: 5px 0 0;
+  padding: 4px 8px;
+  background: #dfe8f6;
+  font-size: 12px;
+  text-align: center;
+}
+.encyclopedia-infobox dl {
+  margin: 5px 8px 8px;
+}
+.encyclopedia-infobox dl div {
+  display: grid;
+  grid-template-columns: 98px 1fr;
+  gap: 8px;
+  padding: 3px 0;
+}
+.encyclopedia-infobox dt {
+  font-weight: 700;
+}
+.encyclopedia-infobox dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.encyclopedia-lead p {
+  margin: 8px 0 12px;
+}
+.encyclopedia sup {
+  color: #36c;
+}
+.encyclopedia-contents {
+  display: inline-block;
+  min-width: 220px;
+  margin: 12px 0 20px;
+  padding: 10px 22px 10px 14px;
+  border: 1px solid #a2a9b1;
+  background: #f8f9fa;
+  font-size: 13px;
+}
+.encyclopedia-contents > strong {
+  display: block;
+  text-align: center;
+}
+.encyclopedia-contents ol {
+  margin: 5px 0 0;
+  padding-left: 28px;
+}
+.encyclopedia a {
+  color: #36c;
+  text-decoration: none;
+}
+.encyclopedia a:hover {
+  text-decoration: underline;
+}
+.encyclopedia-section {
+  clear: left;
+  scroll-margin-top: 80px;
+}
+.encyclopedia-section > h3 {
+  margin: 20px 0 8px;
+  border-bottom: 1px solid #a2a9b1;
+  color: #000;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.encyclopedia-section > p {
+  margin: 8px 0 12px;
+}
+.encyclopedia-career-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid #a2a9b1;
+  background: #a2a9b1;
+}
+.encyclopedia-career-list article {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 9px 11px;
+  background: #fff;
+}
+.encyclopedia-career-list img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+.encyclopedia-career-list span,
+.encyclopedia-career-list p {
+  color: #54595d;
+  font-size: 10px;
+}
+.encyclopedia-career-list h4,
+.encyclopedia-career-list p {
+  margin: 0;
+}
+.encyclopedia-career-list h4 {
+  color: #36c;
+  font-size: 12px;
+}
+.encyclopedia-career-list article > b {
+  padding: 2px 5px;
+  border: 1px solid #a2a9b1;
+  background: #f8f9fa;
+  font-size: 9px;
+  white-space: nowrap;
+}
+.encyclopedia-table-caption {
+  color: #54595d;
+  font-size: 11px;
+  font-style: italic;
+}
+.encyclopedia-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.encyclopedia-stats-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.encyclopedia-stats-table th,
+.encyclopedia-stats-table td {
+  padding: 6px 7px;
+  border: 1px solid #a2a9b1;
+  text-align: center;
+}
+.encyclopedia-stats-table thead th {
+  color: #202122;
+  background: #eaecf0;
+}
+.encyclopedia-stats-table th:first-child,
+.encyclopedia-stats-table td:first-child {
+  text-align: left;
+}
+.encyclopedia-stats-table td:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 280px;
+}
+.encyclopedia-stats-table td:first-child img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.encyclopedia-stats-table tr.ongoing {
+  background: #f0f8f4;
+}
+.encyclopedia-stats-table tfoot {
+  background: #eaecf0;
+}
+.encyclopedia-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+  border: solid #a2a9b1;
+  border-width: 1px 0 0 1px;
+}
+.encyclopedia-stat-grid article {
+  display: grid;
+  padding: 12px;
+  border: solid #a2a9b1;
+  border-width: 0 1px 1px 0;
+  background: #f8f9fa;
+}
+.encyclopedia-stat-grid strong {
+  color: #000;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 400;
+}
+.encyclopedia-stat-grid span {
+  color: #54595d;
+  font-size: 10px;
+}
+.encyclopedia-subheading {
+  margin: 18px 0 6px;
+  border-bottom: 1px solid #c8ccd1;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+.encyclopedia-records {
+  padding-left: 24px;
+}
+.encyclopedia-records li {
+  margin: 6px 0;
+}
+.encyclopedia-gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.encyclopedia-gallery figure {
+  min-width: 0;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #a2a9b1;
+  background: #f8f9fa;
+}
+.encyclopedia-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+}
+.encyclopedia-gallery figcaption {
+  display: grid;
+  padding: 4px 2px 1px;
+  font-size: 9px;
+  line-height: 1.35;
+}
+.encyclopedia-gallery figcaption span {
+  color: #54595d;
+}
+.encyclopedia-notes ol {
+  padding-left: 24px;
+  color: #54595d;
+  font-size: 11px;
+}
+@media (max-width: 900px) {
+  .encyclopedia {
+    padding: 18px;
+  }
+  .encyclopedia-infobox {
+    float: none;
+    width: min(100%, 360px);
+    margin: 8px auto 18px;
+  }
+  .encyclopedia-career-list,
+  .encyclopedia-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .encyclopedia-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .encyclopedia {
+    padding: 13px;
+    font-size: 13px;
+  }
+  .encyclopedia-masthead {
+    align-items: start;
+    flex-direction: column;
+  }
+  .encyclopedia-masthead h2 {
+    font-size: 30px;
+  }
+  .encyclopedia-status {
+    margin-bottom: 10px;
+  }
+  .encyclopedia-contents {
+    display: block;
+  }
+  .encyclopedia-career-list,
+  .encyclopedia-stat-grid {
+    grid-template-columns: 1fr;
+  }
+  .encyclopedia-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.beta-hub-hero {
+  padding: 34px;
+  border-radius: 18px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 85% 20%, rgb(70 190 205 / 24%), transparent 30%),
+    linear-gradient(135deg, #13273d, #075d70);
+}
+.beta-hub-hero > span,
+.history-stats-hero > span {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.beta-hub-hero h2,
+.history-stats-hero h2 {
+  margin: 7px 0;
+  font-size: clamp(30px, 5vw, 48px);
+}
+.beta-hub-hero p {
+  max-width: 720px;
+  margin: 0;
+  color: #d8edf1;
+  line-height: 1.65;
+}
+.beta-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.beta-hub-grid a {
+  display: grid;
+  min-height: 175px;
+  padding: 22px;
+  border: 1px solid #dce4e9;
+  border-radius: 15px;
+  color: #223246;
+  background: #fff;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+.beta-hub-grid a:hover {
+  border-color: #07849a;
+  transform: translateY(-2px);
+}
+.beta-hub-grid a.wide {
+  grid-column: 1 / -1;
+  min-height: 150px;
+  background: linear-gradient(120deg, #f2fafb, #fff);
+}
+.beta-hub-grid span {
+  color: #087c91;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.beta-hub-grid h3 {
+  margin: 5px 0;
+  font-size: 22px;
+}
+.beta-hub-grid p {
+  margin: 0;
+  color: #6c7b8d;
+  line-height: 1.55;
+}
+.beta-hub-grid b {
+  align-self: end;
+  margin-top: 16px;
+  color: #087c91;
+  font-size: 11px;
+}
+.beta-hub-disclaimer,
+.history-stats-note {
+  color: #7c8998;
+  font-size: 10px;
+  text-align: center;
+}
+.history-stats-overview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+}
+.history-stats-overview article {
+  display: grid;
+  padding: 14px 17px;
+  border: 1px solid #dce4e9;
+  border-radius: 11px;
+  background: #fff;
+}
+.history-stats-overview strong {
+  color: #087c91;
+  font-size: 25px;
+}
+.history-stats-overview span {
+  color: #718094;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.beta-page-back {
+  margin-bottom: 10px;
+}
+.beta-page-back a {
+  color: #087c91;
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.history-stats-hero {
+  padding: 28px 30px;
+  border: 1px solid #cfe0e4;
+  border-radius: 16px;
+  color: #173044;
+  background: linear-gradient(135deg, #edf8fa, #fff);
+}
+.history-stats-hero > span {
+  color: #087c91;
+}
+.history-stats-hero p {
+  max-width: 760px;
+  margin: 0;
+  color: #637487;
+  line-height: 1.6;
+}
+.history-stats-leaders {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+.history-stats-leaders article {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  grid-template-areas:
+    "label label"
+    "image title"
+    "image value";
+  gap: 3px 9px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid #dce4e9;
+  border-radius: 12px;
+  background: #fff;
+}
+.history-stats-leaders span {
+  grid-area: label;
+  color: #798696;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.history-stats-leaders img {
+  grid-area: image;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.history-stats-leaders h3 {
+  grid-area: title;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #26354a;
+  font-size: 9px;
+  text-overflow: ellipsis;
+}
+.history-stats-leaders b {
+  grid-area: value;
+  color: #087c91;
+  font-size: 11px;
+}
+.history-stats-toolbar {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #dce4e9;
+  border-radius: 13px;
+  background: #fff;
+}
+.history-stats-toolbar mat-form-field {
+  width: min(300px, 100%);
+}
+.history-stats-toolbar p {
+  margin: 18px 0 0 auto;
+  color: #738194;
+  font-size: 11px;
+}
+.history-stat-tabs {
+  display: flex;
+  gap: 5px;
+  max-width: 100%;
+  margin: 14px 0;
+  padding: 5px;
+  overflow-x: auto;
+  border: 1px solid #dce4e9;
+  border-radius: 12px;
+  background: #fff;
+}
+.history-stat-tabs a {
+  padding: 9px 13px;
+  border-radius: 8px;
+  color: #657487;
+  font-size: 10px;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.history-stat-tabs a:hover {
+  color: #087c91;
+  background: #f1f7f8;
+}
+.history-stat-tabs a.active {
+  color: #fff;
+  background: #087c91;
+}
+.history-tab-heading {
+  margin: 24px 0 11px;
+}
+.history-tab-heading > span {
+  color: #087c91;
+  font-size: 9px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.history-tab-heading h3 {
+  margin: 3px 0;
+  color: #203147;
+  font-size: 24px;
+}
+.history-tab-heading p {
+  margin: 0;
+  color: #718094;
+  font-size: 11px;
+}
+.history-duo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.history-duo-grid > article {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 15px;
+  overflow: hidden;
+  border: 1px solid #dce4e9;
+  border-radius: 13px;
+  background: #fff;
+}
+.history-duo-grid > article.ongoing,
+.history-ranking-card-grid > article.ongoing {
+  border-color: #79bea3;
+  background: linear-gradient(145deg, #f1faf6, #fff);
+}
+.history-duo-grid article > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.history-duo-grid article > header > b {
+  color: #8793a2;
+  font-size: 11px;
+}
+.history-duo-grid article > header > span,
+.history-ranking-card-grid article > em {
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #16704d;
+  background: #dff3e7;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.history-duo-team {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+.history-duo-team img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+.history-duo-team h4 {
+  margin: 0;
+  color: #26364b;
+  font-size: 11px;
+}
+.history-duo-grid ol {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.history-duo-grid li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px;
+  border-radius: 7px;
+  background: #f4f7f8;
+  color: #45556a;
+  font-size: 10px;
+}
+.history-duo-grid li span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.history-duo-grid li i {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 50%;
+  color: #087c91;
+  background: #dceef1;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 850;
+}
+.history-duo-grid li b {
+  color: #087c91;
+  white-space: nowrap;
+}
+.history-duo-grid article > footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 9px;
+  border-top: 1px solid #e5eaed;
+  color: #788697;
+  font-size: 9px;
+}
+.history-duo-grid article > footer strong {
+  color: #24354a;
+  font-size: 15px;
+}
+.history-ranking-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+.history-ranking-card-grid > article {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #dce4e9;
+  border-radius: 12px;
+  background: #fff;
+}
+.history-ranking-card-grid > article.ongoing {
+  padding-top: 42px;
+}
+.history-ranking-card-grid article > b {
+  color: #8793a2;
+  font-size: 10px;
+}
+.history-ranking-card-grid article > img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+.history-ranking-card-grid article > div {
+  min-width: 0;
+}
+.history-ranking-card-grid h4 {
+  margin: 0;
+  overflow: hidden;
+  color: #26364b;
+  font-size: 10px;
+  text-overflow: ellipsis;
+}
+.history-ranking-card-grid article > div span {
+  color: #788697;
+  font-size: 8px;
+}
+.history-ranking-card-grid article > strong {
+  color: #087c91;
+  font-size: 20px;
+  white-space: nowrap;
+}
+.history-ranking-card-grid article > strong small {
+  font-size: 8px;
+  text-transform: uppercase;
+}
+.history-ranking-card-grid article > footer {
+  display: flex;
+  grid-column: 3 / -1;
+  gap: 12px;
+  color: #718094;
+  font-size: 8px;
+}
+.history-ranking-card-grid article > em {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}
+.discipline-card-grid article > footer {
+  align-items: center;
+}
+.discipline-player-accordion {
+  margin-top: 12px;
+}
+.history-scorer-grid {
+  margin-top: 12px;
+}
+.history-stats-section {
+  margin-top: 20px;
+}
+.history-stats-section > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+.history-stats-section header span {
+  color: #087c91;
+  font-size: 9px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.history-stats-section h3 {
+  margin: 2px 0 0;
+  color: #213146;
+  font-size: 22px;
+}
+.history-stats-section header p {
+  margin: 0;
+  color: #738194;
+  font-size: 10px;
+}
+.history-stats-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #dce4e9;
+  background: #fff;
+}
+.history-stats-table {
+  width: 100%;
+  min-width: 1040px;
+  border-collapse: collapse;
+}
+.history-stats-table th {
+  padding: 9px;
+  color: #6d7b8e;
+  background: #f3f7f8;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.history-stats-table td {
+  padding: 9px;
+  border-top: 1px solid #e8edef;
+  color: #4d5c6f;
+  font-size: 10px;
+  text-align: center;
+}
+.history-stats-table th:nth-child(2),
+.history-stats-table td:nth-child(2) {
+  text-align: left;
+}
+.history-stats-table td:nth-child(2) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 285px;
+  color: #25354a;
+  font-weight: 700;
+}
+.history-stats-table td:nth-child(2) img {
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.history-stats-table tbody tr:hover {
+  background: #f8fbfc;
+}
+.history-stats-table td:last-child strong {
+  color: #087c91;
+  font-size: 14px;
+}
+.history-stat-accordions {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.history-stat-accordion {
+  overflow: hidden;
+  border: 1px solid #d9e1e6;
+  border-radius: 13px;
+  background: #fff;
+}
+.history-stat-accordion > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 17px 19px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.history-stat-accordion > summary::-webkit-details-marker {
+  display: none;
+}
+.history-stat-accordion > summary:hover {
+  background: #f7fafb;
+}
+.history-stat-accordion > summary span {
+  display: grid;
+}
+.history-stat-accordion > summary small {
+  color: #087c91;
+  font-size: 8px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.history-stat-accordion > summary b {
+  color: #27364a;
+  font-size: 15px;
+}
+.history-stat-accordion > summary > i {
+  display: grid;
+  width: 33px;
+  height: 33px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #66768a;
+  background: #edf2f4;
+  font-size: 20px;
+  font-style: normal;
+  transition: transform 180ms ease;
+}
+.history-stat-accordion[open] > summary > i {
+  transform: rotate(180deg);
+}
+.history-stat-accordion[open] > summary {
+  border-bottom: 1px solid #dfe6ea;
+  background: #f8fbfc;
+}
+.history-stat-accordion-content {
+  padding: 14px;
+}
+.history-stat-accordion-content > p {
+  margin: 0 3px 10px;
+  color: #728094;
+  font-size: 10px;
+}
+.history-card {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 5px;
+  place-items: center;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 850;
+}
+.history-card.yellow,
+.history-edition-grid i.yellow {
+  color: #4b3b00;
+  background: #f3c92f;
+}
+.history-card.red,
+.history-edition-grid i.red {
+  background: #d9473f;
+}
+.history-card.blue,
+.history-edition-grid i.blue {
+  background: #3679bf;
+}
+.history-edition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.history-edition-grid article {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #dce4e9;
+  border-radius: 10px;
+}
+.history-edition-grid h4 {
+  margin: 0;
+  padding: 10px 12px;
+  color: #26364b;
+  background: #edf4f6;
+  font-size: 11px;
+}
+.history-edition-grid article.ongoing {
+  border-color: #79bea3;
+}
+.history-edition-grid article.ongoing h4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #e9f6ef;
+}
+.history-edition-grid article.ongoing h4 span {
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #16704d;
+  background: #d5eddf;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.history-edition-grid ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.history-edition-grid li {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border-top: 1px solid #edf0f2;
+  color: #4d5b6d;
+  font-size: 10px;
+}
+.history-edition-grid li:first-child {
+  border-top: 0;
+}
+.history-edition-grid li span {
+  display: grid;
+  min-width: 0;
+}
+.history-edition-grid li small {
+  overflow: hidden;
+  color: #7b8796;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.discipline-editions li {
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+}
+.discipline-editions li > b {
+  color: #8793a1;
+  font-size: 9px;
+}
+.discipline-editions li em {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-style: normal;
+}
+.discipline-editions li i {
+  display: grid;
+  min-width: 19px;
+  height: 21px;
+  padding: 0 3px;
+  place-items: center;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 850;
+}
+.discipline-editions li em strong {
+  min-width: 22px;
+  color: #26364b;
+  text-align: right;
+}
+.discipline-editions article > p {
+  padding: 12px;
+  color: #7b8796;
+  font-size: 9px;
+}
+.scoring-editions li {
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+}
+.scoring-editions li > b {
+  color: #8793a1;
+}
+.scoring-editions li > em {
+  color: #087c91;
+  font-style: normal;
+  font-weight: 850;
+  white-space: nowrap;
+}
+@media (max-width: 1050px) {
+  .history-stats-leaders {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .history-duo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 650px) {
+  .beta-hub-hero,
+  .history-stats-hero {
+    padding: 22px;
+  }
+  .beta-hub-grid,
+  .history-stats-leaders,
+  .history-stats-overview,
+  .history-edition-grid {
+    grid-template-columns: 1fr;
+  }
+  .history-duo-grid,
+  .history-ranking-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .beta-hub-grid a.wide {
+    grid-column: auto;
+  }
+  .history-stats-toolbar,
+  .history-stats-section > header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .history-stats-toolbar mat-form-field {
+    width: 100%;
+  }
+  .history-stats-toolbar p {
+    margin: 0;
+  }
+}
+@media (max-width: 470px) {
+  .wiki2-cover {
+    grid-template-columns: 110px minmax(0, 1fr);
+  }
+  .wiki2-current-team span {
+    display: none;
+  }
+  .wiki2-cover-number {
+    grid-template-columns: 1fr;
+  }
+  .wiki2-timeline > article {
+    grid-template-columns: 50px minmax(0, 1fr);
+  }
+  .wiki2-time-photo {
+    display: none;
+  }
+  .wiki2-time-stats {
+    grid-column: 1 / -1;
+  }
+  .wiki2-portraits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.historical-ranking-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.historical-ranking-kicker {
+  color: #00788e;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.historical-ranking-formula {
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid #dce4e9;
+  border-radius: 12px;
+  background: #fff;
+}
+.historical-ranking-formula span {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #708093;
+  font-size: 10px;
+}
+.historical-ranking-formula b {
+  color: #006f82;
+  font-size: 17px;
+}
+.historical-ranking-state {
+  padding: 36px;
+  border: 1px solid #dfe6eb;
+  border-radius: 16px;
+  color: #657487;
+  background: #fff;
+  text-align: center;
+}
+.historical-ranking-state.error {
+  color: #943d36;
+  background: #fff7f6;
+}
+.historical-ranking-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.historical-ranking-summary article {
+  display: grid;
+  gap: 2px;
+  padding: 17px 19px;
+  border: 1px solid #dfe6eb;
+  border-radius: 14px;
+  background: #fff;
+}
+.historical-ranking-summary span,
+.historical-ranking-summary small {
+  color: #778698;
+}
+.historical-ranking-summary span {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.historical-ranking-summary strong {
+  color: #172235;
+  font-size: 27px;
+}
+.historical-ranking-summary small {
+  font-size: 10px;
+}
+.historical-ranking-podium {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.historical-ranking-podium article {
+  display: grid;
+  grid-template-columns: auto 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid #dce4e9;
+  border-radius: 15px;
+  background: #fff;
+}
+.historical-ranking-podium article.champion {
+  border-color: #e4c875;
+  background: linear-gradient(135deg, #fffdf3, #fff);
+}
+.historical-ranking-medal {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 50%;
+  color: #6e5a24;
+  background: #f4e7b9;
+  font-size: 11px;
+  font-weight: 850;
+}
+.historical-ranking-podium img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+.historical-ranking-podium div {
+  min-width: 0;
+}
+.historical-ranking-podium h3 {
+  margin: 0;
+  overflow: hidden;
+  color: #263348;
+  font-size: 12px;
+  text-overflow: ellipsis;
+}
+.historical-ranking-podium p {
+  margin: 5px 0 0;
+  color: #7a8796;
+  font-size: 10px;
+}
+.historical-ranking-podium article > strong {
+  color: #006f82;
+  font-size: 24px;
+  white-space: nowrap;
+}
+.historical-ranking-podium article > strong small {
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.historical-ranking-toolbar {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 14px;
+  border: solid #dfe6eb;
+  border-width: 1px 1px 0;
+  border-radius: 15px 15px 0 0;
+  background: #fff;
+}
+.historical-ranking-toolbar mat-form-field {
+  width: min(300px, 100%);
+}
+.historical-ranking-toolbar p {
+  margin: 18px 0 0 auto;
+  color: #758397;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.historical-ranking-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #dfe6eb;
+  background: #fff;
+}
+.historical-ranking-table {
+  width: 100%;
+  min-width: 790px;
+  border-collapse: collapse;
+}
+.historical-ranking-table th {
+  padding: 10px 12px;
+  color: #748295;
+  background: #f5f8f9;
+  font-size: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.historical-ranking-table th:nth-child(2) {
+  text-align: left;
+}
+.historical-ranking-table td {
+  padding: 11px 12px;
+  border-top: 1px solid #edf0f2;
+  color: #4c5a6c;
+  font-size: 12px;
+  text-align: center;
+}
+.historical-ranking-table tbody tr:hover {
+  background: #f8fbfc;
+}
+.historical-ranking-table tr.ongoing {
+  background: #f2faf6;
+}
+.historical-ranking-table td:first-child {
+  color: #8390a0;
+}
+.historical-ranking-table td:nth-child(2) {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 280px;
+  text-align: left;
+}
+.historical-ranking-table td:nth-child(2) img {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.historical-ranking-table td:nth-child(2) span {
+  display: grid;
+  gap: 3px;
+}
+.historical-ranking-table td:nth-child(2) strong {
+  color: #263348;
+  font-size: 11px;
+}
+.historical-ranking-star {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 16px;
+  line-height: 1;
+  vertical-align: -1px;
+  filter: drop-shadow(0 1px 1px rgb(22 34 53 / 18%));
+}
+.historical-ranking-star.gold {
+  color: #e0ae18;
+}
+.historical-ranking-star.silver {
+  color: #9ca8b5;
+}
+.historical-ranking-star.bronze {
+  color: #b87333;
+}
+.historical-ranking-table td:nth-child(2) small {
+  justify-self: start;
+  padding: 3px 6px;
+  border-radius: 999px;
+  color: #16704d;
+  background: #def3e7;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.historical-ranking-table td.positive {
+  color: #14724e;
+  font-weight: 750;
+}
+.historical-ranking-table td:last-child strong {
+  color: #006f82;
+  font-size: 14px;
+}
+.historical-ranking-note {
+  margin: 10px 2px 0;
+  color: #7b8898;
+  font-size: 10px;
+  line-height: 1.5;
+}
+@media (max-width: 1000px) {
+  .historical-ranking-podium {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .historical-ranking-title,
+  .historical-ranking-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .historical-ranking-formula {
+    align-self: start;
+  }
+  .historical-ranking-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .historical-ranking-toolbar mat-form-field {
+    width: 100%;
+  }
+  .historical-ranking-toolbar p {
+    margin: 0;
+  }
 }
 
 .voting-layout {

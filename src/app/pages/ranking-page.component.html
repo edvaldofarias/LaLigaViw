@@ -1,0 +1,155 @@
+<div class="section-title historical-ranking-title">
+  <div>
+    <span class="historical-ranking-kicker">Arquivo VIW · 2023—2026</span>
+    <h2>Ranking</h2>
+    <p>
+      Todas as campanhas ordenadas por pontos: três por vitória, um por empate
+      e zero por derrota.
+    </p>
+  </div>
+  <div class="historical-ranking-formula">
+    <span><b>3</b> vitória</span>
+    <span><b>1</b> empate</span>
+    <span><b>0</b> derrota</span>
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="historical-ranking-state" role="status">
+    Carregando ranking histórico…
+  </div>
+} @else if (error()) {
+  <div class="historical-ranking-state error" role="alert">{{ error() }}</div>
+} @else {
+  <section class="historical-ranking-summary" aria-label="Resumo do ranking">
+    <article>
+      <span>Campanhas</span>
+      <strong>{{ rows().length }}</strong>
+      <small>equipes por edição</small>
+    </article>
+    <article>
+      <span>Campeonatos</span>
+      <strong>{{ competitions().length }}</strong>
+      <small>de 2023 a 2026</small>
+    </article>
+    <article>
+      <span>Partidas</span>
+      <strong>{{ totalMatches() }}</strong>
+      <small>jogos encerrados</small>
+    </article>
+    <article>
+      <span>Pontos distribuídos</span>
+      <strong>{{ totalPoints() }}</strong>
+      <small>somatório das campanhas</small>
+    </article>
+  </section>
+
+  <section class="historical-ranking-podium" aria-label="Pódio do ranking">
+    @for (row of podium(); track row.editionTeamId; let index = $index) {
+      <article [class.champion]="index === 0">
+        <span class="historical-ranking-medal">{{ index + 1 }}º</span>
+        <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+        <div>
+          <h3>{{ teamLabel(row) }}</h3>
+          <p>{{ row.wins }}V · {{ row.draws }}E · {{ row.losses }}D</p>
+        </div>
+        <strong>{{ row.points }}<small> pts</small></strong>
+      </article>
+    }
+  </section>
+
+  <section class="historical-ranking-toolbar">
+    <mat-form-field appearance="outline">
+      <mat-label>Pesquisar equipe</mat-label>
+      <input
+        matInput
+        placeholder="Time, campeonato ou ano"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Campeonato</mat-label>
+      <mat-select
+        [ngModel]="eventKey()"
+        (ngModelChange)="eventKey.set($event)"
+      >
+        <mat-option value="">Todos os campeonatos</mat-option>
+        @for (competition of competitions(); track competition.eventKey) {
+          <mat-option [value]="competition.eventKey">{{
+            competition.label
+          }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <p>
+      {{ filtered().length }}
+      {{ filtered().length === 1 ? "campanha encontrada" : "campanhas encontradas" }}
+    </p>
+  </section>
+
+  <div class="historical-ranking-table-wrap">
+    <table class="historical-ranking-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Equipe</th>
+          <th>J</th>
+          <th>V</th>
+          <th>E</th>
+          <th>D</th>
+          <th>GP</th>
+          <th>GC</th>
+          <th>SG</th>
+          <th>PTS</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of filtered(); track row.editionTeamId; let index = $index) {
+          <tr [class.ongoing]="row.ongoing">
+            <td><b>{{ eventKey() || search() ? index + 1 : row.ranking }}º</b></td>
+            <td>
+              <img [src]="row.badgeUrl" alt="" referrerpolicy="no-referrer" />
+              <span>
+                <strong>
+                  {{ teamLabel(row) }}
+                  @if (row.placement; as placement) {
+                    <span
+                      class="historical-ranking-star"
+                      [class.gold]="placement === 1"
+                      [class.silver]="placement === 2"
+                      [class.bronze]="placement === 3"
+                      [attr.aria-label]="placementLabel(placement)"
+                      [title]="placementLabel(placement)"
+                    >★</span>
+                  }
+                </strong>
+                @if (row.ongoing) {
+                  <small>Em andamento</small>
+                }
+              </span>
+            </td>
+            <td>{{ row.matches }}</td>
+            <td>{{ row.wins }}</td>
+            <td>{{ row.draws }}</td>
+            <td>{{ row.losses }}</td>
+            <td>{{ row.goalsFor }}</td>
+            <td>{{ row.goalsAgainst }}</td>
+            <td [class.positive]="row.goalDifference > 0">
+              {{ row.goalDifference > 0 ? "+" : "" }}{{ row.goalDifference }}
+            </td>
+            <td><strong>{{ row.points }}</strong></td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="10">Nenhuma campanha encontrada.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="historical-ranking-note">
+    Desempates: vitórias, saldo de gols, gols marcados, nome da equipe e
+    campeonato. Cada equipe é classificada separadamente em cada edição.
+  </p>
+}

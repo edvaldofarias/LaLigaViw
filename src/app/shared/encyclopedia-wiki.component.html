@@ -1,0 +1,218 @@
+<article class="encyclopedia">
+  <header class="encyclopedia-masthead">
+    <div>
+      <span>Arquivo histórico VIW</span>
+      <h2>{{ source().name }}</h2>
+      <p>Jogador de futebol da comunidade VIW</p>
+    </div>
+    @if (currentCampaign().ongoing) {
+      <span class="encyclopedia-status"><i></i> Em atividade</span>
+    }
+  </header>
+
+  <aside
+    class="encyclopedia-infobox"
+    [attr.aria-label]="'Informações de ' + source().name"
+  >
+    <h3>{{ source().name }}</h3>
+    <div class="encyclopedia-infobox-photo">
+      <img
+        [src]="source().currentPhoto"
+        alt="{{ source().name }} por {{ teamLabel(currentCampaign()) }}"
+        referrerpolicy="no-referrer"
+      />
+      <small>{{ source().name }} em {{ currentCampaign().season }}</small>
+    </div>
+    <h4>Informações pessoais</h4>
+    <dl>
+      <div><dt>Nome</dt><dd>{{ source().name }}</dd></div>
+      <div><dt>ID canônico</dt><dd>{{ source().canonicalId }}</dd></div>
+      <div>
+        <dt>Período</dt>
+        <dd>{{ source().activeSince ?? campaigns()[0].season }}–presente</dd>
+      </div>
+    </dl>
+    <h4>Informações profissionais</h4>
+    <dl>
+      <div><dt>Equipe atual</dt><dd>{{ teamLabel(currentCampaign()) }}</dd></div>
+      <div><dt>Competições</dt><dd>{{ source().summary.competitions }}</dd></div>
+      <div><dt>Equipes</dt><dd>{{ source().summary.teams }}</dd></div>
+      <div><dt>Partidas</dt><dd>{{ source().summary.matches }}</dd></div>
+      <div><dt>Gols</dt><dd>{{ source().summary.goals }}</dd></div>
+    </dl>
+  </aside>
+
+  <div class="encyclopedia-lead">
+    <p>
+      <b>{{ source().name }}</b> é um jogador da comunidade VIW. Seus registros
+      históricos em diferentes campeonatos da Copa Fácil foram reunidos em uma
+      única identidade canônica.<sup>[1]</sup>
+    </p>
+    <p>
+      Em {{ source().summary.matches }} partidas por
+      {{ source().summary.teams }} equipes, marcou
+      {{ source().summary.goals }} gols, conquistou
+      {{ source().summary.wins }} vitórias e somou {{ points() }} pontos.
+    </p>
+  </div>
+
+  <nav class="encyclopedia-contents" aria-label="Sumário">
+    <strong>Sumário</strong>
+    <ol>
+      <li><a href="#carreira">Carreira</a></li>
+      <li><a href="#estatisticas">Estatísticas</a></li>
+      <li><a href="#recordes">Recordes</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#notas">Notas e metodologia</a></li>
+    </ol>
+  </nav>
+
+  <section id="carreira" class="encyclopedia-section">
+    <h3>Carreira</h3>
+    <p>
+      A trajetória registrada começou por
+      <b>{{ teamLabel(campaigns()[0]) }}</b> e atualmente chega a
+      <b>{{ teamLabel(currentCampaign()) }}</b>. Ao todo, são
+      {{ source().summary.competitions }} edições preservadas no arquivo.
+    </p>
+    <div class="encyclopedia-career-list">
+      @for (campaign of campaigns(); track campaign.eventKey) {
+        <article>
+          <img [src]="campaign.teamCrest" alt="" referrerpolicy="no-referrer" />
+          <div>
+            <span>{{ campaign.period }} de {{ campaign.season }}</span>
+            <h4>{{ teamLabel(campaign) }}</h4>
+            <p>
+              {{ finishLabel(campaign) }} · {{ campaign.matches }} jogos ·
+              {{ campaign.goals }} gols
+            </p>
+          </div>
+          @if (campaign.ongoing) {
+            <b>Em andamento</b>
+          }
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="estatisticas" class="encyclopedia-section">
+    <h3>Estatísticas</h3>
+    <p class="encyclopedia-table-caption">
+      Números por campeonato; equipes históricas consideram presença por
+      elenco, enquanto a edição atual usa escalações confirmadas.
+    </p>
+    <div class="encyclopedia-table-wrap">
+      <table class="encyclopedia-stats-table">
+        <thead>
+          <tr>
+            <th>Equipe (campeonato e ano)</th>
+            <th>J</th><th>V</th><th>E</th><th>D</th><th>Pts</th>
+            <th>Apr.</th><th>G</th><th>G/J</th><th>GP</th><th>GC</th><th>SG</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (campaign of campaigns(); track campaign.eventKey) {
+            <tr [class.ongoing]="campaign.ongoing">
+              <td>
+                <img [src]="campaign.teamCrest" alt="" referrerpolicy="no-referrer" />
+                <span>{{ teamLabel(campaign) }}</span>
+              </td>
+              <td>{{ campaign.matches }}</td>
+              <td>{{ campaign.wins }}</td>
+              <td>{{ campaign.draws }}</td>
+              <td>{{ campaign.losses }}</td>
+              <td>{{ campaignPoints(campaign) }}</td>
+              <td>{{ campaignPerformance(campaign) }}%</td>
+              <td><b>{{ campaign.goals }}</b></td>
+              <td>{{ (campaign.goals / campaign.matches).toFixed(2) }}</td>
+              <td>{{ campaign.goalsFor }}</td>
+              <td>{{ campaign.goalsAgainst }}</td>
+              <td>
+                {{ campaign.goalsFor - campaign.goalsAgainst > 0 ? "+" : ""
+                }}{{ campaign.goalsFor - campaign.goalsAgainst }}
+              </td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total</th>
+            <th>{{ source().summary.matches }}</th>
+            <th>{{ source().summary.wins }}</th>
+            <th>{{ source().summary.draws }}</th>
+            <th>{{ source().summary.losses }}</th>
+            <th>{{ points() }}</th>
+            <th>{{ performance() }}%</th>
+            <th>{{ source().summary.goals }}</th>
+            <th>{{ goalsPerMatch() }}</th>
+            <th>{{ goalsFor() }}</th>
+            <th>{{ goalsAgainst() }}</th>
+            <th>{{ goalDifference() > 0 ? "+" : "" }}{{ goalDifference() }}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="encyclopedia-stat-grid">
+      <article><strong>{{ winRate() }}%</strong><span>taxa de vitórias</span></article>
+      <article><strong>{{ unbeatenRate() }}%</strong><span>jogos sem derrota</span></article>
+      <article><strong>{{ goalsPerMatch() }}</strong><span>gols por partida</span></article>
+      <article><strong>{{ performance() }}%</strong><span>aproveitamento</span></article>
+      <article><strong>{{ points() }}</strong><span>pontos conquistados</span></article>
+      <article><strong>{{ goalsFor() }}</strong><span>gols das equipes</span></article>
+      <article><strong>{{ goalsAgainst() }}</strong><span>gols sofridos</span></article>
+      <article><strong>{{ goalDifference() > 0 ? "+" : "" }}{{ goalDifference() }}</strong><span>saldo das equipes</span></article>
+    </div>
+
+    <h4 class="encyclopedia-subheading">Disciplina</h4>
+    <p>
+      {{ source().summary.yellowCards }} cartões amarelos e
+      {{ source().summary.redCards }} cartões vermelhos registrados.
+    </p>
+  </section>
+
+  <section id="recordes" class="encyclopedia-section">
+    <h3>Recordes e marcas</h3>
+    <ul class="encyclopedia-records">
+      <li><b>Melhor resultado:</b> {{ finishLabel(bestFinish()) }} por {{ teamLabel(bestFinish()) }}.</li>
+      <li><b>Mais gols em uma edição:</b> {{ bestScoringCampaign().goals }} por {{ teamLabel(bestScoringCampaign()) }}.</li>
+      <li><b>Total de gols:</b> {{ source().summary.goals }} em {{ source().summary.matches }} partidas.</li>
+      <li><b>Campanhas disputadas:</b> {{ source().summary.competitions }} entre {{ campaigns()[0].season }} e {{ currentCampaign().season }}.</li>
+      @if (source().records?.biggestWin; as biggestWin) {
+        <li><b>Maior vitória:</b> {{ biggestWin }} ({{ source().records?.biggestWinCompetition }}).</li>
+      }
+      @if (source().records?.biggestLoss; as biggestLoss) {
+        <li><b>Maior derrota:</b> {{ biggestLoss }} ({{ source().records?.biggestLossCompetition }}).</li>
+      }
+    </ul>
+  </section>
+
+  <section id="galeria" class="encyclopedia-section">
+    <h3>Galeria</h3>
+    <div class="encyclopedia-gallery">
+      @for (campaign of campaigns(); track campaign.eventKey) {
+        <figure>
+          <img
+            [src]="campaign.playerPhoto"
+            alt="{{ source().name }} por {{ teamLabel(campaign) }}"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          />
+          <figcaption>
+            <b>{{ campaign.season }}</b>
+            <span>{{ teamLabel(campaign) }}</span>
+          </figcaption>
+        </figure>
+      }
+    </div>
+  </section>
+
+  <section id="notas" class="encyclopedia-section encyclopedia-notes">
+    <h3>Notas e metodologia</h3>
+    <ol>
+      <li>Os cadastros históricos foram vinculados à pessoa canônica {{ source().canonicalId }}.</li>
+      <li>Nas edições históricas, a presença é inferida nas partidas encerradas da equipe. Na LaLiga VIW 2026, são usadas escalações confirmadas.</li>
+      <li>Os pontos seguem a regra de três por vitória, um por empate e zero por derrota.</li>
+    </ol>
+  </section>
+</article>

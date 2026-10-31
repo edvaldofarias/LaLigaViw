@@ -24,7 +24,11 @@ bootstrapApplication(AppComponent, {
         ...SECTIONS.map(([view]) => ({
           path: view,
           loadComponent: () =>
-            view === "simulation"
+            view === "teste"
+              ? import("./app/pages/beta-hub-page.component").then(
+                  (m) => m.BetaHubPageComponent,
+                )
+              : view === "simulation"
               ? import("./app/pages/simulation-page.component").then(m => m.SimulationPageComponent)
               : view === "voting"
               ? import("./app/pages/voting-page.component").then(
@@ -43,6 +47,46 @@ bootstrapApplication(AppComponent, {
                 ),
           data: { view },
         })),
+        {
+          path: "wiki",
+          loadComponent: () =>
+            import("./app/pages/wiki-page.component").then(
+              (m) => m.WikiPageComponent,
+            ),
+        },
+        {
+          path: "wiki-2",
+          loadComponent: () =>
+            import("./app/pages/wiki-two-page.component").then(
+              (m) => m.WikiTwoPageComponent,
+            ),
+        },
+        {
+          path: "wiki-3",
+          loadComponent: () =>
+            import("./app/pages/wiki-three-page.component").then(
+              (m) => m.WikiThreePageComponent,
+            ),
+        },
+        {
+          path: "ranking",
+          loadComponent: () =>
+            import("./app/pages/ranking-page.component").then(
+              (m) => m.RankingPageComponent,
+            ),
+        },
+        {
+          path: "teste-estatisticas",
+          pathMatch: "full",
+          redirectTo: "teste-estatisticas/duplas",
+        },
+        {
+          path: "teste-estatisticas/:view",
+          loadComponent: () =>
+            import("./app/pages/historical-statistics-page.component").then(
+              (m) => m.HistoricalStatisticsPageComponent,
+            ),
+        },
         { path: "", pathMatch: "full", redirectTo: "overview" },
         { path: "**", redirectTo: "overview" },
       ],
