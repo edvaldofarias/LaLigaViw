@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 import {completedRoundGroups} from "../../dist/evolution.mjs";
 import {matchAwards} from "../../dist/awards.mjs";
+import {championshipSelections} from "../../dist/selections.mjs";
 const data = JSON.parse(fs.readFileSync("dist/data.json", "utf8"));
 const installPromptTest =
   "mobile install suggestion remembers a permanent decline";
@@ -225,7 +226,7 @@ test("wiki 3 presents Andrews as an encyclopedia article", async ({ page }) => {
     "18",
   );
   await expect(page.locator(".encyclopedia-notes")).toContainText(
-    "ID canônico 3",
+    "pessoa canônica 3",
   );
   await expect
     .poll(() =>
@@ -480,14 +481,23 @@ test("player recognitions stay compact and aligned", async ({ page }, info) => {
   await page.locator(".grid-search input").fill("Felipe");
   await page.locator('[data-player="1789220352095"]').click();
   const achievements = page.locator(".player-achievement");
-  await expect(achievements).toHaveCount(4);
+  const expectedCount = matchAwards.filter(a => a.playerId === "1789220352095").length
+    + championshipSelections.filter(r => r.players.some(p => p.playerId === "1789220352095")).length;
+  await expect(achievements).toHaveCount(expectedCount);
   const positions = await achievements.evaluateAll((cards) =>
     cards.map((card) => Math.round(card.getBoundingClientRect().top)),
   );
   if (info.project.name === "desktop") {
-    expect(new Set(positions).size).toBe(1);
+    const boxes = await achievements.evaluateAll(cards => cards.map(card => {
+      const b = card.getBoundingClientRect();
+      return {left: b.left, right: b.right, top: Math.round(b.top)};
+    }));
+    for (const top of new Set(positions)) {
+      const row = boxes.filter(b => b.top === top);
+      for (let i = 1; i < row.length; i++) expect(row[i].left).toBeGreaterThanOrEqual(row[i - 1].right);
+    }
   } else {
-    expect(new Set(positions).size).toBe(4);
+    expect(new Set(positions).size).toBe(expectedCount);
   }
   await expect(
     achievements.first().locator(".player-achievement-icon"),
