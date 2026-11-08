@@ -65,6 +65,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Repescagem sem pênalti: o empate classifica o time de melhor campanha. Com a Primeira Fase encerrada, os confrontos "5° x 12°" e seguintes recebem as equipes pela classificação final até que o Copa Fácil os defina, e as odds de classificação somam o empate ao lado favorecido.
 - Técnicos, prêmios e seleções são escolhas manuais preservadas por IDs. João foi substituto de Ênio apenas na quarta rodada.
 - Craques informados da 6ª rodada: Nanddo (Getafe), Edvaldo (Barcelona), Igor (Real Sociedad), Reinaldo (Rayo Vallecano) e Igor (Athletico Bilbao). O bônus de MVP considera apenas partidas encerradas.
+- Craques informados da 7ª rodada: Palhinha (Atlético de Madrid), Elias (Barcelona), Ricardo Vechiez (Villareal), Andrews (Athletico Bilbao), Jorge (Rayo Vallecano) e Rafinha (Celta).
 - Seleção informada da 6ª rodada: Felipe (Barcelona), Bira (Athletico Bilbao), Igor (Real Sociedad), Bruno Blotti (Athletico Bilbao), Felipe (Rayo Vallecano), Igor (Athletico Bilbao) e Reinaldo (Rayo Vallecano).
 - Panfletos apenas para a próxima rodada. Local fixo: Pro Beach — Av. Cézar Magnani, nº 840, Paulicéia, São Bernardo do Campo — SP, 09694-000.
 - Fotos originais preservadas; ausência/erro usa iniciais no Placehold.co. Downloads PNG e zoom das artes continuam disponíveis.

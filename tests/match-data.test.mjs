@@ -53,3 +53,33 @@ test('round six preserves the five organizer awards and grants four MVP points a
  for(const a of picks)data.matchs[a.matchId]={...data.matchs[a.matchId],st:0,finished:false};
  for(const player of calculateScores(data,picks))assert.equal(player.counts.motm,0);
 });
+test('round seven preserves the six organizer awards and grants four MVP points after completion',()=>{
+ const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+ const picks=matchAwards.filter(a=>a.round===7);
+ assert.deepEqual(picks.map(a=>[a.matchId,a.playerId,a.teamId,a.name]),[
+  ['1780480370864','1789257983771','-OuCEPqc-2Ju1pdvU4j1','Palhinha'],
+  ['1786249309618','1789172525525','-OuCE2n4ni8czw1OPXtQ','Elias'],
+  ['1786249311627','1789196780364','-OuCE79e187h1srqNCAK','Ricardo Vechiez'],
+  ['1786249310310','1789257897307','-OuCEIPXbahnsYG98j_K','Andrews'],
+  ['1786249311018','1789220310276','-OuCE8ygQVY-3BXzP80H','Jorge'],
+  ['1786249309068','1789194052636','-OuCEUdiPg-VFiAmxP-W','Rafinha'],
+ ]);
+ assert.equal(new Set(matchAwards.map(a=>a.matchId)).size,matchAwards.length);
+ for(const a of picks){
+  const match=data.matchs[a.matchId];
+  assert.equal(match.m_set,'1780480356187');
+  assert.equal(data.player[a.playerId].team,a.teamId);
+  assert.equal(data.player[a.playerId].name.trim().toLocaleLowerCase('pt-BR'),a.name.toLocaleLowerCase('pt-BR'));
+  assert.ok([match.team1,match.team2].includes(a.teamId));
+  data.matchs[a.matchId]={...match,st:3,dt:{qt_g1:0,qt_g2:0}};
+ }
+ const baseline=new Map(calculateScores(data).map(p=>[p.id,p.total]));
+ const rows=calculateScores(data,picks);
+ for(const a of picks){
+  const player=rows.find(p=>p.id===a.playerId);
+  assert.equal(player.counts.motm,1);
+  assert.equal(player.total-baseline.get(a.playerId),4);
+ }
+ for(const a of picks)data.matchs[a.matchId]={...data.matchs[a.matchId],st:0,finished:false};
+ for(const player of calculateScores(data,picks))assert.equal(player.counts.motm,0);
+});

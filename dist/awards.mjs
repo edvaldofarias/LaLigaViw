@@ -30,4 +30,10 @@ export const matchAwards=[
   {matchId:'1786247139523',playerId:'1789199583001',teamId:'-OuCEBQOxXueVsu4_Pbt',name:'Igor',round:6},
   {matchId:'1786247140006',playerId:'1789220349061',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Reinaldo',round:6},
   {matchId:'1786247139815',playerId:'1789257889097',teamId:'-OuCEIPXbahnsYG98j_K',name:'Igor',round:6},
+  {matchId:'1780480370864',playerId:'1789257983771',teamId:'-OuCEPqc-2Ju1pdvU4j1',name:'Palhinha',round:7},
+  {matchId:'1786249309618',playerId:'1789172525525',teamId:'-OuCE2n4ni8czw1OPXtQ',name:'Elias',round:7},
+  {matchId:'1786249311627',playerId:'1789196780364',teamId:'-OuCE79e187h1srqNCAK',name:'Ricardo Vechiez',round:7},
+  {matchId:'1786249310310',playerId:'1789257897307',teamId:'-OuCEIPXbahnsYG98j_K',name:'Andrews',round:7},
+  {matchId:'1786249311018',playerId:'1789220310276',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Jorge',round:7},
+  {matchId:'1786249309068',playerId:'1789194052636',teamId:'-OuCEUdiPg-VFiAmxP-W',name:'Rafinha',round:7},
 ];
