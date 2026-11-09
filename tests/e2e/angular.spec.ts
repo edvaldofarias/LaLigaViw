@@ -4,6 +4,23 @@ import {completedRoundGroups} from "../../dist/evolution.mjs";
 import {matchAwards} from "../../dist/awards.mjs";
 import {championshipSelections} from "../../dist/selections.mjs";
 const data = JSON.parse(fs.readFileSync("dist/data.json", "utf8"));
+// Apresenta a sétima rodada como a próxima: jogos sem resultado e data futura.
+async function mockUpcomingRoundSeven(page: any) {
+  const snapshot = structuredClone(data);
+  for (const m of Object.values(snapshot.matchs) as any[]) {
+    if (m.m_set === "1780480356187") {
+      delete m.st;
+      delete m.finished;
+      delete m.dt;
+      m.d_i = Date.now() + 86400000;
+    }
+  }
+  await page.unroute("**/copafacil-web.firebaseio.com/**");
+  await page.route("**/copafacil-web.firebaseio.com/**", (r: any) => {
+    const key = r.request().url().split("/").at(-1)!.replace(".json", "");
+    return snapshot[key] ? r.fulfill({ json: snapshot[key] }) : r.abort();
+  });
+}
 const installPromptTest =
   "mobile install suggestion remembers a permanent decline";
 test.beforeEach(async ({ page }, testInfo) => {
@@ -47,14 +64,14 @@ test("overview keeps standings and compact round navigation together", async ({
   await expect(page.locator("app-compact-match-card")).not.toHaveCount(0);
   await expect(page.locator(".metrics")).toHaveCount(0);
   const currentRound = await page
-    .locator(".round-carousel-item.active strong")
-    .innerText();
+    .locator(".round-carousel-item.active")
+    .getAttribute("data-round-id");
   const nextButton = page.getByRole("button", { name: "Próxima rodada" });
   if (await nextButton.isEnabled()) {
     await nextButton.click();
     await expect(
-      page.locator(".round-carousel-item.active strong"),
-    ).not.toHaveText(currentRound);
+      page.locator(".round-carousel-item.active"),
+    ).not.toHaveAttribute("data-round-id", currentRound!);
   }
   await expect
     .poll(() =>
@@ -143,7 +160,7 @@ test("wiki presents Edvaldo's consolidated history", async ({ page }) => {
   ).toBeVisible();
   await expect(page.locator(".encyclopedia-career-list article")).toHaveCount(4);
   await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(4);
-  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("30");
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("31");
   await expect
     .poll(() =>
       page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
@@ -157,7 +174,7 @@ test("wiki 2 presents Yurick's seven-edition timeline", async ({ page }) => {
   ).toBeVisible();
   await expect(page.locator(".encyclopedia-career-list article")).toHaveCount(7);
   await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(7);
-  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("54");
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("55");
   await expect
     .poll(() =>
       page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
@@ -220,10 +237,10 @@ test("wiki 3 presents Andrews as an encyclopedia article", async ({ page }) => {
   );
   await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(6);
   await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText(
-    "44",
+    "45",
   );
   await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText(
-    "18",
+    "21",
   );
   await expect(page.locator(".encyclopedia-notes")).toContainText(
     "pessoa canônica 3",
@@ -330,6 +347,7 @@ test("selects and search fields share the global form style", async ({
 test("match detail stays compact with broadcast, newspaper and highlights", async ({
   page,
 }) => {
+  await mockUpcomingRoundSeven(page);
   await page.goto("/#/matches");
   await page.locator(".compact-match-main").first().click();
   await expect(page.locator(".match-detail-card")).toBeVisible();
@@ -411,8 +429,8 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
   await page
     .locator(".round-carousel-item", { hasText: "Rodada 7" })
     .click();
-  await expect(page.locator(".cartola-suggestion-grid .cartola-team")).toHaveCount(2);
-  await expect(page.locator(".cartola-suggestion-row")).toHaveCount(14);
+  await expect(page.locator(".cartola-grid .cartola-team")).toHaveCount(2);
+  await expect(page.locator(".cartola-lineup-row")).toHaveCount(14);
   await page.goto("/#/players");
   await page.locator(".grid-search input").fill("Edvado");
   await expect(page.locator("#content tbody")).toContainText("Edvaldo");
@@ -609,10 +627,11 @@ test("live scoreboard and provisional points update from source without reloadin
 }) => {
   const snapshot = structuredClone(data);
   const [id, m] = Object.entries(snapshot.matchs).find(
-    ([, m]: any) => !m.st && m.title === "Q1",
+    ([, m]: any) => Number(m.st) === 3 && m.title === "Q1",
   ) as [string, any];
   m.st = 1;
   delete m.dt;
+  delete m.finished;
   await page.unroute("**/copafacil-web.firebaseio.com/**");
   await page.route("**/copafacil-web.firebaseio.com/**", (r) => {
     const key = r.request().url().split("/").at(-1)!.replace(".json", "");
@@ -829,6 +848,7 @@ test("entity alignment, compact chart logos, placeholders and nonzero match even
 });
 
 test("overview odds use Portuguese number formatting", async ({ page }) => {
+  await mockUpcomingRoundSeven(page);
   await page.goto("/#/overview");
   await expect(page.locator(".compact-odd b").first()).toBeVisible();
   const odds = await page
@@ -844,8 +864,9 @@ test('round seven match scenarios have two teams and no mobile overflow', async 
  await page.locator('[data-round-id="1780480356187"]').click();
  await page.locator('.compact-match-main').first().click();
  await expect(page.locator('.qualification-team')).toHaveCount(2);
- await expect(page.locator('.qualification-team article')).toHaveCount(6);
+ await expect(page.locator('.qualification-team article')).toHaveCount(2);
  await expect(page.locator('.qualification-scenarios')).toContainText('20.000');
+ await expect(page.locator('.qualification-scenarios')).toContainText('Resultado encerrado aplicado.');
  expect(await page.locator('#detail-content').evaluate(e=>e.scrollWidth<=e.clientWidth+1)).toBe(true);
  await page.locator('.qualification-scenarios').screenshot({path:`/tmp/laliga-scenarios-${info.project.name}.png`});
  await page.locator('#close-detail').click();
@@ -871,6 +892,7 @@ test('round seven simulator updates standings and clears custom scores without m
  await page.goto('/#/simulation');
  await expect(page.getByRole('heading',{name:'Simulação · 7ª rodada'})).toBeVisible();
  await expect(page.locator('.simulation-match')).toHaveCount(6);
+ await expect(page.locator('.simulation-toolbar')).toContainText('6 de 6');
  const fixture=page.locator('.simulation-match').first();
  const fields=fixture.locator('input');
  const match=Object.values(data.matchs).filter((m:any)=>m.m_set==='1780480356187').sort((a:any,b:any)=>a.d_i-b.d_i)[0] as any;
@@ -878,13 +900,16 @@ test('round seven simulator updates standings and clears custom scores without m
  const row=page.locator('.simulation-table tbody tr').filter({has:page.locator('app-entity')}).filter({hasText:new RegExp(teamName,'i')});
  const before=Number(await row.locator('.mat-column-pts').innerText());
  await fields.nth(0).fill('4');await fields.nth(1).fill('1');
- await expect(page.locator('.simulation-toolbar')).toContainText('1 de 6');
+ await expect(page.locator('.simulation-toolbar')).toContainText('6 de 6');
  await expect(row.locator('.mat-column-pts')).toHaveText(String(before+3));
  await expect(fixture).toContainText('Simulado');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.locator('.simulation-fixtures').screenshot({path:`/tmp/laliga-simulation-${info.project.name}.png`});
  await page.getByRole('button',{name:'Limpar placares'}).click();
  await expect(page.locator('.simulation-toolbar')).toContainText('0 de 6');
+ await expect(row.locator('.mat-column-pts')).toHaveText(String(before));
+ await page.getByRole('button',{name:'Restaurar resultados oficiais'}).click();
+ await expect(page.locator('.simulation-toolbar')).toContainText('6 de 6');
  await expect(row.locator('.mat-column-pts')).toHaveText(String(before));
 });
 

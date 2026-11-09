@@ -44,6 +44,7 @@ Os testes de navegador usam Playwright com Google Chrome instalado, nos tamanhos
 - `dist/images/` e `assets/`: fotos, escudos, logo e imagens das seleções.
 - `server/`: Worker do contador e versão da aplicação.
 - `scripts/update-forecast.mjs`: consulta pública e atualização das simulações após rodadas completas.
+- `scripts/update-beta-data.mjs`: atualiza a aba Teste (beta) a cada rodada encerrada — campanhas -ciddy, rankings históricos, artilharia/cartões da edição e wikis do Edvaldo, Yurick e Andrews. Rode depois do `update-forecast.mjs`.
 - `tests/`: regressões de domínio e integrações; `tests/e2e/`: testes reais da interface Angular.
 
 A aplicação publicada é compilada a partir de `src/`; os módulos em `dist/` contêm apenas regras de domínio e integrações ainda reutilizadas pelo Angular.
