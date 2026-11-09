@@ -1,3 +1,4 @@
+import {defineRepescagem} from './repescagem.mjs';
 // Copa Fácil omits a zero-valued goal field in some completed match records.
 // Only fill one absent side when the other side explicitly contains a valid score.
 // An entirely absent score, null/invalid values, or scheduled match stay unknown.
@@ -10,4 +11,7 @@ export function normalizeMatch(match){
   }
   return changed?{...match,dt}:match;
 }
-export function normalizeCompetition(data){return {...data,matchs:Object.fromEntries(Object.entries(data.matchs||{}).map(([id,m])=>[id,normalizeMatch(m)]))};}
+export function normalizeCompetition(data){
+  const normalized={...data,matchs:Object.fromEntries(Object.entries(data.matchs||{}).map(([id,m])=>[id,normalizeMatch(m)]))};
+  return {...normalized,matchs:defineRepescagem(normalized)};
+}

@@ -3626,6 +3626,10 @@ mat-form-field .mat-mdc-select-arrow {
   padding: 0 20px 16px !important;
   gap: 8px;
 }
+.odds-strip-duo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-bottom: 8px !important;
+}
 .odd-cell {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -5802,6 +5806,12 @@ button.player-achievement:hover {
   font-size: 9px;
   text-transform: uppercase;
 }
+.compact-odds-duo {
+  grid-template-columns: minmax(48px, 1fr) repeat(2, minmax(54px, 70px));
+}
+.compact-odds-note {
+  grid-column: 1 / -1;
+}
 .compact-broadcast {
   width: 100%;
   min-height: 38px;
@@ -6109,6 +6119,9 @@ button.player-achievement:hover {
   }
   .compact-odds {
     grid-template-columns: minmax(38px, 1fr) repeat(3, minmax(50px, 64px));
+  }
+  .compact-odds-duo {
+    grid-template-columns: minmax(38px, 1fr) repeat(2, minmax(50px, 64px));
   }
   .matches-browser-heading {
     min-height: 66px;

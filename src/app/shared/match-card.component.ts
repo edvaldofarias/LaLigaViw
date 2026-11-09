@@ -50,20 +50,41 @@ import { CompetitionService } from "../core/competition.service";
     </button>
     @if (odds() && s.prediction(m()); as p) {
       @if (p.status === "ready") {
-        <div class="odds-caption px-3">
-          Odds estimadas <span>1 · X · 2</span>
-        </div>
-        <div class="odds-strip px-3 pb-3">
-          @for (v of p.odds; track $index; let i = $index) {
-            <span class="odd-cell"
-              ><span>{{ ["1", "X", "2"][i] }}</span
-              ><b>{{ v | number: "1.2-2" }}</b
-              ><small
-                >{{ p.probabilities[i] * 100 | number: "1.1-1" }}%</small
-              ></span
-            >
-          }
-        </div>
+        @if (p.knockout; as k) {
+          <div class="odds-caption px-3">
+            Odds para avançar <span>1 · 2</span>
+          </div>
+          <div class="odds-strip odds-strip-duo px-3">
+            @for (v of k.odds; track $index; let i = $index) {
+              <span class="odd-cell"
+                ><span>{{ ["1", "2"][i] }}</span
+                ><b>{{ v | number: "1.2-2" }}</b
+                ><small
+                  >{{ k.probabilities[i] * 100 | number: "1.1-1" }}%</small
+                ></span
+              >
+            }
+          </div>
+          <small class="subtle"
+            >Em caso de empate, avança {{ advantagedName(k) }} (melhor campanha
+            na Primeira Fase).</small
+          >
+        } @else {
+          <div class="odds-caption px-3">
+            Odds estimadas <span>1 · X · 2</span>
+          </div>
+          <div class="odds-strip px-3 pb-3">
+            @for (v of p.odds; track $index; let i = $index) {
+              <span class="odd-cell"
+                ><span>{{ ["1", "X", "2"][i] }}</span
+                ><b>{{ v | number: "1.2-2" }}</b
+                ><small
+                  >{{ p.probabilities[i] * 100 | number: "1.1-1" }}%</small
+                ></span
+              >
+            }
+          </div>
+        }
       }
     }
     @if (s.finished(m())) {
@@ -130,5 +151,8 @@ export class MatchCardComponent {
       this.s.upcoming().some((m) => m.id === this.m().id)
       ? (this.s.standings().find((t) => t.id === id)?.rank ?? null)
       : null;
+  }
+  advantagedName(k: any) {
+    return this.s.name(this.s.team(this.m()[k.drawAdvantage])?.name);
   }
 }

@@ -1,7 +1,7 @@
 {
   "modelVersion": "poisson-shrinkage-v1",
   "updatePolicy": "completed-round",
-  "cutoff": 1793193657828,
+  "cutoff": 1794146712500,
   "completedRounds": [
     {
       "key": "1780479913323:1780480342602",
@@ -32,262 +32,229 @@
       "key": "1780479913323:1780480354570",
       "phaseId": "1780479913323",
       "roundId": "1780480354570"
+    },
+    {
+      "key": "1780479913323:1780480356187",
+      "phaseId": "1780479913323",
+      "roundId": "1780480356187"
     }
   ],
-  "historyCount": 30,
-  "historyFingerprint": "820f9d26",
-  "leagueGoalsPerTeam": 2.9,
+  "historyCount": 36,
+  "historyFingerprint": "3d25fac9",
+  "leagueGoalsPerTeam": 3.013888888888889,
   "trials": 20000,
   "priorMatches": 4,
   "teamWindow": 8,
-  "roundId": "1780480356187",
-  "phaseId": "1780479913323",
+  "roundId": "1780480630569",
+  "phaseId": "1780479913324",
   "predictions": [
     {
-      "matchId": "1780480370864",
-      "team1": "-OuCECnOQDCHySBDLAxx",
-      "team2": "-OuCEPqc-2Ju1pdvU4j1",
-      "startsAt": 1794081600000,
-      "status": "ready",
-      "probabilities": [
-        0.3431,
-        0.17225,
-        0.48465
-      ],
-      "odds": [
-        2.914602156805596,
-        5.805515239477504,
-        2.063344681729083
-      ],
-      "topScores": [
-        {
-          "score": "2-2",
-          "probability": 0.05925
-        },
-        {
-          "score": "2-3",
-          "probability": 0.0588
-        },
-        {
-          "score": "3-2",
-          "probability": 0.04955
-        }
-      ],
-      "trials": 20000,
-      "expectedGoals": [
-        2.4715197956577266,
-        2.8989357173265224
-      ],
-      "teamGames": [
-        5,
-        5
-      ],
-      "limitedHistory": false
-    },
-    {
-      "matchId": "1786249310310",
-      "team1": "-OuCEIPXbahnsYG98j_K",
-      "team2": "-OuCE5UUPYmEL7Mnf4-D",
-      "startsAt": 1794081600000,
-      "status": "ready",
-      "probabilities": [
-        0.34795,
-        0.16595,
-        0.4861
-      ],
-      "odds": [
-        2.8739761459979882,
-        6.0259114191021395,
-        2.057189878625797
-      ],
-      "topScores": [
-        {
-          "score": "2-3",
-          "probability": 0.05345
-        },
-        {
-          "score": "2-2",
-          "probability": 0.053
-        },
-        {
-          "score": "3-2",
-          "probability": 0.04835
-        }
-      ],
-      "trials": 20000,
-      "expectedGoals": [
-        2.680970625798212,
-        3.1169008088548327
-      ],
-      "teamGames": [
-        5,
-        5
-      ],
-      "limitedHistory": false
-    },
-    {
-      "matchId": "1786249309618",
-      "team1": "-OuCEAFLB6cDtcv8W1dI",
-      "team2": "-OuCE2n4ni8czw1OPXtQ",
-      "startsAt": 1794085200000,
-      "status": "ready",
-      "probabilities": [
-        0.42575,
-        0.1809,
-        0.39335
-      ],
-      "odds": [
-        2.3487962419260127,
-        5.527915975677169,
-        2.542265158256006
-      ],
-      "topScores": [
-        {
-          "score": "2-2",
-          "probability": 0.05705
-        },
-        {
-          "score": "3-2",
-          "probability": 0.0547
-        },
-        {
-          "score": "3-3",
-          "probability": 0.05265
-        }
-      ],
-      "trials": 20000,
-      "expectedGoals": [
-        2.721839080459771,
-        2.6298850574712653
-      ],
-      "teamGames": [
-        5,
-        5
-      ],
-      "limitedHistory": false
-    },
-    {
-      "matchId": "1786249311018",
-      "team1": "-OuCEBQOxXueVsu4_Pbt",
-      "team2": "-OuCE8ygQVY-3BXzP80H",
-      "startsAt": 1794085200000,
-      "status": "ready",
-      "probabilities": [
-        0.3056,
-        0.16725,
-        0.52715
-      ],
-      "odds": [
-        3.2722513089005236,
-        5.9790732436472345,
-        1.8969932656739068
-      ],
-      "topScores": [
-        {
-          "score": "2-2",
-          "probability": 0.0597
-        },
-        {
-          "score": "2-3",
-          "probability": 0.05925
-        },
-        {
-          "score": "1-3",
-          "probability": 0.05145
-        }
-      ],
-      "trials": 20000,
-      "expectedGoals": [
-        2.3540229885057475,
-        3.0343124733929336
-      ],
-      "teamGames": [
-        5,
-        5
-      ],
-      "limitedHistory": false
-    },
-    {
-      "matchId": "1786249309068",
-      "team1": "-OuCEUdiPg-VFiAmxP-W",
-      "team2": "-OuCE3jNN_OU-QexjdHw",
-      "startsAt": 1794088800000,
-      "status": "ready",
-      "probabilities": [
-        0.3376,
-        0.1757,
-        0.4867
-      ],
-      "odds": [
-        2.962085308056872,
-        5.691519635742743,
-        2.054653790836244
-      ],
-      "topScores": [
-        {
-          "score": "2-2",
-          "probability": 0.06115
-        },
-        {
-          "score": "2-3",
-          "probability": 0.05845
-        },
-        {
-          "score": "3-3",
-          "probability": 0.0483
-        }
-      ],
-      "trials": 20000,
-      "expectedGoals": [
-        2.4630055342699024,
-        2.9057471264367822
-      ],
-      "teamGames": [
-        5,
-        5
-      ],
-      "limitedHistory": false
-    },
-    {
-      "matchId": "1786249311627",
+      "matchId": "1780480633602",
       "team1": "-OuCE79e187h1srqNCAK",
       "team2": "-OuCE1lbs7UFbj9mOJgT",
-      "startsAt": 1794088800000,
+      "startsAt": 1794614400000,
       "status": "ready",
       "probabilities": [
-        0.50445,
-        0.14535,
-        0.3502
+        0.5924,
+        0.1407,
+        0.2669
       ],
       "odds": [
-        1.9823570224997524,
-        6.879944960440316,
-        2.855511136493432
+        1.6880486158001349,
+        7.107320540156361,
+        3.746721618583739
       ],
       "topScores": [
         {
-          "score": "3-3",
-          "probability": 0.04375
+          "score": "4-3",
+          "probability": 0.04315
         },
         {
-          "score": "4-3",
-          "probability": 0.04295
+          "score": "3-3",
+          "probability": 0.0411
         },
         {
           "score": "4-2",
-          "probability": 0.0405
+          "probability": 0.04025
         }
       ],
       "trials": 20000,
       "expectedGoals": [
-        3.8559386973180083,
-        3.309323116219668
+        4.433005632360471,
+        3.2632360471070148
       ],
       "teamGames": [
-        5,
-        5
+        6,
+        6
       ],
-      "limitedHistory": false
+      "limitedHistory": false,
+      "knockout": {
+        "drawAdvantage": "team1",
+        "probabilities": [
+          0.7331000000000001,
+          0.2669
+        ],
+        "odds": [
+          1.364070386031919,
+          3.746721618583739
+        ]
+      }
+    },
+    {
+      "matchId": "1792903648629",
+      "team1": "-OuCEAFLB6cDtcv8W1dI",
+      "team2": "-OuCEUdiPg-VFiAmxP-W",
+      "startsAt": 1794618000000,
+      "status": "ready",
+      "probabilities": [
+        0.5054,
+        0.1664,
+        0.3282
+      ],
+      "odds": [
+        1.9786307874950535,
+        6.009615384615385,
+        3.0469226081657528
+      ],
+      "topScores": [
+        {
+          "score": "3-2",
+          "probability": 0.05305
+        },
+        {
+          "score": "2-2",
+          "probability": 0.0503
+        },
+        {
+          "score": "3-3",
+          "probability": 0.0484
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        3.2632360471070148,
+        2.7047107014848955
+      ],
+      "teamGames": [
+        6,
+        6
+      ],
+      "limitedHistory": false,
+      "knockout": {
+        "drawAdvantage": "team1",
+        "probabilities": [
+          0.6718,
+          0.3282
+        ],
+        "odds": [
+          1.4885382554331648,
+          3.0469226081657528
+        ]
+      }
+    },
+    {
+      "matchId": "1792903649205",
+      "team1": "-OuCEIPXbahnsYG98j_K",
+      "team2": "-OuCE3jNN_OU-QexjdHw",
+      "startsAt": 1794618000000,
+      "status": "ready",
+      "probabilities": [
+        0.42445,
+        0.18505,
+        0.3905
+      ],
+      "odds": [
+        2.3559901048415597,
+        5.403944879762227,
+        2.560819462227913
+      ],
+      "topScores": [
+        {
+          "score": "2-2",
+          "probability": 0.06765
+        },
+        {
+          "score": "2-1",
+          "probability": 0.05885
+        },
+        {
+          "score": "1-2",
+          "probability": 0.055
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        2.5118996415770614,
+        2.415494111623144
+      ],
+      "teamGames": [
+        6,
+        6
+      ],
+      "limitedHistory": false,
+      "knockout": {
+        "drawAdvantage": "team1",
+        "probabilities": [
+          0.6094999999999999,
+          0.3905
+        ],
+        "odds": [
+          1.6406890894175556,
+          2.560819462227913
+        ]
+      }
+    },
+    {
+      "matchId": "1792903649938",
+      "team1": "-OuCE5UUPYmEL7Mnf4-D",
+      "team2": "-OuCECnOQDCHySBDLAxx",
+      "startsAt": 1794621600000,
+      "status": "ready",
+      "probabilities": [
+        0.509,
+        0.17205,
+        0.31895
+      ],
+      "odds": [
+        1.9646365422396856,
+        5.812263876780006,
+        3.1352876626430475
+      ],
+      "topScores": [
+        {
+          "score": "2-2",
+          "probability": 0.0576
+        },
+        {
+          "score": "3-2",
+          "probability": 0.05675
+        },
+        {
+          "score": "3-3",
+          "probability": 0.0497
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        3.090332821300564,
+        2.518535586277522
+      ],
+      "teamGames": [
+        6,
+        6
+      ],
+      "limitedHistory": false,
+      "knockout": {
+        "drawAdvantage": "team1",
+        "probabilities": [
+          0.68105,
+          0.31895
+        ],
+        "odds": [
+          1.4683209749651274,
+          3.1352876626430475
+        ]
+      }
     }
   ],
   "qualification": {
@@ -296,21 +263,21 @@
     "teamCount": 12,
     "scheduledGames": 36,
     "status": "ready",
-    "historyCount": 30,
-    "remainingGames": 6,
-    "completedRounds": 6,
+    "historyCount": 36,
+    "remainingGames": 0,
+    "completedRounds": 7,
     "partialRoundResults": 0,
-    "officialFinal": false,
+    "officialFinal": true,
     "cutoffs": {
       "top4": {
-        "median": 10,
-        "low": 10,
+        "median": 11,
+        "low": 11,
         "high": 11
       },
       "top8": {
         "median": 7,
         "low": 7,
-        "high": 8
+        "high": 7
       }
     },
     "teams": [
@@ -318,87 +285,87 @@
         "id": "-OuCE1lbs7UFbj9mOJgT",
         "points": 1,
         "wins": 0,
-        "gf": 13,
-        "ga": 19,
-        "played": 5,
+        "gf": 16,
+        "ga": 25,
+        "played": 6,
         "top4": 0,
         "top8": 0,
         "totalGames": 6
       },
       {
         "id": "-OuCE2n4ni8czw1OPXtQ",
-        "points": 10,
+        "points": 11,
         "wins": 3,
-        "gf": 17,
-        "ga": 18,
-        "played": 5,
-        "top4": 0.6404,
+        "gf": 23,
+        "ga": 24,
+        "played": 6,
+        "top4": 1,
         "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCE3jNN_OU-QexjdHw",
-        "points": 4,
+        "points": 5,
         "wins": 1,
-        "gf": 10,
-        "ga": 11,
-        "played": 5,
+        "gf": 13,
+        "ga": 14,
+        "played": 6,
         "top4": 0,
-        "top8": 0.2841,
+        "top8": 0,
         "totalGames": 6
       },
       {
         "id": "-OuCE5UUPYmEL7Mnf4-D",
-        "points": 6,
+        "points": 7,
         "wins": 2,
-        "gf": 17,
-        "ga": 13,
-        "played": 5,
-        "top4": 0.0732,
-        "top8": 0.6022,
+        "gf": 20,
+        "ga": 16,
+        "played": 6,
+        "top4": 0,
+        "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCE79e187h1srqNCAK",
-        "points": 7,
-        "wins": 2,
-        "gf": 18,
-        "ga": 20,
-        "played": 5,
-        "top4": 0.2697,
-        "top8": 0.74335,
+        "points": 10,
+        "wins": 3,
+        "gf": 24,
+        "ga": 23,
+        "played": 6,
+        "top4": 0,
+        "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCE8ygQVY-3BXzP80H",
         "points": 13,
         "wins": 4,
-        "gf": 23,
-        "ga": 14,
-        "played": 5,
+        "gf": 25,
+        "ga": 17,
+        "played": 6,
         "top4": 1,
         "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCEAFLB6cDtcv8W1dI",
-        "points": 8,
+        "points": 9,
         "wins": 2,
-        "gf": 10,
-        "ga": 10,
-        "played": 5,
-        "top4": 0.4326,
+        "gf": 16,
+        "ga": 16,
+        "played": 6,
+        "top4": 0,
         "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCEBQOxXueVsu4_Pbt",
-        "points": 9,
-        "wins": 3,
-        "gf": 10,
-        "ga": 9,
-        "played": 5,
-        "top4": 0.4184,
+        "points": 12,
+        "wins": 4,
+        "gf": 13,
+        "ga": 11,
+        "played": 6,
+        "top4": 1,
         "top8": 1,
         "totalGames": 6
       },
@@ -406,44 +373,44 @@
         "id": "-OuCECnOQDCHySBDLAxx",
         "points": 7,
         "wins": 2,
-        "gf": 13,
-        "ga": 14,
-        "played": 5,
-        "top4": 0.26315,
-        "top8": 0.65425,
+        "gf": 15,
+        "ga": 17,
+        "played": 6,
+        "top4": 0,
+        "top8": 0,
         "totalGames": 6
       },
       {
         "id": "-OuCEIPXbahnsYG98j_K",
-        "points": 7,
+        "points": 8,
         "wins": 2,
-        "gf": 14,
-        "ga": 14,
-        "played": 5,
-        "top4": 0.241,
-        "top8": 0.6581,
+        "gf": 17,
+        "ga": 17,
+        "played": 6,
+        "top4": 0,
+        "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCEPqc-2Ju1pdvU4j1",
-        "points": 9,
-        "wins": 3,
-        "gf": 15,
-        "ga": 12,
-        "played": 5,
-        "top4": 0.66155,
+        "points": 12,
+        "wins": 4,
+        "gf": 18,
+        "ga": 14,
+        "played": 6,
+        "top4": 1,
         "top8": 1,
         "totalGames": 6
       },
       {
         "id": "-OuCEUdiPg-VFiAmxP-W",
-        "points": 4,
+        "points": 5,
         "wins": 1,
-        "gf": 14,
-        "ga": 20,
-        "played": 5,
+        "gf": 17,
+        "ga": 23,
+        "played": 6,
         "top4": 0,
-        "top8": 0.058,
+        "top8": 0,
         "totalGames": 6
       }
     ]

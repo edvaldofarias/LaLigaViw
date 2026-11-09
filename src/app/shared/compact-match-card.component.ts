@@ -68,19 +68,39 @@ export function teamCrestFallback(
       </button>
       @if (odds() && s.prediction(match()); as prediction) {
         @if (prediction.status === "ready") {
-          <div class="compact-odds">
-            <span class="compact-odds-label">Odds</span>
-            @for (
-              odd of prediction.odds;
-              track $index;
-              let index = $index
-            ) {
-              <span class="compact-odd">
-                <small>{{ ["1", "X", "2"][index] }}</small>
-                <b>{{ odd | number: "1.2-2" }}</b>
-              </span>
-            }
-          </div>
+          @if (prediction.knockout; as knockout) {
+            <div class="compact-odds compact-odds-duo">
+              <span class="compact-odds-label">Odds p/ avançar</span>
+              @for (
+                odd of knockout.odds;
+                track $index;
+                let index = $index
+              ) {
+                <span class="compact-odd">
+                  <small>{{ ["1", "2"][index] }}</small>
+                  <b>{{ odd | number: "1.2-2" }}</b>
+                </span>
+              }
+              <small class="compact-odds-note"
+                >Empate: avança {{ advantagedName(knockout) }} (melhor
+                campanha)</small
+              >
+            </div>
+          } @else {
+            <div class="compact-odds">
+              <span class="compact-odds-label">Odds</span>
+              @for (
+                odd of prediction.odds;
+                track $index;
+                let index = $index
+              ) {
+                <span class="compact-odd">
+                  <small>{{ ["1", "X", "2"][index] }}</small>
+                  <b>{{ odd | number: "1.2-2" }}</b>
+                </span>
+              }
+            </div>
+          }
         }
       }
       @if (broadcast() && !s.finished(match()) && courtNumber()) {
@@ -112,5 +132,9 @@ export class CompactMatchCardComponent {
 
   courtNumber() {
     return Number(String(this.match().title || "").match(/[12]/)?.[0]) || 0;
+  }
+
+  advantagedName(knockout: any) {
+    return this.s.name(this.s.team(this.match()[knockout.drawAdvantage])?.name);
   }
 }

@@ -62,6 +62,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Os detalhes das partidas das rodadas 1 a 6 exibem os 30 replays da playlist oficial do YouTube, vinculados individualmente por ID da partida.
 - Odds: 20.000 simulações por partida. G4/G8: 20.000 cenários da Primeira Fase. Base somente de rodadas completamente encerradas, sem mudar o modelo estatístico.
 - Apenas a Primeira Fase tem classificação: 1º–4º quartas; 5º–8º repescagem com empate; 9º–12º repescagem sem empate.
+- Repescagem sem pênalti: o empate classifica o time de melhor campanha. Com a Primeira Fase encerrada, os confrontos "5° x 12°" e seguintes recebem as equipes pela classificação final até que o Copa Fácil os defina, e as odds de classificação somam o empate ao lado favorecido.
 - Técnicos, prêmios e seleções são escolhas manuais preservadas por IDs. João foi substituto de Ênio apenas na quarta rodada.
 - Craques informados da 6ª rodada: Nanddo (Getafe), Edvaldo (Barcelona), Igor (Real Sociedad), Reinaldo (Rayo Vallecano) e Igor (Athletico Bilbao). O bônus de MVP considera apenas partidas encerradas.
 - Seleção informada da 6ª rodada: Felipe (Barcelona), Bira (Athletico Bilbao), Igor (Real Sociedad), Bruno Blotti (Athletico Bilbao), Felipe (Rayo Vallecano), Igor (Athletico Bilbao) e Reinaldo (Rayo Vallecano).

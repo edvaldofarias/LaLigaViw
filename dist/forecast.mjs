@@ -1,3 +1,4 @@
+import { drawAdvantage } from './repescagem.mjs';
 // Shared deterministic model. A new edition incorporates only fully completed rounds.
 export const MODEL_VERSION = 'poisson-shrinkage-v1';
 export const TRIALS = 20000;
@@ -157,8 +158,18 @@ export function buildForecast(data, now = Date.now()) {
     if (!history.length) return { ...identity, status: 'insufficient_history' };
     const {expectedGoals,teamGames}=model.means(m);
     const simulation = simulate(...expectedGoals, `${MODEL_VERSION}:${fingerprint}:${m.id}`);
-    return { ...identity, status: 'ready', ...simulation, expectedGoals,teamGames,
+    const prediction = { ...identity, status: 'ready', ...simulation, expectedGoals,teamGames,
       limitedHistory: history.length < 30 || Math.min(...teamGames) < 5 };
+    // Mata-mata sem pênalti: o empate classifica o time de melhor campanha,
+    // então a odd de classificação soma o empate ao lado beneficiado.
+    const advantage = drawAdvantage(data, m);
+    if (advantage) {
+      const [home, draw, away] = simulation.probabilities;
+      const advancing = advantage === 'team1' ? [home + draw, away] : [home, draw + away];
+      prediction.knockout = { drawAdvantage: advantage, probabilities: advancing,
+        odds: advancing.map(p => p > 0 ? 1 / p : null) };
+    }
+    return prediction;
   });
   return { modelVersion: MODEL_VERSION, updatePolicy:'completed-round',cutoff,completedRounds:context.completedRounds,
     historyCount: history.length,historyFingerprint: fingerprint, leagueGoalsPerTeam: model.average, trials: TRIALS,
