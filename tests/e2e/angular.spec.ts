@@ -301,8 +301,11 @@ test("latest official selection lists all seven supplied players", async ({
   page,
 }) => {
   await page.goto("/#/selection");
-  await expect(page.locator("#selection-round")).toContainText("Rodada 6");
+  await expect(page.locator("#selection-round")).toContainText("Rodada 7");
   await expect(page.locator(".selection-grid .selection-card")).toHaveCount(7);
+  await expect(page.locator(".selection-source-note")).toBeVisible();
+  await page.locator("#selection-round").click();
+  await page.getByRole("option", { name: "Seleção · Rodada 6" }).click();
   const poster = page.locator(".selection-art-preview img");
   await expect(poster).toBeVisible();
   await expect(poster).toHaveAttribute("src", /2026-round-6-gold\.png$/);
@@ -609,6 +612,8 @@ test("coach detail teams, match newspaper and selection zoom remain available", 
   await expect(page.locator("#detail .match-newspaper")).toBeVisible();
   await page.locator("#close-detail").click();
   await page.goto("/#/selection");
+  await page.locator("#selection-round").click();
+  await page.getByRole("option", { name: "Seleção · Rodada 6" }).click();
   const img = page.locator(".selection-art-preview img");
   await expect(img).toBeVisible();
   await expect

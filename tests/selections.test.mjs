@@ -71,3 +71,25 @@ test('round six preserves the supplied positions, homonyms and clubs',async()=>{
  assert.equal(new Set(round.players.map(p=>p.playerId)).size,7);
  assert.deepEqual(round.players.filter(p=>isGoalkeeper(p.playerId,p.teamId)).map(p=>p.playerId),['1789172492805']);
 });
+
+test('round seven credits the seven supplied players and their clubs',async()=>{
+ const {isGoalkeeper}=await import('../dist/goalkeepers.mjs');
+ const {calculateScores}=await import('../dist/player-score.mjs');
+ const {readFileSync}=await import('node:fs');
+ const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url)));
+ const round=championshipSelections.find(r=>r.id==='2026-round-7');
+ assert.equal(round.roundId,'1780480356187');
+ assert.deepEqual(round.players.map(p=>[p.playerId,p.teamName]),[
+  ['1789220310276','Rayo Vallecano'],['1789199553315','Real Sociedad'],
+  ['1789257963011','Atlético de Madrid'],['1789196742352','Villareal'],
+  ['1789172525525','Barcelona'],['1789194052636','Celta de Vigo'],
+  ['1789257897307','Athletico Bilbao'],
+ ]);
+ assert.equal(new Set(round.players.map(p=>p.playerId)).size,7);
+ assert.deepEqual(round.players.filter(p=>isGoalkeeper(p.playerId,p.teamId)).map(p=>p.name),['Jorge']);
+ const scores=calculateScores(data,[],[round]);
+ for(const p of round.players){
+  assert.equal(data.player[p.playerId].team,p.teamId);
+  assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,6);
+ }
+});

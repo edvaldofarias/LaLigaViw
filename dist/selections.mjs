@@ -205,6 +205,20 @@ export const championshipSelections = [
     {playerId:'1789220349061',name:'Reinaldo',teamId:'-OuCE8ygQVY-3BXzP80H',teamName:'Rayo Vallecano'},
   ],
 },
+{
+  id:'2026-round-7', season:2026, roundNumber:7,
+  phaseId:'1780479913323', roundId:'1780480356187',
+  source:'Seleção informada pela organização',
+  players:[
+    {playerId:'1789220310276',name:'Jorge',teamId:'-OuCE8ygQVY-3BXzP80H',teamName:'Rayo Vallecano'},
+    {playerId:'1789199553315',name:'Edy',teamId:'-OuCEBQOxXueVsu4_Pbt',teamName:'Real Sociedad'},
+    {playerId:'1789257963011',name:'Samuel',teamId:'-OuCEPqc-2Ju1pdvU4j1',teamName:'Atlético de Madrid'},
+    {playerId:'1789196742352',name:'Digo',teamId:'-OuCE79e187h1srqNCAK',teamName:'Villareal'},
+    {playerId:'1789172525525',name:'Elias (Tinoco)',teamId:'-OuCE2n4ni8czw1OPXtQ',teamName:'Barcelona'},
+    {playerId:'1789194052636',name:'Rafinha',teamId:'-OuCEUdiPg-VFiAmxP-W',teamName:'Celta de Vigo'},
+    {playerId:'1789257897307',name:'Andrews',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+  ],
+},
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){
