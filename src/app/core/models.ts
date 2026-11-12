@@ -21,8 +21,6 @@ export const PHASE_NAMES: Record<string, string> = {
 export const SECTIONS = [
   ["overview", "Visão geral"],
   ["matches", "Partidas"],
-  ["simulation", "Simulação"],
-  ["voting", "Votação secreta"],
   ["pool", "Bolão"],
   ["teams", "Equipes"],
   ["players", "Jogadores"],
@@ -31,9 +29,15 @@ export const SECTIONS = [
   ["motm", "Melhor em campo"],
   ["coaches", "Técnicos"],
   ["ballon", "MVP"],
-  ["cartola", "CARTOLA"],
+  ["cartola", "(beta) CARTOLA"],
   ["user", "Usuário"],
   ["teste", "Teste (beta)"],
+];
+// Keep legacy deep links available without showing these pages in navigation.
+export const ROUTABLE_SECTIONS = [
+  ...SECTIONS,
+  ["simulation", "Simulação"],
+  ["voting", "Votação secreta"],
 ];
 export const displayName = (s: any) =>
   String(s ?? "A definir")

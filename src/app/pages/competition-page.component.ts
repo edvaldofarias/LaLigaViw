@@ -5,7 +5,7 @@ import { NgTemplateOutlet } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { CompetitionService } from "../core/competition.service";
-import { SECTIONS } from "../core/models";
+import { ROUTABLE_SECTIONS } from "../core/models";
 import { GridComponent, GridColumn } from "../shared/grid.component";
 import {
   CompactMatchCardComponent,
@@ -33,7 +33,7 @@ export class CompetitionPageComponent {
   private routeData = toSignal(inject(ActivatedRoute).data);
   view = computed(() => this.routeData()?.["view"] || "overview");
   title = computed(
-    () => SECTIONS.find((x) => x[0] === this.view())?.[1] || "Visão geral",
+    () => ROUTABLE_SECTIONS.find((x) => x[0] === this.view())?.[1] || "Visão geral",
   );
   team = signal("");
   playerStatus = signal("");

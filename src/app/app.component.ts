@@ -20,7 +20,7 @@ import {
 import { CompetitionService } from "./core/competition.service";
 import { VotingService } from "./core/voting.service";
 import { DetailComponent } from "./shared/detail.component";
-import { SECTIONS } from "./core/models";
+import { ROUTABLE_SECTIONS, SECTIONS } from "./core/models";
 @Component({
   selector: "app-root",
   standalone: true,
@@ -55,7 +55,7 @@ export class AppComponent {
       )
         return "Teste (beta)";
       return (
-        this.sections.find((x) => this.url().includes("/" + x[0]))?.[1] ||
+        ROUTABLE_SECTIONS.find((x) => this.url().includes("/" + x[0]))?.[1] ||
         "Visão geral"
       );
     },

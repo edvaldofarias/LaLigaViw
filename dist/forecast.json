@@ -1,7 +1,7 @@
 {
   "modelVersion": "poisson-shrinkage-v1",
   "updatePolicy": "completed-round",
-  "cutoff": 1794146712500,
+  "cutoff": 1794243398518,
   "completedRounds": [
     {
       "key": "1780479913323:1780480342602",
@@ -154,84 +154,32 @@
     },
     {
       "matchId": "1792903649205",
-      "team1": "-OuCEIPXbahnsYG98j_K",
-      "team2": "-OuCE3jNN_OU-QexjdHw",
+      "team1": "-OuCE5UUPYmEL7Mnf4-D",
+      "team2": "-OuCECnOQDCHySBDLAxx",
       "startsAt": 1794618000000,
       "status": "ready",
       "probabilities": [
-        0.42445,
-        0.18505,
-        0.3905
+        0.5108,
+        0.16835,
+        0.32085
       ],
       "odds": [
-        2.3559901048415597,
-        5.403944879762227,
-        2.560819462227913
+        1.9577133907595927,
+        5.94000594000594,
+        3.116721209287829
       ],
       "topScores": [
         {
           "score": "2-2",
-          "probability": 0.06765
-        },
-        {
-          "score": "2-1",
-          "probability": 0.05885
-        },
-        {
-          "score": "1-2",
-          "probability": 0.055
-        }
-      ],
-      "trials": 20000,
-      "expectedGoals": [
-        2.5118996415770614,
-        2.415494111623144
-      ],
-      "teamGames": [
-        6,
-        6
-      ],
-      "limitedHistory": false,
-      "knockout": {
-        "drawAdvantage": "team1",
-        "probabilities": [
-          0.6094999999999999,
-          0.3905
-        ],
-        "odds": [
-          1.6406890894175556,
-          2.560819462227913
-        ]
-      }
-    },
-    {
-      "matchId": "1792903649938",
-      "team1": "-OuCE5UUPYmEL7Mnf4-D",
-      "team2": "-OuCECnOQDCHySBDLAxx",
-      "startsAt": 1794621600000,
-      "status": "ready",
-      "probabilities": [
-        0.509,
-        0.17205,
-        0.31895
-      ],
-      "odds": [
-        1.9646365422396856,
-        5.812263876780006,
-        3.1352876626430475
-      ],
-      "topScores": [
-        {
-          "score": "2-2",
-          "probability": 0.0576
+          "probability": 0.0605
         },
         {
           "score": "3-2",
-          "probability": 0.05675
+          "probability": 0.05745
         },
         {
-          "score": "3-3",
-          "probability": 0.0497
+          "score": "3-1",
+          "probability": 0.04795
         }
       ],
       "trials": 20000,
@@ -247,12 +195,64 @@
       "knockout": {
         "drawAdvantage": "team1",
         "probabilities": [
-          0.68105,
-          0.31895
+          0.67915,
+          0.32085
         ],
         "odds": [
-          1.4683209749651274,
-          3.1352876626430475
+          1.4724287712581903,
+          3.116721209287829
+        ]
+      }
+    },
+    {
+      "matchId": "1792903649938",
+      "team1": "-OuCEIPXbahnsYG98j_K",
+      "team2": "-OuCE3jNN_OU-QexjdHw",
+      "startsAt": 1794621600000,
+      "status": "ready",
+      "probabilities": [
+        0.42415,
+        0.18545,
+        0.3904
+      ],
+      "odds": [
+        2.357656489449487,
+        5.392289026691831,
+        2.5614754098360653
+      ],
+      "topScores": [
+        {
+          "score": "2-2",
+          "probability": 0.0652
+        },
+        {
+          "score": "3-2",
+          "probability": 0.05745
+        },
+        {
+          "score": "2-1",
+          "probability": 0.056
+        }
+      ],
+      "trials": 20000,
+      "expectedGoals": [
+        2.5118996415770614,
+        2.415494111623144
+      ],
+      "teamGames": [
+        6,
+        6
+      ],
+      "limitedHistory": false,
+      "knockout": {
+        "drawAdvantage": "team1",
+        "probabilities": [
+          0.6096,
+          0.3904
+        ],
+        "odds": [
+          1.6404199475065615,
+          2.5614754098360653
         ]
       }
     }

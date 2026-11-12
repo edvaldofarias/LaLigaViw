@@ -5,7 +5,7 @@ import { LOCALE_ID, provideZonelessChangeDetection } from "@angular/core";
 import { provideRouter, withHashLocation } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
 import { AppComponent } from "./app/app.component";
-import { SECTIONS } from "./app/core/models";
+import { ROUTABLE_SECTIONS } from "./app/core/models";
 registerLocaleData(localePt, "pt-BR");
 // Preserve all existing shared URLs, e.g. #matches -> #/matches.
 if (/^#[a-z]/i.test(location.hash))
@@ -21,7 +21,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideRouter(
       [
-        ...SECTIONS.map(([view]) => ({
+        ...ROUTABLE_SECTIONS.map(([view]) => ({
           path: view,
           loadComponent: () =>
             view === "teste"

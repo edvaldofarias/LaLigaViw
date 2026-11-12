@@ -404,7 +404,7 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
     ["motm", "Melhor em campo"],
     ["coaches", "Técnicos"],
     ["ballon", "MVP"],
-    ["cartola", "CARTOLA"],
+    ["cartola", "(beta) CARTOLA"],
   ]) {
     await page.goto("/#/" + path);
     await expect(page.locator(".section-title h2")).toHaveText(title);
@@ -421,6 +421,15 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
   }
   await expect(page.locator(".desktop-navigation")).not.toContainText(
     "Odds e simulações",
+  );
+  await expect(page.locator(".desktop-navigation")).not.toContainText(
+    "Simulação",
+  );
+  await expect(page.locator(".desktop-navigation")).not.toContainText(
+    "Votação secreta",
+  );
+  await expect(page.locator(".desktop-navigation")).toContainText(
+    "(beta) CARTOLA",
   );
   await expect(page.locator(".desktop-navigation")).not.toContainText(
     "Classificação",
@@ -473,7 +482,7 @@ test("all competition tabs use compact modern surfaces", async ({ page }) => {
     ["players", ".data-panel"],
     ["ballon", ".data-panel"],
     ["coaches", ".data-panel"],
-    ["selection", ".feature-panel"],
+    ["selection", ".feature-panel, .selection-source-note"],
     ["motm", ".motm-player-card"],
     ["cartola", ".data-panel"],
   ]) {
@@ -762,7 +771,7 @@ test("Material controls sort, filter, paginate and open accessible navigation", 
     await expect(page.locator("mat-sidenav")).toBeVisible();
     await page
       .locator("mat-sidenav")
-      .getByRole("link", { name: "CARTOLA", exact: true })
+      .getByRole("link", { name: "(beta) CARTOLA", exact: true })
       .click();
     await expect(page).toHaveURL(/cartola$/);
     await expect(page.locator("mat-sidenav")).not.toBeVisible();
