@@ -1,5 +1,6 @@
 import {browserImage,contain,fitText,VIW_LOGO} from './poster-assets.mjs';
 import {courtLabel} from './schedule.mjs';
+import {awardRoundLabel} from './awards.mjs';
 export async function makeMotmPoster(match,data,award,{canvas=document.createElement('canvas'),loadImage=browserImage}={}){
   if(!award||award.matchId!==match.id||!(Number(match.st)===3||match.finished))throw new Error('O prêmio desta partida ainda não foi informado.');
   const p=data.player?.[award.playerId],teams=[data.teams?.[match.team1],data.teams?.[match.team2]];
@@ -13,7 +14,7 @@ export async function makeMotmPoster(match,data,award,{canvas=document.createEle
   ctx.drawImage(background,0,0,1080,1350);
   ctx.fillStyle='rgba(8,18,30,.48)';ctx.fillRect(0,0,1080,1350);
   contain(ctx,logo,58,38,125,125);
-  ctx.textAlign='left';fitText(ctx,'LA LIGA VIW',215,92,790,34);fitText(ctx,`RODADA ${award.round} · CRAQUE DO JOGO`,215,134,790,24,cyan);
+  ctx.textAlign='left';fitText(ctx,'LA LIGA VIW',215,92,790,34);fitText(ctx,`${awardRoundLabel(award).toUpperCase()} · CRAQUE DO JOGO`,215,134,790,24,cyan);
   ctx.textAlign='center';fitText(ctx,'MAN OF THE MATCH',540,235,970,76);
   // Preserve the entire original photograph, with no retouching or cropping.
   ctx.fillStyle='#ffffff';ctx.fillRect(287,274,506,530);contain(ctx,photo,300,287,480,504);

@@ -36,4 +36,10 @@ export const matchAwards=[
   {matchId:'1786249310310',playerId:'1789257897307',teamId:'-OuCEIPXbahnsYG98j_K',name:'Andrews',round:7},
   {matchId:'1786249311018',playerId:'1789220310276',teamId:'-OuCE8ygQVY-3BXzP80H',name:'Jorge',round:7},
   {matchId:'1786249309068',playerId:'1789194052636',teamId:'-OuCEUdiPg-VFiAmxP-W',name:'Rafinha',round:7},
+  {matchId:'1780480633602',playerId:'1789196742352',teamId:'-OuCE79e187h1srqNCAK',name:'Digo',round:8,roundLabel:'Repescagem'},
+  {matchId:'1792903648629',playerId:'1789194972417',teamId:'-OuCEAFLB6cDtcv8W1dI',name:'Michel',round:8,roundLabel:'Repescagem'},
+  {matchId:'1792903649938',playerId:'1789257879880',teamId:'-OuCEIPXbahnsYG98j_K',name:'Blotti',round:8,roundLabel:'Repescagem'},
+  {matchId:'1792903649205',playerId:'1789220939022',teamId:'-OuCE5UUPYmEL7Mnf4-D',name:'João Paulo',round:8,roundLabel:'Repescagem'},
 ];
+
+export const awardRoundLabel = award => award.roundLabel || `Rodada ${award.round}`;

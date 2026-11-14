@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import {normalizeMatch,normalizeCompetition} from '../dist/match-data.mjs';
 import {calculateScores} from '../dist/player-score.mjs';
 import {coachStatistics,coachAssignments} from '../dist/coaches.mjs';
-import {matchAwards} from '../dist/awards.mjs';
+import {matchAwards,awardRoundLabel} from '../dist/awards.mjs';
 import {readFileSync} from 'node:fs';
 test('completed sparse scores supply only the missing zero and do not mutate source',()=>{
  const m={st:3,dt:{qt_g1:3}};assert.deepEqual(normalizeMatch(m).dt,{qt_g1:3,qt_g2:0});assert.deepEqual(m.dt,{qt_g1:3});
@@ -81,5 +81,32 @@ test('round seven preserves the six organizer awards and grants four MVP points 
   assert.equal(player.total-baseline.get(a.playerId),4);
  }
  for(const a of picks)data.matchs[a.matchId]={...data.matchs[a.matchId],st:0,finished:false};
+ for(const player of calculateScores(data,picks))assert.equal(player.counts.motm,0);
+});
+test('repescagem awards identify the four players and award MVP points only after completion',()=>{
+ const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
+ const picks=matchAwards.filter(a=>a.round===8);
+ assert.deepEqual(picks.map(a=>[a.matchId,a.playerId,a.teamId,a.name]),[
+  ['1780480633602','1789196742352','-OuCE79e187h1srqNCAK','Digo'],
+  ['1792903648629','1789194972417','-OuCEAFLB6cDtcv8W1dI','Michel'],
+  ['1792903649938','1789257879880','-OuCEIPXbahnsYG98j_K','Blotti'],
+  ['1792903649205','1789220939022','-OuCE5UUPYmEL7Mnf4-D','João Paulo'],
+ ]);
+ assert.equal(new Set(matchAwards.map(a=>a.matchId)).size,matchAwards.length);
+ for(const a of picks){
+  const match=data.matchs[a.matchId];
+  assert.equal(awardRoundLabel(a),'Repescagem');
+  assert.equal(data.player[a.playerId].team,a.teamId);
+  assert.ok([match.team1,match.team2].includes(a.teamId));
+  data.matchs[a.matchId]={...match,st:3,finished:true};
+ }
+ const baseline=new Map(calculateScores(data).map(p=>[p.id,p.total]));
+ const rows=calculateScores(data,picks);
+ for(const a of picks){
+  const player=rows.find(p=>p.id===a.playerId);
+  assert.equal(player.counts.motm,1);
+  assert.equal(player.total-baseline.get(a.playerId),4);
+  data.matchs[a.matchId]={...data.matchs[a.matchId],st:0,finished:false};
+ }
  for(const player of calculateScores(data,picks))assert.equal(player.counts.motm,0);
 });

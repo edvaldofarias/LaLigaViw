@@ -126,8 +126,8 @@ export const EDVALDO_WIKI = {
       competitionLogo:
         "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Finfo.png?alt=media&token=1&m=1780485943228",
       ongoing: true,
-      position: 4,
-      positionLabel: "4º lugar atual",
+      position: 7,
+      positionLabel: "7º lugar atual",
       matches: 6,
       wins: 3,
       draws: 2,

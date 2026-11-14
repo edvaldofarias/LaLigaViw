@@ -701,7 +701,7 @@
         >
           @for (round of motmRounds(); track round) {
             <mat-option [value]="round"
-              >Melhores em campo · Rodada {{ round }}</mat-option
+              >Melhores em campo · {{ motmRoundLabel(round) }}</mat-option
             >
           }
         </mat-select>

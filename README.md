@@ -67,6 +67,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Técnicos, prêmios e seleções são escolhas manuais preservadas por IDs. João foi substituto de Ênio apenas na quarta rodada.
 - Craques informados da 6ª rodada: Nanddo (Getafe), Edvaldo (Barcelona), Igor (Real Sociedad), Reinaldo (Rayo Vallecano) e Igor (Athletico Bilbao). O bônus de MVP considera apenas partidas encerradas.
 - Craques informados da 7ª rodada: Palhinha (Atlético de Madrid), Elias (Barcelona), Ricardo Vechiez (Villareal), Andrews (Athletico Bilbao), Jorge (Rayo Vallecano) e Rafinha (Celta).
+- Craques da repescagem: Digo (Villareal), Michel (Real Bétis), Blotti (Athletico Bilbao) e João Paulo (Sevilla).
 - Seleção informada da 6ª rodada: Felipe (Barcelona), Bira (Athletico Bilbao), Igor (Real Sociedad), Bruno Blotti (Athletico Bilbao), Felipe (Rayo Vallecano), Igor (Athletico Bilbao) e Reinaldo (Rayo Vallecano).
 - Panfletos apenas para a próxima rodada. Local fixo: Pro Beach — Av. Cézar Magnani, nº 840, Paulicéia, São Bernardo do Campo — SP, 09694-000.
 - Fotos originais preservadas; ausência/erro usa iniciais no Placehold.co. Downloads PNG e zoom das artes continuam disponíveis.

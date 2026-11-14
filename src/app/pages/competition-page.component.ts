@@ -14,6 +14,7 @@ import {
 } from "../shared/compact-match-card.component";
 import { RoundCarouselComponent } from "../shared/round-carousel.component";
 import { EntityComponent } from "../shared/entity.component";
+import { awardRoundLabel } from "../../../dist/awards.mjs";
 @Component({
   selector: "app-competition-page",
   standalone: true,
@@ -53,6 +54,9 @@ export class CompetitionPageComponent {
       (a, b) => a - b,
     ),
   );
+  motmRoundLabel(round: number) {
+    return awardRoundLabel(this.s.awards.find((award) => award.round === round)!);
+  }
   selectedMotmRound = computed(
     () => this.motmRound() ?? this.motmRounds().at(-1) ?? 0,
   );

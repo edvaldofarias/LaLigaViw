@@ -47,10 +47,10 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 9,
-    "attackRank": 18,
+    "attackRank": 19,
     "defenseRank": 1,
     "duoRank": 25,
-    "cardRank": 17
+    "cardRank": 19
   },
   {
     "ranking": 2,
@@ -179,7 +179,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 13,
-    "attackRank": 24,
+    "attackRank": 25,
     "defenseRank": 8,
     "duoRank": 6,
     "cardRank": 3
@@ -223,7 +223,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 19,
+    "attackRank": 20,
     "defenseRank": 2,
     "duoRank": 34,
     "cardRank": 49
@@ -355,10 +355,10 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 10,
-    "attackRank": 23,
+    "attackRank": 24,
     "defenseRank": 7,
     "duoRank": 31,
-    "cardRank": 8
+    "cardRank": 10
   },
   {
     "ranking": 9,
@@ -399,7 +399,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 4,
-    "attackRank": 20,
+    "attackRank": 21,
     "defenseRank": 11,
     "duoRank": 8,
     "cardRank": 58
@@ -444,9 +444,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 9,
     "attackRank": 7,
-    "defenseRank": 32,
+    "defenseRank": 31,
     "duoRank": 13,
-    "cardRank": 16
+    "cardRank": 18
   },
   {
     "ranking": 11,
@@ -531,10 +531,10 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 7,
-    "attackRank": 17,
+    "attackRank": 18,
     "defenseRank": 5,
     "duoRank": 20,
-    "cardRank": 25
+    "cardRank": 27
   },
   {
     "ranking": 13,
@@ -664,9 +664,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 9,
     "attackRank": 14,
-    "defenseRank": 35,
+    "defenseRank": 34,
     "duoRank": 17,
-    "cardRank": 11
+    "cardRank": 13
   },
   {
     "ranking": 16,
@@ -709,8 +709,8 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 9,
     "attackRank": 31,
     "defenseRank": 14,
-    "duoRank": 53,
-    "cardRank": 15
+    "duoRank": 55,
+    "cardRank": 17
   },
   {
     "ranking": 17,
@@ -751,7 +751,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 14,
-    "attackRank": 44,
+    "attackRank": 45,
     "defenseRank": 12,
     "duoRank": 46,
     "cardRank": 2
@@ -798,7 +798,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "attackRank": 10,
     "defenseRank": 57,
     "duoRank": 16,
-    "cardRank": 24
+    "cardRank": 26
   },
   {
     "ranking": 19,
@@ -886,7 +886,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "attackRank": 35,
     "defenseRank": 4,
     "duoRank": 21,
-    "cardRank": 14
+    "cardRank": 16
   },
   {
     "ranking": 21,
@@ -927,7 +927,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 2,
-    "attackRank": 47,
+    "attackRank": 48,
     "defenseRank": 20,
     "duoRank": 33,
     "cardRank": 71
@@ -972,7 +972,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 0,
     "attackRank": 4,
-    "defenseRank": 40,
+    "defenseRank": 43,
     "duoRank": 11,
     "cardRank": 74
   },
@@ -1015,7 +1015,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 21,
+    "attackRank": 22,
     "defenseRank": 51,
     "duoRank": 7,
     "cardRank": 42
@@ -1060,8 +1060,8 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 3,
     "attackRank": 40,
-    "defenseRank": 33,
-    "duoRank": 75,
+    "defenseRank": 32,
+    "duoRank": 76,
     "cardRank": 67
   },
   {
@@ -1154,6 +1154,50 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
   },
   {
     "ranking": 27,
+    "eventKey": "-ciddy",
+    "championship": "LALIGA VIW 2026 🇪🇸",
+    "seasonYear": 2026,
+    "semester": 2,
+    "editionTeamId": 83,
+    "team": "VILLAREAL",
+    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE79e187h1srqNCAK.png?alt=media&token=1&m=1780486214562",
+    "matches": 7,
+    "wins": 4,
+    "draws": 1,
+    "losses": 2,
+    "goalsFor": 27,
+    "goalsAgainst": 25,
+    "goalDifference": 2,
+    "points": 13,
+    "placement": null,
+    "ongoing": true,
+    "duo": [
+      {
+        "name": "JHOW",
+        "goals": 6
+      },
+      {
+        "name": "DIGO",
+        "goals": 5
+      }
+    ],
+    "duoGoals": 11,
+    "unbeatenStreak": 3,
+    "cleanSheets": 0,
+    "failedToScore": 0,
+    "biggestWinMargin": 3,
+    "biggestLossMargin": 4,
+    "yellowCards": 8,
+    "redCards": 2,
+    "blueCards": 0,
+    "totalCards": 10,
+    "attackRank": 15,
+    "defenseRank": 75,
+    "duoRank": 48,
+    "cardRank": 9
+  },
+  {
+    "ranking": 28,
     "eventKey": "-t22j5",
     "championship": "CAMPEONATO ITALIANO VIW",
     "seasonYear": 2025,
@@ -1191,13 +1235,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 8,
-    "attackRank": 22,
+    "attackRank": 23,
     "defenseRank": 28,
     "duoRank": 5,
-    "cardRank": 21
+    "cardRank": 23
   },
   {
-    "ranking": 28,
+    "ranking": 29,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -1235,13 +1279,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 58,
+    "attackRank": 61,
     "defenseRank": 26,
-    "duoRank": 48,
+    "duoRank": 49,
     "cardRank": 38
   },
   {
-    "ranking": 29,
+    "ranking": 30,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -1279,13 +1323,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 2,
-    "attackRank": 72,
-    "defenseRank": 38,
+    "attackRank": 73,
+    "defenseRank": 40,
     "duoRank": 38,
     "cardRank": 70
   },
   {
-    "ranking": 30,
+    "ranking": 31,
     "eventKey": "-t22j5",
     "championship": "CAMPEONATO ITALIANO VIW",
     "seasonYear": 2025,
@@ -1323,13 +1367,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 8,
-    "attackRank": 53,
-    "defenseRank": 47,
+    "attackRank": 54,
+    "defenseRank": 49,
     "duoRank": 10,
-    "cardRank": 20
+    "cardRank": 22
   },
   {
-    "ranking": 31,
+    "ranking": 32,
     "eventKey": "-ciddy",
     "championship": "LALIGA VIW 2026 🇪🇸",
     "seasonYear": 2026,
@@ -1367,13 +1411,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 54,
+    "attackRank": 55,
     "defenseRank": 29,
     "duoRank": 35,
     "cardRank": 53
   },
   {
-    "ranking": 32,
+    "ranking": 33,
     "eventKey": "-ncna_domeuyityn-om1",
     "championship": "COPA DO BRASIL VIW ⚽️",
     "seasonYear": 2023,
@@ -1417,7 +1461,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "cardRank": 73
   },
   {
-    "ranking": 33,
+    "ranking": 34,
     "eventKey": "-ncna_domeuyityn-om1",
     "championship": "COPA DO BRASIL VIW ⚽️",
     "seasonYear": 2023,
@@ -1455,13 +1499,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 25,
+    "attackRank": 26,
     "defenseRank": 61,
     "duoRank": 19,
     "cardRank": 75
   },
   {
-    "ranking": 34,
+    "ranking": 35,
     "eventKey": "-ciddy",
     "championship": "LALIGA VIW 2026 🇪🇸",
     "seasonYear": 2026,
@@ -1499,13 +1543,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 2,
-    "attackRank": 81,
+    "attackRank": 82,
     "defenseRank": 13,
-    "duoRank": 64,
+    "duoRank": 65,
     "cardRank": 72
   },
   {
-    "ranking": 35,
+    "ranking": 36,
     "eventKey": "-1xwvs",
     "championship": "COPA LIBERTAVIW",
     "seasonYear": 2025,
@@ -1543,13 +1587,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 10,
-    "attackRank": 42,
-    "defenseRank": 37,
+    "attackRank": 43,
+    "defenseRank": 39,
     "duoRank": 43,
-    "cardRank": 9
+    "cardRank": 11
   },
   {
-    "ranking": 36,
+    "ranking": 37,
     "eventKey": "-ncna_domeuyityn-om1",
     "championship": "COPA DO BRASIL VIW ⚽️",
     "seasonYear": 2023,
@@ -1587,13 +1631,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 46,
-    "defenseRank": 46,
+    "attackRank": 47,
+    "defenseRank": 48,
     "duoRank": 44,
     "cardRank": 81
   },
   {
-    "ranking": 37,
+    "ranking": 38,
     "eventKey": "-ntuuhaxhe2_pmjm8fm5",
     "championship": "COPA DO NORDESTE VIW 2023",
     "seasonYear": 2023,
@@ -1637,7 +1681,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "cardRank": 86
   },
   {
-    "ranking": 38,
+    "ranking": 39,
     "eventKey": "-6pgn9",
     "championship": "COPA DO MUNDO VIW 2026",
     "seasonYear": 2026,
@@ -1677,11 +1721,11 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 3,
     "attackRank": 39,
     "defenseRank": 21,
-    "duoRank": 57,
+    "duoRank": 59,
     "cardRank": 65
   },
   {
-    "ranking": 39,
+    "ranking": 40,
     "eventKey": "-6pgn9",
     "championship": "COPA DO MUNDO VIW 2026",
     "seasonYear": 2026,
@@ -1719,13 +1763,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 4,
-    "attackRank": 62,
+    "attackRank": 64,
     "defenseRank": 18,
-    "duoRank": 66,
+    "duoRank": 67,
     "cardRank": 60
   },
   {
-    "ranking": 40,
+    "ranking": 41,
     "eventKey": "-1xwvs",
     "championship": "COPA LIBERTAVIW",
     "seasonYear": 2025,
@@ -1763,13 +1807,57 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 9,
-    "attackRank": 26,
+    "attackRank": 27,
     "defenseRank": 54,
     "duoRank": 14,
-    "cardRank": 10
+    "cardRank": 12
   },
   {
-    "ranking": 41,
+    "ranking": 42,
+    "eventKey": "-ciddy",
+    "championship": "LALIGA VIW 2026 🇪🇸",
+    "seasonYear": 2026,
+    "semester": 2,
+    "editionTeamId": 85,
+    "team": "REAL BÉTIS",
+    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEAFLB6cDtcv8W1dI.jpg?alt=media&token=1&m=1780486184928",
+    "matches": 7,
+    "wins": 3,
+    "draws": 3,
+    "losses": 1,
+    "goalsFor": 18,
+    "goalsAgainst": 17,
+    "goalDifference": 1,
+    "points": 12,
+    "placement": null,
+    "ongoing": true,
+    "duo": [
+      {
+        "name": "VALMIR",
+        "goals": 4
+      },
+      {
+        "name": "LUCCIOLA",
+        "goals": 3
+      }
+    ],
+    "duoGoals": 7,
+    "unbeatenStreak": 4,
+    "cleanSheets": 1,
+    "failedToScore": 0,
+    "biggestWinMargin": 2,
+    "biggestLossMargin": 4,
+    "yellowCards": 8,
+    "redCards": 0,
+    "blueCards": 0,
+    "totalCards": 8,
+    "attackRank": 57,
+    "defenseRank": 36,
+    "duoRank": 79,
+    "cardRank": 24
+  },
+  {
+    "ranking": 43,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -1807,13 +1895,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 8,
-    "attackRank": 76,
+    "attackRank": 77,
     "defenseRank": 19,
-    "duoRank": 74,
-    "cardRank": 19
+    "duoRank": 75,
+    "cardRank": 21
   },
   {
-    "ranking": 42,
+    "ranking": 44,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -1851,13 +1939,57 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 56,
+    "attackRank": 60,
     "defenseRank": 24,
-    "duoRank": 76,
+    "duoRank": 77,
     "cardRank": 34
   },
   {
-    "ranking": 43,
+    "ranking": 45,
+    "eventKey": "-ciddy",
+    "championship": "LALIGA VIW 2026 🇪🇸",
+    "seasonYear": 2026,
+    "semester": 2,
+    "editionTeamId": 88,
+    "team": "ATHLETICO BILBAO",
+    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEIPXbahnsYG98j_K.png?alt=media&token=1&m=1780486156323",
+    "matches": 7,
+    "wins": 3,
+    "draws": 2,
+    "losses": 2,
+    "goalsFor": 20,
+    "goalsAgainst": 19,
+    "goalDifference": 1,
+    "points": 11,
+    "placement": null,
+    "ongoing": true,
+    "duo": [
+      {
+        "name": "BLOTTI",
+        "goals": 6
+      },
+      {
+        "name": "ANDREWS",
+        "goals": 4
+      }
+    ],
+    "duoGoals": 10,
+    "unbeatenStreak": 4,
+    "cleanSheets": 0,
+    "failedToScore": 1,
+    "biggestWinMargin": 4,
+    "biggestLossMargin": 3,
+    "yellowCards": 8,
+    "redCards": 2,
+    "blueCards": 0,
+    "totalCards": 10,
+    "attackRank": 46,
+    "defenseRank": 45,
+    "duoRank": 51,
+    "cardRank": 8
+  },
+  {
+    "ranking": 46,
     "eventKey": "-shn4",
     "championship": "PREMIER LEAGUE VIW",
     "seasonYear": 2024,
@@ -1895,13 +2027,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 55,
-    "defenseRank": 36,
+    "attackRank": 56,
+    "defenseRank": 35,
     "duoRank": 41,
     "cardRank": 40
   },
   {
-    "ranking": 44,
+    "ranking": 47,
     "eventKey": "-ciddy",
     "championship": "LALIGA VIW 2026 🇪🇸",
     "seasonYear": 2026,
@@ -1945,51 +2077,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "cardRank": 61
   },
   {
-    "ranking": 45,
-    "eventKey": "-ciddy",
-    "championship": "LALIGA VIW 2026 🇪🇸",
-    "seasonYear": 2026,
-    "semester": 2,
-    "editionTeamId": 83,
-    "team": "VILLAREAL",
-    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE79e187h1srqNCAK.png?alt=media&token=1&m=1780486214562",
-    "matches": 6,
-    "wins": 3,
-    "draws": 1,
-    "losses": 2,
-    "goalsFor": 24,
-    "goalsAgainst": 23,
-    "goalDifference": 1,
-    "points": 10,
-    "placement": null,
-    "ongoing": true,
-    "duo": [
-      {
-        "name": "JHOW",
-        "goals": 6
-      },
-      {
-        "name": "DIGO",
-        "goals": 4
-      }
-    ],
-    "duoGoals": 10,
-    "unbeatenStreak": 3,
-    "cleanSheets": 0,
-    "failedToScore": 0,
-    "biggestWinMargin": 3,
-    "biggestLossMargin": 4,
-    "yellowCards": 6,
-    "redCards": 1,
-    "blueCards": 0,
-    "totalCards": 7,
-    "attackRank": 28,
-    "defenseRank": 77,
-    "duoRank": 52,
-    "cardRank": 26
-  },
-  {
-    "ranking": 46,
+    "ranking": 48,
     "eventKey": "-shn4",
     "championship": "PREMIER LEAGUE VIW",
     "seasonYear": 2024,
@@ -2028,12 +2116,12 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 6,
     "attackRank": 36,
-    "defenseRank": 31,
+    "defenseRank": 30,
     "duoRank": 24,
     "cardRank": 35
   },
   {
-    "ranking": 47,
+    "ranking": 49,
     "eventKey": "-ntuuhaxhe2_pmjm8fm5",
     "championship": "COPA DO NORDESTE VIW 2023",
     "seasonYear": 2023,
@@ -2071,13 +2159,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 15,
+    "attackRank": 16,
     "defenseRank": 86,
     "duoRank": 1,
     "cardRank": 88
   },
   {
-    "ranking": 48,
+    "ranking": 50,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -2116,12 +2204,12 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 4,
     "attackRank": 29,
-    "defenseRank": 48,
-    "duoRank": 55,
+    "defenseRank": 50,
+    "duoRank": 57,
     "cardRank": 63
   },
   {
-    "ranking": 49,
+    "ranking": 51,
     "eventKey": "-ncna_domeuyityn-om1",
     "championship": "COPA DO BRASIL VIW ⚽️",
     "seasonYear": 2023,
@@ -2159,13 +2247,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 65,
+    "attackRank": 67,
     "defenseRank": 53,
-    "duoRank": 65,
+    "duoRank": 66,
     "cardRank": 83
   },
   {
-    "ranking": 50,
+    "ranking": 52,
     "eventKey": "-shn4",
     "championship": "PREMIER LEAGUE VIW",
     "seasonYear": 2024,
@@ -2203,13 +2291,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 2,
     "blueCards": 0,
     "totalCards": 14,
-    "attackRank": 16,
+    "attackRank": 17,
     "defenseRank": 64,
     "duoRank": 30,
     "cardRank": 1
   },
   {
-    "ranking": 51,
+    "ranking": 53,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -2247,57 +2335,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 8,
-    "attackRank": 78,
-    "defenseRank": 39,
-    "duoRank": 80,
-    "cardRank": 22
-  },
-  {
-    "ranking": 52,
-    "eventKey": "-ciddy",
-    "championship": "LALIGA VIW 2026 🇪🇸",
-    "seasonYear": 2026,
-    "semester": 2,
-    "editionTeamId": 85,
-    "team": "REAL BÉTIS",
-    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEAFLB6cDtcv8W1dI.jpg?alt=media&token=1&m=1780486184928",
-    "matches": 6,
-    "wins": 2,
-    "draws": 3,
-    "losses": 1,
-    "goalsFor": 16,
-    "goalsAgainst": 16,
-    "goalDifference": 0,
-    "points": 9,
-    "placement": null,
-    "ongoing": true,
-    "duo": [
-      {
-        "name": "VALMIR",
-        "goals": 4
-      },
-      {
-        "name": "JORGE",
-        "goals": 3
-      }
-    ],
-    "duoGoals": 7,
-    "unbeatenStreak": 4,
-    "cleanSheets": 1,
-    "failedToScore": 0,
-    "biggestWinMargin": 2,
-    "biggestLossMargin": 4,
-    "yellowCards": 7,
-    "redCards": 0,
-    "blueCards": 0,
-    "totalCards": 7,
-    "attackRank": 63,
+    "attackRank": 79,
     "defenseRank": 42,
-    "duoRank": 78,
-    "cardRank": 27
+    "duoRank": 80,
+    "cardRank": 25
   },
   {
-    "ranking": 53,
+    "ranking": 54,
     "eventKey": "-6pgn9",
     "championship": "COPA DO MUNDO VIW 2026",
     "seasonYear": 2026,
@@ -2335,13 +2379,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 2,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 50,
+    "attackRank": 51,
     "defenseRank": 55,
     "duoRank": 40,
     "cardRank": 44
   },
   {
-    "ranking": 54,
+    "ranking": 55,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -2379,13 +2423,57 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 60,
+    "attackRank": 62,
     "defenseRank": 27,
-    "duoRank": 67,
+    "duoRank": 68,
     "cardRank": 39
   },
   {
-    "ranking": 55,
+    "ranking": 56,
+    "eventKey": "-ciddy",
+    "championship": "LALIGA VIW 2026 🇪🇸",
+    "seasonYear": 2026,
+    "semester": 2,
+    "editionTeamId": 82,
+    "team": "SEVILLA",
+    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE5UUPYmEL7Mnf4-D.jpg?alt=media&token=1&m=1780486225730",
+    "matches": 7,
+    "wins": 2,
+    "draws": 2,
+    "losses": 3,
+    "goalsFor": 21,
+    "goalsAgainst": 17,
+    "goalDifference": 4,
+    "points": 8,
+    "placement": null,
+    "ongoing": true,
+    "duo": [
+      {
+        "name": "EFRAIM",
+        "goals": 6
+      },
+      {
+        "name": "LUCAS",
+        "goals": 5
+      }
+    ],
+    "duoGoals": 11,
+    "unbeatenStreak": 2,
+    "cleanSheets": 1,
+    "failedToScore": 0,
+    "biggestWinMargin": 4,
+    "biggestLossMargin": 2,
+    "yellowCards": 9,
+    "redCards": 3,
+    "blueCards": 0,
+    "totalCards": 12,
+    "attackRank": 42,
+    "defenseRank": 37,
+    "duoRank": 47,
+    "cardRank": 5
+  },
+  {
+    "ranking": 57,
     "eventKey": "-shn4",
     "championship": "PREMIER LEAGUE VIW",
     "seasonYear": 2024,
@@ -2423,57 +2511,57 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 48,
-    "defenseRank": 45,
-    "duoRank": 50,
+    "attackRank": 49,
+    "defenseRank": 47,
+    "duoRank": 53,
     "cardRank": 41
   },
   {
-    "ranking": 56,
+    "ranking": 58,
     "eventKey": "-ciddy",
     "championship": "LALIGA VIW 2026 🇪🇸",
     "seasonYear": 2026,
     "semester": 2,
-    "editionTeamId": 88,
-    "team": "ATHLETICO BILBAO",
-    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEIPXbahnsYG98j_K.png?alt=media&token=1&m=1780486156323",
-    "matches": 6,
+    "editionTeamId": 87,
+    "team": "GETAFE",
+    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCECnOQDCHySBDLAxx.jpg?alt=media&token=1&m=1780486165873",
+    "matches": 7,
     "wins": 2,
     "draws": 2,
-    "losses": 2,
-    "goalsFor": 17,
-    "goalsAgainst": 17,
-    "goalDifference": 0,
+    "losses": 3,
+    "goalsFor": 16,
+    "goalsAgainst": 18,
+    "goalDifference": -2,
     "points": 8,
     "placement": null,
-    "ongoing": true,
+    "ongoing": false,
     "duo": [
       {
-        "name": "ANDREWS",
-        "goals": 4
+        "name": "JEFERSON",
+        "goals": 3
       },
       {
-        "name": "BLOTTI",
-        "goals": 4
+        "name": "MATHEUS",
+        "goals": 3
       }
     ],
-    "duoGoals": 8,
-    "unbeatenStreak": 3,
+    "duoGoals": 6,
+    "unbeatenStreak": 2,
     "cleanSheets": 0,
-    "failedToScore": 1,
-    "biggestWinMargin": 4,
-    "biggestLossMargin": 3,
-    "yellowCards": 6,
-    "redCards": 1,
+    "failedToScore": 0,
+    "biggestWinMargin": 1,
+    "biggestLossMargin": 2,
+    "yellowCards": 3,
+    "redCards": 0,
     "blueCards": 0,
-    "totalCards": 7,
-    "attackRank": 57,
-    "defenseRank": 49,
-    "duoRank": 70,
-    "cardRank": 23
+    "totalCards": 3,
+    "attackRank": 65,
+    "defenseRank": 41,
+    "duoRank": 88,
+    "cardRank": 68
   },
   {
-    "ranking": 57,
+    "ranking": 59,
     "eventKey": "-6pgn9",
     "championship": "COPA DO MUNDO VIW 2026",
     "seasonYear": 2026,
@@ -2513,11 +2601,11 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 8,
     "attackRank": 84,
     "defenseRank": 23,
-    "duoRank": 73,
-    "cardRank": 18
+    "duoRank": 74,
+    "cardRank": 20
   },
   {
-    "ranking": 58,
+    "ranking": 60,
     "eventKey": "-6pgn9",
     "championship": "COPA DO MUNDO VIW 2026",
     "seasonYear": 2026,
@@ -2555,13 +2643,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 4,
-    "attackRank": 77,
-    "defenseRank": 34,
-    "duoRank": 72,
+    "attackRank": 78,
+    "defenseRank": 33,
+    "duoRank": 73,
     "cardRank": 62
   },
   {
-    "ranking": 59,
+    "ranking": 61,
     "eventKey": "-ntuuhaxhe2_pmjm8fm5",
     "championship": "COPA DO NORDESTE VIW 2023",
     "seasonYear": 2023,
@@ -2599,13 +2687,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 43,
-    "defenseRank": 84,
+    "attackRank": 44,
+    "defenseRank": 85,
     "duoRank": 15,
     "cardRank": 82
   },
   {
-    "ranking": 60,
+    "ranking": 62,
     "eventKey": "-ncna_domeuyityn-om1",
     "championship": "COPA DO BRASIL VIW ⚽️",
     "seasonYear": 2023,
@@ -2643,13 +2731,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 64,
+    "attackRank": 66,
     "defenseRank": 52,
-    "duoRank": 86,
+    "duoRank": 87,
     "cardRank": 78
   },
   {
-    "ranking": 61,
+    "ranking": 63,
     "eventKey": "-6pgn9",
     "championship": "COPA DO MUNDO VIW 2026",
     "seasonYear": 2026,
@@ -2687,57 +2775,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 51,
+    "attackRank": 52,
     "defenseRank": 70,
     "duoRank": 26,
     "cardRank": 45
   },
   {
-    "ranking": 62,
-    "eventKey": "-ciddy",
-    "championship": "LALIGA VIW 2026 🇪🇸",
-    "seasonYear": 2026,
-    "semester": 2,
-    "editionTeamId": 82,
-    "team": "SEVILLA",
-    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE5UUPYmEL7Mnf4-D.jpg?alt=media&token=1&m=1780486225730",
-    "matches": 6,
-    "wins": 2,
-    "draws": 1,
-    "losses": 3,
-    "goalsFor": 20,
-    "goalsAgainst": 16,
-    "goalDifference": 4,
-    "points": 7,
-    "placement": null,
-    "ongoing": true,
-    "duo": [
-      {
-        "name": "EFRAIM",
-        "goals": 6
-      },
-      {
-        "name": "LUCAS",
-        "goals": 5
-      }
-    ],
-    "duoGoals": 11,
-    "unbeatenStreak": 1,
-    "cleanSheets": 1,
-    "failedToScore": 0,
-    "biggestWinMargin": 4,
-    "biggestLossMargin": 2,
-    "yellowCards": 9,
-    "redCards": 3,
-    "blueCards": 0,
-    "totalCards": 12,
-    "attackRank": 45,
-    "defenseRank": 43,
-    "duoRank": 47,
-    "cardRank": 5
-  },
-  {
-    "ranking": 63,
+    "ranking": 64,
     "eventKey": "-4dqvf",
     "championship": "COPA EUROVIW",
     "seasonYear": 2024,
@@ -2775,13 +2819,13 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 2,
     "blueCards": 0,
     "totalCards": 11,
-    "attackRank": 82,
+    "attackRank": 83,
     "defenseRank": 15,
-    "duoRank": 69,
+    "duoRank": 70,
     "cardRank": 7
   },
   {
-    "ranking": 64,
+    "ranking": 65,
     "eventKey": "-t22j5",
     "championship": "CAMPEONATO ITALIANO VIW",
     "seasonYear": 2025,
@@ -2819,54 +2863,10 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 3,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 49,
-    "defenseRank": 41,
-    "duoRank": 51,
+    "attackRank": 50,
+    "defenseRank": 44,
+    "duoRank": 54,
     "cardRank": 30
-  },
-  {
-    "ranking": 65,
-    "eventKey": "-ciddy",
-    "championship": "LALIGA VIW 2026 🇪🇸",
-    "seasonYear": 2026,
-    "semester": 2,
-    "editionTeamId": 87,
-    "team": "GETAFE",
-    "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCECnOQDCHySBDLAxx.jpg?alt=media&token=1&m=1780486165873",
-    "matches": 6,
-    "wins": 2,
-    "draws": 1,
-    "losses": 3,
-    "goalsFor": 15,
-    "goalsAgainst": 17,
-    "goalDifference": -2,
-    "points": 7,
-    "placement": null,
-    "ongoing": true,
-    "duo": [
-      {
-        "name": "JEFERSON",
-        "goals": 3
-      },
-      {
-        "name": "MATHEUS",
-        "goals": 3
-      }
-    ],
-    "duoGoals": 6,
-    "unbeatenStreak": 2,
-    "cleanSheets": 0,
-    "failedToScore": 0,
-    "biggestWinMargin": 1,
-    "biggestLossMargin": 2,
-    "yellowCards": 3,
-    "redCards": 0,
-    "blueCards": 0,
-    "totalCards": 3,
-    "attackRank": 71,
-    "defenseRank": 50,
-    "duoRank": 87,
-    "cardRank": 68
   },
   {
     "ranking": 66,
@@ -2907,7 +2907,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 61,
+    "attackRank": 63,
     "defenseRank": 58,
     "duoRank": 36,
     "cardRank": 51
@@ -2952,7 +2952,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 6,
     "attackRank": 30,
-    "defenseRank": 74,
+    "defenseRank": 76,
     "duoRank": 29,
     "cardRank": 36
   },
@@ -2995,9 +2995,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 4,
-    "attackRank": 79,
+    "attackRank": 80,
     "defenseRank": 65,
-    "duoRank": 49,
+    "duoRank": 50,
     "cardRank": 59
   },
   {
@@ -3039,9 +3039,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 27,
-    "defenseRank": 76,
-    "duoRank": 61,
+    "attackRank": 28,
+    "defenseRank": 77,
+    "duoRank": 62,
     "cardRank": 79
   },
   {
@@ -3086,7 +3086,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "attackRank": 32,
     "defenseRank": 56,
     "duoRank": 39,
-    "cardRank": 13
+    "cardRank": 15
   },
   {
     "ranking": 71,
@@ -3129,7 +3129,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 2,
     "attackRank": 89,
     "defenseRank": 60,
-    "duoRank": 89,
+    "duoRank": 90,
     "cardRank": 69
   },
   {
@@ -3172,8 +3172,8 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 0,
     "attackRank": 37,
-    "defenseRank": 83,
-    "duoRank": 60,
+    "defenseRank": 84,
+    "duoRank": 61,
     "cardRank": 76
   },
   {
@@ -3215,9 +3215,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 2,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 52,
+    "attackRank": 53,
     "defenseRank": 59,
-    "duoRank": 58,
+    "duoRank": 60,
     "cardRank": 43
   },
   {
@@ -3260,8 +3260,8 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "blueCards": 0,
     "totalCards": 5,
     "attackRank": 85,
-    "defenseRank": 44,
-    "duoRank": 84,
+    "defenseRank": 46,
+    "duoRank": 85,
     "cardRank": 46
   },
   {
@@ -3317,27 +3317,27 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "editionTeamId": 81,
     "team": "VALÊNCIA",
     "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE3jNN_OU-QexjdHw.jpg?alt=media&token=1&m=1780486237207",
-    "matches": 6,
+    "matches": 7,
     "wins": 1,
     "draws": 2,
-    "losses": 3,
-    "goalsFor": 13,
-    "goalsAgainst": 14,
-    "goalDifference": -1,
+    "losses": 4,
+    "goalsFor": 15,
+    "goalsAgainst": 17,
+    "goalDifference": -2,
     "points": 5,
     "placement": null,
-    "ongoing": true,
+    "ongoing": false,
     "duo": [
       {
         "name": "LUCAS",
-        "goals": 3
+        "goals": 4
       },
       {
         "name": "BOLACHA",
-        "goals": 2
+        "goals": 3
       }
     ],
-    "duoGoals": 5,
+    "duoGoals": 7,
     "unbeatenStreak": 2,
     "cleanSheets": 1,
     "failedToScore": 0,
@@ -3347,9 +3347,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 7,
-    "attackRank": 83,
-    "defenseRank": 30,
-    "duoRank": 90,
+    "attackRank": 72,
+    "defenseRank": 38,
+    "duoRank": 81,
     "cardRank": 29
   },
   {
@@ -3361,16 +3361,16 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "editionTeamId": 90,
     "team": "CELTA DE VIGO",
     "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCEUdiPg-VFiAmxP-W.png?alt=media&token=1&m=1780486128245",
-    "matches": 6,
+    "matches": 7,
     "wins": 1,
     "draws": 2,
-    "losses": 3,
-    "goalsFor": 17,
-    "goalsAgainst": 23,
-    "goalDifference": -6,
+    "losses": 4,
+    "goalsFor": 18,
+    "goalsAgainst": 25,
+    "goalDifference": -7,
     "points": 5,
     "placement": null,
-    "ongoing": true,
+    "ongoing": false,
     "duo": [
       {
         "name": "RAFINHA",
@@ -3378,10 +3378,10 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
       },
       {
         "name": "R LOURENÇO",
-        "goals": 3
+        "goals": 4
       }
     ],
-    "duoGoals": 9,
+    "duoGoals": 10,
     "unbeatenStreak": 1,
     "cleanSheets": 0,
     "failedToScore": 0,
@@ -3391,9 +3391,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 59,
-    "defenseRank": 75,
-    "duoRank": 59,
+    "attackRank": 58,
+    "defenseRank": 74,
+    "duoRank": 52,
     "cardRank": 33
   },
   {
@@ -3435,10 +3435,10 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 9,
-    "attackRank": 73,
+    "attackRank": 74,
     "defenseRank": 63,
-    "duoRank": 62,
-    "cardRank": 12
+    "duoRank": 63,
+    "cardRank": 14
   },
   {
     "ranking": 79,
@@ -3479,9 +3479,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 2,
     "blueCards": 0,
     "totalCards": 6,
-    "attackRank": 67,
+    "attackRank": 69,
     "defenseRank": 71,
-    "duoRank": 85,
+    "duoRank": 86,
     "cardRank": 31
   },
   {
@@ -3523,9 +3523,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 5,
-    "attackRank": 66,
+    "attackRank": 68,
     "defenseRank": 62,
-    "duoRank": 56,
+    "duoRank": 58,
     "cardRank": 48
   },
   {
@@ -3567,9 +3567,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 12,
-    "attackRank": 68,
+    "attackRank": 70,
     "defenseRank": 72,
-    "duoRank": 54,
+    "duoRank": 56,
     "cardRank": 6
   },
   {
@@ -3611,9 +3611,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 70,
+    "attackRank": 71,
     "defenseRank": 81,
-    "duoRank": 83,
+    "duoRank": 84,
     "cardRank": 84
   },
   {
@@ -3657,7 +3657,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 5,
     "attackRank": 87,
     "defenseRank": 66,
-    "duoRank": 68,
+    "duoRank": 69,
     "cardRank": 55
   },
   {
@@ -3743,9 +3743,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 0,
-    "attackRank": 74,
+    "attackRank": 75,
     "defenseRank": 89,
-    "duoRank": 81,
+    "duoRank": 82,
     "cardRank": 89
   },
   {
@@ -3789,7 +3789,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 5,
     "attackRank": 90,
     "defenseRank": 87,
-    "duoRank": 82,
+    "duoRank": 83,
     "cardRank": 57
   },
   {
@@ -3833,7 +3833,7 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "totalCards": 0,
     "attackRank": 86,
     "defenseRank": 68,
-    "duoRank": 77,
+    "duoRank": 78,
     "cardRank": 85
   },
   {
@@ -3875,9 +3875,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 0,
     "blueCards": 0,
     "totalCards": 7,
-    "attackRank": 80,
+    "attackRank": 81,
     "defenseRank": 79,
-    "duoRank": 88,
+    "duoRank": 89,
     "cardRank": 28
   },
   {
@@ -3889,27 +3889,27 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "editionTeamId": 79,
     "team": "REAL MADRID",
     "badgeUrl": "https://firebasestorage.googleapis.com/v0/b/copafacil-web.appspot.com/o/events%2F-ciddy%2Fteams%2F-OuCE1lbs7UFbj9mOJgT.png?alt=media&token=1&m=1780486258622",
-    "matches": 6,
+    "matches": 7,
     "wins": 0,
     "draws": 1,
-    "losses": 5,
-    "goalsFor": 16,
-    "goalsAgainst": 25,
-    "goalDifference": -9,
+    "losses": 6,
+    "goalsFor": 18,
+    "goalsAgainst": 28,
+    "goalDifference": -10,
     "points": 1,
     "placement": null,
-    "ongoing": true,
+    "ongoing": false,
     "duo": [
       {
-        "name": "TIAGO BIANCO",
+        "name": "BRUNO HENRIQUE",
         "goals": 4
       },
       {
-        "name": "BRUNO HENRIQUE",
-        "goals": 3
+        "name": "GUSTAVO MARQUES",
+        "goals": 4
       }
     ],
-    "duoGoals": 7,
+    "duoGoals": 8,
     "unbeatenStreak": 1,
     "cleanSheets": 0,
     "failedToScore": 0,
@@ -3919,9 +3919,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 1,
     "blueCards": 0,
     "totalCards": 3,
-    "attackRank": 69,
-    "defenseRank": 85,
-    "duoRank": 79,
+    "attackRank": 59,
+    "defenseRank": 83,
+    "duoRank": 72,
     "cardRank": 66
   },
   {
@@ -3963,9 +3963,9 @@ export const HISTORICAL_TEAM_STATISTICS: HistoricalTeamStatistic[] = [
     "redCards": 3,
     "blueCards": 0,
     "totalCards": 12,
-    "attackRank": 75,
+    "attackRank": 76,
     "defenseRank": 90,
-    "duoRank": 63,
+    "duoRank": 64,
     "cardRank": 4
   }
 ];
@@ -4555,6 +4555,26 @@ export const HISTORICAL_DISCIPLINE_EDITIONS: HistoricalDisciplineEdition[] = [
       },
       {
         "position": 4,
+        "name": "IGOR",
+        "team": "ATHLETICO BILBAO",
+        "editionTeamId": 88,
+        "yellowCards": 3,
+        "redCards": 0,
+        "blueCards": 0,
+        "totalCards": 3
+      },
+      {
+        "position": 5,
+        "name": "JHOW",
+        "team": "VILLAREAL",
+        "editionTeamId": 83,
+        "yellowCards": 1,
+        "redCards": 1,
+        "blueCards": 0,
+        "totalCards": 2
+      },
+      {
+        "position": 6,
         "name": "TURINI",
         "team": "SEVILLA",
         "editionTeamId": 82,
@@ -4564,7 +4584,7 @@ export const HISTORICAL_DISCIPLINE_EDITIONS: HistoricalDisciplineEdition[] = [
         "totalCards": 2
       },
       {
-        "position": 5,
+        "position": 7,
         "name": "ALE",
         "team": "VALÊNCIA",
         "editionTeamId": 81,
@@ -4574,7 +4594,7 @@ export const HISTORICAL_DISCIPLINE_EDITIONS: HistoricalDisciplineEdition[] = [
         "totalCards": 2
       },
       {
-        "position": 6,
+        "position": 8,
         "name": "BIEL",
         "team": "GETAFE",
         "editionTeamId": 87,
@@ -4584,30 +4604,10 @@ export const HISTORICAL_DISCIPLINE_EDITIONS: HistoricalDisciplineEdition[] = [
         "totalCards": 2
       },
       {
-        "position": 7,
-        "name": "EDVALDO",
-        "team": "BARCELONA",
-        "editionTeamId": 80,
-        "yellowCards": 2,
-        "redCards": 0,
-        "blueCards": 0,
-        "totalCards": 2
-      },
-      {
-        "position": 8,
-        "name": "IGOR",
-        "team": "ATHLETICO BILBAO",
-        "editionTeamId": 88,
-        "yellowCards": 2,
-        "redCards": 0,
-        "blueCards": 0,
-        "totalCards": 2
-      },
-      {
         "position": 9,
-        "name": "J. JÚNIOR",
-        "team": "RAYO VALLECANO",
-        "editionTeamId": 84,
+        "name": "DIGO",
+        "team": "VILLAREAL",
+        "editionTeamId": 83,
         "yellowCards": 2,
         "redCards": 0,
         "blueCards": 0,
@@ -4615,9 +4615,9 @@ export const HISTORICAL_DISCIPLINE_EDITIONS: HistoricalDisciplineEdition[] = [
       },
       {
         "position": 10,
-        "name": "LUCAS",
-        "team": "SEVILLA",
-        "editionTeamId": 82,
+        "name": "EDVALDO",
+        "team": "BARCELONA",
+        "editionTeamId": 80,
         "yellowCards": 2,
         "redCards": 0,
         "blueCards": 0,
@@ -5195,52 +5195,52 @@ export const HISTORICAL_SCORING_EDITIONS: HistoricalScoringEdition[] = [
       },
       {
         "position": 4,
+        "name": "BLOTTI",
+        "team": "ATHLETICO BILBAO",
+        "editionTeamId": 88,
+        "goals": 6
+      },
+      {
+        "position": 5,
         "name": "BRUNO SALES",
         "team": "RAYO VALLECANO",
         "editionTeamId": 84,
         "goals": 6
       },
       {
-        "position": 5,
+        "position": 6,
         "name": "EFRAIM",
         "team": "SEVILLA",
         "editionTeamId": 82,
         "goals": 6
       },
       {
-        "position": 6,
+        "position": 7,
         "name": "JHOW",
         "team": "VILLAREAL",
         "editionTeamId": 83,
         "goals": 6
       },
       {
-        "position": 7,
+        "position": 8,
         "name": "RAFINHA",
         "team": "CELTA DE VIGO",
         "editionTeamId": 90,
         "goals": 6
       },
       {
-        "position": 8,
+        "position": 9,
         "name": "ALAN",
         "team": "REAL SOCIEDAD",
         "editionTeamId": 86,
         "goals": 5
       },
       {
-        "position": 9,
-        "name": "LUCAS",
-        "team": "SEVILLA",
-        "editionTeamId": 82,
-        "goals": 5
-      },
-      {
         "position": 10,
-        "name": "ANDREWS",
-        "team": "ATHLETICO BILBAO",
-        "editionTeamId": 88,
-        "goals": 4
+        "name": "DIGO",
+        "team": "VILLAREAL",
+        "editionTeamId": 83,
+        "goals": 5
       }
     ]
   }

@@ -174,7 +174,7 @@ test("wiki 2 presents Yurick's seven-edition timeline", async ({ page }) => {
   ).toBeVisible();
   await expect(page.locator(".encyclopedia-career-list article")).toHaveCount(7);
   await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(7);
-  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("55");
+  await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText("56");
   await expect
     .poll(() =>
       page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
@@ -192,6 +192,13 @@ test("historical ranking orders every team campaign", async ({ page }) => {
   await expect(page.locator(".historical-ranking-podium article")).toHaveCount(
     3,
   );
+  for (const team of ["REAL MADRID", "CELTA DE VIGO", "VALÊNCIA", "GETAFE"]) {
+    const row = page.locator(".historical-ranking-table tbody tr").filter({
+      hasText: `${team} (LALIGA VIW 2026)`,
+    });
+    await expect(row).toHaveCount(1);
+    await expect(row).not.toContainText("Em andamento");
+  }
   await expect(page.locator(".historical-ranking-star.gold")).toHaveCount(7);
   await expect(page.locator(".historical-ranking-star.silver")).toHaveCount(7);
   await expect(page.locator(".historical-ranking-star.bronze")).toHaveCount(7);
@@ -237,7 +244,7 @@ test("wiki 3 presents Andrews as an encyclopedia article", async ({ page }) => {
   );
   await expect(page.locator(".encyclopedia-gallery figure")).toHaveCount(6);
   await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText(
-    "45",
+    "46",
   );
   await expect(page.locator(".encyclopedia-stats-table tfoot")).toContainText(
     "21",
@@ -275,7 +282,7 @@ test("historical statistics ranks teams and scoring duos", async ({ page }) => {
   ).toBeVisible();
   await expect(page.locator(".history-stat-tabs a")).toHaveCount(8);
   await expect(page.locator(".history-duo-grid > article")).toHaveCount(90);
-  await expect(page.locator(".history-duo-grid > article.ongoing")).toHaveCount(12);
+  await expect(page.locator(".history-duo-grid > article.ongoing")).toHaveCount(8);
   await expect(page.locator(".team-ranking")).toHaveCount(0);
   await page.getByRole("link", { name: "Melhores ataques" }).click();
   await expect(page.locator(".attack-card-grid > article")).toHaveCount(90);
@@ -495,8 +502,11 @@ test("all competition tabs use compact modern surfaces", async ({ page }) => {
   );
   await page.goto("/#/motm");
   const latestRound = Math.max(...matchAwards.map(a => a.round));
-  await expect(page.locator("#motm-round")).toContainText(`Rodada ${latestRound}`);
+  await expect(page.locator("#motm-round")).toContainText("Repescagem");
   await expect(page.locator(".motm-player-card")).toHaveCount(matchAwards.filter(a => a.round === latestRound).length);
+  for (const player of ["Digo", "Michel", "Blotti", "João Paulo"]) {
+    await expect(page.locator(".motm-player-card").filter({hasText: player})).toHaveCount(1);
+  }
   await page.locator("#motm-round").click();
   await page
     .getByRole("option", {

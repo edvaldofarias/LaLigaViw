@@ -243,8 +243,8 @@ for (const wiki of WIKIS) {
     const hasCareerBraces = /hatTricks:\s*\d+/.test(oldSummary) || /braces:\s*\d+/.test(oldSummary);
     const oldHat = old.goals >= 3 ? null : 0, oldBrace = old.goals >= 2 ? null : 0;
     if (hasCareerBraces && (oldHat === null || oldBrace === null)) wikiNotes.push(`${wiki.label}: revise hatTricks/braces manualmente (campanha já tinha ${old.goals} gols).`);
-    delta.hatTricks = c.hatTricks - (oldHat ?? 0);
-    delta.braces = c.braces - (oldBrace ?? 0);
+    if (oldHat !== null) delta.hatTricks = c.hatTricks - oldHat;
+    if (oldBrace !== null) delta.braces = c.braces - oldBrace;
     delta.blueCards = c.blue;
     delta.ownGoals = c.ownGoals;
     const summaryValues = {};
