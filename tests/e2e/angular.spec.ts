@@ -87,7 +87,7 @@ test("matches opens the current round and reuses compact cards", async ({
   await expect(activeRound).toBeVisible();
   await expect(page.locator("app-compact-match-card")).not.toHaveCount(0);
   await expect(page.locator("app-match-card")).toHaveCount(0);
-  await expect(page.locator(".compact-broadcast").first()).toBeVisible();
+  await expect(page.locator(".compact-match-main").first()).toBeVisible();
   const filter = page.locator(".matches-toolbar mat-form-field").first();
   await expect(filter).toBeVisible();
   expect(
@@ -442,8 +442,9 @@ test("all Angular routes, old deep links, no horizontal overflow, search and pla
     "Classificação",
   );
   await page.goto("/#/cartola");
-  await expect(page.locator(".round-carousel-item.active")).toContainText(
-    `Rodada ${completedRoundGroups(data).at(-1)!.number}`,
+  await expect(page.locator(".round-carousel-item.active")).toHaveAttribute(
+    "data-round-id",
+    completedRoundGroups(data).at(-1)!.id,
   );
   await page
     .locator(".round-carousel-item", { hasText: "Rodada 7" })
