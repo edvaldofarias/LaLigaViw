@@ -219,6 +219,20 @@ export const championshipSelections = [
     {playerId:'1789257897307',name:'Andrews',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
   ],
 },
+{
+  id:'2026-repescagem', season:2026, roundNumber:8,
+  phaseId:'1780479913324', roundId:'1780480630569',
+  source:'Seleção informada pela organização',
+  players:[
+    {playerId:'1789257856480',name:'Felipe Herminio',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+    {playerId:'1789220915736',name:'Turini',teamId:'-OuCE5UUPYmEL7Mnf4-D',teamName:'Sevilla'},
+    {playerId:'1789257879880',name:'Blotti',teamId:'-OuCEIPXbahnsYG98j_K',teamName:'Athletico Bilbao'},
+    {playerId:'1789196742352',name:'Digo',teamId:'-OuCE79e187h1srqNCAK',teamName:'Villareal'},
+    {playerId:'1789194972417',name:'Michel',teamId:'-OuCEAFLB6cDtcv8W1dI',teamName:'Real Bétis'},
+    {playerId:'1789196242049',name:'Davi',teamId:'-OuCECnOQDCHySBDLAxx',teamName:'Getafe'},
+    {playerId:'1789196758345',name:'Denner',teamId:'-OuCE79e187h1srqNCAK',teamName:'Villareal'},
+  ],
+},
 ];
 
 export function selectionsForPlayer(playerId, history=championshipSelections){

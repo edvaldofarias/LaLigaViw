@@ -93,3 +93,26 @@ test('round seven credits the seven supplied players and their clubs',async()=>{
   assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,6);
  }
 });
+
+test('repescagem selection preserves the supplied names and clubs',async()=>{
+ const {calculateScores}=await import('../dist/player-score.mjs');
+ const {readFileSync}=await import('node:fs');
+ const data=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url)));
+ const round=championshipSelections.find(r=>r.id==='2026-repescagem');
+ assert.equal(round.roundId,'1780480630569');
+ assert.deepEqual(round.players.map(p=>[p.name,p.teamName]),[
+  ['Felipe Herminio','Athletico Bilbao'],
+  ['Turini','Sevilla'],
+  ['Blotti','Athletico Bilbao'],
+  ['Digo','Villareal'],
+  ['Michel','Real Bétis'],
+  ['Davi','Getafe'],
+  ['Denner','Villareal'],
+ ]);
+ assert.equal(new Set(round.players.map(p=>p.playerId)).size,7);
+ const scores=calculateScores(data,[],[round]);
+ for(const p of round.players){
+  assert.equal(data.player[p.playerId].team,p.teamId);
+  assert.equal(scores.find(s=>s.id===p.playerId).components.find(c=>c.key==='selections').earned,6);
+ }
+});

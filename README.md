@@ -69,6 +69,7 @@ Fonte pública: `https://copafacil-web.firebaseio.com/events/-ciddy/`, endpoints
 - Craques informados da 7ª rodada: Palhinha (Atlético de Madrid), Elias (Barcelona), Ricardo Vechiez (Villareal), Andrews (Athletico Bilbao), Jorge (Rayo Vallecano) e Rafinha (Celta).
 - Craques da repescagem: Digo (Villareal), Michel (Real Bétis), Blotti (Athletico Bilbao) e João Paulo (Sevilla).
 - Seleção informada da 6ª rodada: Felipe (Barcelona), Bira (Athletico Bilbao), Igor (Real Sociedad), Bruno Blotti (Athletico Bilbao), Felipe (Rayo Vallecano), Igor (Athletico Bilbao) e Reinaldo (Rayo Vallecano).
+- Seleção informada da repescagem: Felipe Herminio (Athletico Bilbao), Turini (Sevilla), Blotti (Athletico Bilbao), Digo (Villareal), Michel (Real Bétis), Davi (Getafe) e Denner (Villareal).
 - Panfletos apenas para a próxima rodada. Local fixo: Pro Beach — Av. Cézar Magnani, nº 840, Paulicéia, São Bernardo do Campo — SP, 09694-000.
 - Fotos originais preservadas; ausência/erro usa iniciais no Placehold.co. Downloads PNG e zoom das artes continuam disponíveis.
 
