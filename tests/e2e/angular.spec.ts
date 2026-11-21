@@ -308,7 +308,9 @@ test("latest official selection lists all seven supplied players", async ({
   page,
 }) => {
   await page.goto("/#/selection");
-  await expect(page.locator("#selection-round")).toContainText("Rodada 7");
+  await expect(page.locator("#selection-round")).toContainText(
+    `Rodada ${championshipSelections.at(-1)!.roundNumber}`,
+  );
   await expect(page.locator(".selection-grid .selection-card")).toHaveCount(7);
   await expect(page.locator(".selection-source-note")).toBeVisible();
   await page.locator("#selection-round").click();
